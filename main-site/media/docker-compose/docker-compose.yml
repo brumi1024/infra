@@ -60,6 +60,24 @@ services:
     volumes:
       - /home/benjamin/appdata/radarr:/config
       - /mnt/media/:/data
+    ports:
+      - 7878:7878
+    labels:
+      - swag=enable
+      - swag_auth=authelia
+    restart: unless-stopped
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+    volumes:
+      - /home/benjamin/appdata/sonarr:/config
+      - /mnt/media/:/data
+    ports:
+      - 8989:8989
     labels:
       - swag=enable
       - swag_auth=authelia
@@ -85,20 +103,6 @@ services:
       - swag=enable
       - swag_auth=authelia
     restart: unless-stopped
-  sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
-    container_name: sonarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Budapest
-    volumes:
-      - /home/benjamin/appdata/sonarr:/config
-      - /mnt/media/:/data
-    labels:
-      - swag=enable
-      - swag_auth=authelia
-    restart: unless-stopped
   tautulli:
     image: lscr.io/linuxserver/tautulli
     container_name: tautulli
@@ -108,6 +112,8 @@ services:
       - TZ=Europe/Budapest
     volumes:
       - /home/benjamin/appdata/tautulli:/config
+    ports:
+      - 8181:8181
     labels:
       - swag=enable
       - swag_auth=authelia
