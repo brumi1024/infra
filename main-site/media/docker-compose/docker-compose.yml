@@ -1,0 +1,119 @@
+version: "3.9"
+
+services:
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+      - AUTO_UPDATE=true
+    volumes:
+      - /home/benjamin/appdata/jackett:/config
+      - /mnt/media/downloads:/downloads
+    ports:
+      - 9117:9117
+    labels:
+      - swag=enable
+      - swag_auth=authelia
+    restart: unless-stopped
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+    volumes:
+      - /home/benjamin/appdata/overseerr:/config
+    labels:
+      - swag=enable
+      - swag_auth=authelia
+    restart: unless-stopped
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+      - WEBUI_PORT=8080
+    volumes:
+      - /home/benjamin/appdata/qbittorrent:/config
+      - /mnt/media/downloads:/data/downloads
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    labels:
+      - swag=enable
+      - swag_auth=authelia
+    restart: unless-stopped
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+    volumes:
+      - /home/benjamin/appdata/radarr:/config
+      - /mnt/media/:/data
+    labels:
+      - swag=enable
+      - swag_auth=authelia
+    restart: unless-stopped
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    hostname: susanoo
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+    volumes:
+      - /home/benjamin/appdata/syncthing:/config
+      - /mnt/media/movies:/data/movies
+      - /mnt/media/tv:/data/tv
+    ports:
+      - 8384:8384
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    labels:
+      - swag=enable
+      - swag_auth=authelia
+    restart: unless-stopped
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+    volumes:
+      - /home/benjamin/appdata/sonarr:/config
+      - /mnt/media/:/data
+    labels:
+      - swag=enable
+      - swag_auth=authelia
+    restart: unless-stopped
+  tautulli:
+    image: lscr.io/linuxserver/tautulli
+    container_name: tautulli
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+    volumes:
+      - /home/benjamin/appdata/tautulli:/config
+    labels:
+      - swag=enable
+      - swag_auth=authelia
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: amaterasu

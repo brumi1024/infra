@@ -1,0 +1,76 @@
+version: "3.9"
+
+services:
+  cloudflare-ddns:
+    image: joshava/cloudflare-ddns:latest
+    container_name: cloudflare-ddns
+    volumes:
+      - /home/benjamin/appdata/cloudflare-ddns/config.yaml:/app/config.yaml
+    environment:
+      - TZ=Europe/Budapest
+    restart: unless-stopped
+  swag:
+    image: lscr.io/linuxserver/swag
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+      - URL=${DOMAIN_NAME}
+      - VALIDATION=dns
+      - SUBDOMAINS=wildcard
+      - DNSPLUGIN=cloudflare
+      - DOCKER_MODS=linuxserver/mods:swag-auto-proxy|linuxserver/mods:universal-docker|linuxserver/mods:swag-auto-reload
+      - DOCKER_HOST=dockerproxy
+    extra_hosts:
+      - ${DOMAIN_NAME}:127.0.0.1
+    ports:
+      - 443:443
+      - 80:80
+    volumes:
+      - /home/benjamin/appdata/swag:/config
+    restart: unless-stopped
+  dockerproxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy
+    container_name: dockerproxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - CONTAINERS=1
+      - POST=0
+    restart: unless-stopped
+  authelia:
+    image: ghcr.io/authelia/authelia:latest
+    container_name: authelia
+    user: "1000:1000"
+    environment:
+      - TZ=Europe/Budapest
+    volumes:
+      - /home/benjamin/appdata/authelia:/config
+    expose:
+      - 9091
+    restart: unless-stopped
+    labels:
+      - swag=enable
+  organizr:
+    image: organizr/organizr:latest
+    container_name: organizr
+    volumes:
+      - /home/benjamin/appdata/organizr:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+    ports:
+      - 8085:80
+    labels:
+      - swag=enable
+      - swag_auth=authelia
+    restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: amaterasu
