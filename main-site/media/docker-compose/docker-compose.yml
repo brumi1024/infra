@@ -27,6 +27,8 @@ services:
       - TZ=Europe/Budapest
     volumes:
       - /home/benjamin/appdata/overseerr:/config
+    ports:
+      - 5055:5055
     labels:
       - swag=enable
       - swag_auth=authelia
