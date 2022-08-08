@@ -14,9 +14,6 @@ services:
       - /mnt/media/downloads:/downloads
     ports:
       - 9117:9117
-    labels:
-      - swag=enable
-      - swag_auth=authelia
     restart: unless-stopped
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
@@ -29,9 +26,6 @@ services:
       - /home/benjamin/appdata/overseerr:/config
     ports:
       - 5055:5055
-    labels:
-      - swag=enable
-      - swag_auth=authelia
     restart: unless-stopped
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -48,9 +42,6 @@ services:
       - 8080:8080
       - 6881:6881
       - 6881:6881/udp
-    labels:
-      - swag=enable
-      - swag_auth=authelia
     restart: unless-stopped
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -64,9 +55,6 @@ services:
       - /mnt/media/:/data
     ports:
       - 7878:7878
-    labels:
-      - swag=enable
-      - swag_auth=authelia
     restart: unless-stopped
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -80,9 +68,6 @@ services:
       - /mnt/media/:/data
     ports:
       - 8989:8989
-    labels:
-      - swag=enable
-      - swag_auth=authelia
     restart: unless-stopped
   syncthing:
     image: lscr.io/linuxserver/syncthing:latest
@@ -101,9 +86,6 @@ services:
       - 22000:22000/tcp
       - 22000:22000/udp
       - 21027:21027/udp
-    labels:
-      - swag=enable
-      - swag_auth=authelia
     restart: unless-stopped
   tautulli:
     image: lscr.io/linuxserver/tautulli
@@ -116,9 +98,6 @@ services:
       - /home/benjamin/appdata/tautulli:/config
     ports:
       - 8181:8181
-    labels:
-      - swag=enable
-      - swag_auth=authelia
     restart: unless-stopped
 
 networks:
