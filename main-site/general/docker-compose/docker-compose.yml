@@ -22,7 +22,7 @@ services:
       - VALIDATION=dns
       - SUBDOMAINS=wildcard
       - DNSPLUGIN=cloudflare
-      - DOCKER_MODS=linuxserver/mods:swag-auto-proxy|linuxserver/mods:universal-docker|linuxserver/mods:swag-auto-reload|linuxserver/mods:swag-f2bdiscord|linuxserver/mods:swag-dashboard
+      - DOCKER_MODS=linuxserver/mods:swag-auto-proxy|linuxserver/mods:universal-docker|linuxserver/mods:swag-auto-reload|linuxserver/mods:swag-f2bdiscord|linuxserver/mods:swag-dashboard|linuxserver/mods:swag-dbip
       - DOCKER_HOST=dockerproxy
       - DISC_HOOK=${DISC_HOOK}
       - DISC_ME=${DISC_ME}
