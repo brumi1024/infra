@@ -22,8 +22,11 @@ services:
       - VALIDATION=dns
       - SUBDOMAINS=wildcard
       - DNSPLUGIN=cloudflare
-      - DOCKER_MODS=linuxserver/mods:swag-auto-proxy|linuxserver/mods:universal-docker|linuxserver/mods:swag-auto-reload
+      - DOCKER_MODS=linuxserver/mods:swag-auto-proxy|linuxserver/mods:universal-docker|linuxserver/mods:swag-auto-reload|linuxserver/mods:swag-f2bdiscord|linuxserver/mods:swag-dashboard
       - DOCKER_HOST=dockerproxy
+      - DISC_HOOK=${DISC_HOOK}
+      - DISC_ME=${DISC_ME}
+      - DISC_API=${DISC_API}
     extra_hosts:
       - ${DOMAIN_NAME}:127.0.0.1
     ports:
@@ -58,6 +61,7 @@ services:
     restart: unless-stopped
     labels:
       - swag=enable
+      - swag_url=${AUTHELIA_URL}
   organizr:
     image: organizr/organizr:latest
     container_name: organizr
