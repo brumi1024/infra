@@ -25,11 +25,3 @@ services:
       - "1935:1935"
     environment:
       - FRIGATE_RTSP_PASSWORD
-  rtsp-to-web:
-    container_name: rtsp-to-web
-    restart: unless-stopped
-    image: ghcr.io/deepch/rtsptoweb:latest
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /root/appdata/rtsp-to-web/config.json:/config/config.json
-    network_mode: host
