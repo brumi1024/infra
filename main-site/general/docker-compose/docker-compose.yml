@@ -46,9 +46,13 @@ services:
     container_name: authelia
     user: "1000:1000"
     environment:
-      - TZ=Europe/Budapest
+      AUTHELIA_JWT_SECRET_FILE: /secrets/JWT_SECRET
+      AUTHELIA_SESSION_SECRET_FILE: /secrets/SESSION_SECRET
+      AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE: /secrets/NOTIFIER_SMTP_PASSWORD
+      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /secrets/STORAGE_ENCRYPTION_KEY
     volumes:
       - /home/benjamin/appdata/authelia:/config
+      - /home/benjamin/appdata/authelia/secrets:/secrets
     expose:
       - 9091
     restart: unless-stopped
