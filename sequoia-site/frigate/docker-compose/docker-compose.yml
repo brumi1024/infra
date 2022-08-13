@@ -25,6 +25,8 @@ services:
       - "1935:1935"
     environment:
       - FRIGATE_RTSP_PASSWORD
+      - LIBVA_DRIVER_NAME_JELLYFIN
+      - PLUS_API_KEY
   rtsp-to-web:
      container_name: rtsp-to-web
      restart: unless-stopped
