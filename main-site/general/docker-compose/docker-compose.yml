@@ -6,18 +6,19 @@ services:
     container_name: cloudflare-ddns
     volumes:
       - /home/benjamin/appdata/cloudflare-ddns/config.yaml:/app/config.yaml
-    environment:
-      - TZ=Europe/Budapest
+      - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
   swag:
     image: lscr.io/linuxserver/swag
     container_name: swag
     cap_add:
       - NET_ADMIN
+    volumes:
+      - /home/benjamin/appdata/swag:/config
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Budapest
       - URL=${DOMAIN_NAME}
       - VALIDATION=dns
       - SUBDOMAINS=wildcard
@@ -29,11 +30,9 @@ services:
       - DISC_API=${DISC_API}
     extra_hosts:
       - ${DOMAIN_NAME}:127.0.0.1
-    ports:
-      - 443:443
-      - 80:80
-    volumes:
-      - /home/benjamin/appdata/swag:/config
+    expose:
+      - 443
+      - 80
     restart: unless-stopped
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy
@@ -48,14 +47,15 @@ services:
     image: ghcr.io/authelia/authelia:latest
     container_name: authelia
     user: "1000:1000"
+    volumes:
+      - /home/benjamin/appdata/authelia:/config
+      - /home/benjamin/appdata/authelia/secrets:/secrets
+      - /etc/localtime:/etc/localtime:ro
     environment:
       AUTHELIA_JWT_SECRET_FILE: /secrets/JWT_SECRET
       AUTHELIA_SESSION_SECRET_FILE: /secrets/SESSION_SECRET
       AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE: /secrets/NOTIFIER_SMTP_PASSWORD
       AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /secrets/STORAGE_ENCRYPTION_KEY
-    volumes:
-      - /home/benjamin/appdata/authelia:/config
-      - /home/benjamin/appdata/authelia/secrets:/secrets
     expose:
       - 9091
     restart: unless-stopped
@@ -64,7 +64,7 @@ services:
       - swag_url=${AUTHELIA_URL}
   authelia-redis:
     image: redis:latest
-    container_name: redis
+    container_name: authelia-redis
     volumes:
       - /home/benjamin/appdata/redis:/data
       - /etc/localtime:/etc/localtime:ro
@@ -72,30 +72,31 @@ services:
       - 6379
     restart: unless-stopped
   authelia-db:
-    restart: always
     image: postgres:14
-    environment:
-    - POSTGRES_USER
-    - POSTGRES_PASSWORD
-    - POSTGRES_DB
+    container_name: authelia-postgres
     volumes:
-    - /home/benjamin/appdata/postgres:/var/lib/postgresql/data
-    - /etc/localtime:/etc/localtime:ro
+      - /home/benjamin/appdata/postgres:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    restart: unless-stopped
   organizr:
     image: organizr/organizr:latest
     container_name: organizr
     volumes:
       - /home/benjamin/appdata/organizr:/config
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Budapest
     ports:
       - 8080:80
+    restart: unless-stopped
     labels:
       - swag=enable
       - swag_auth=authelia
-    restart: unless-stopped
 
 networks:
   default:
