@@ -30,9 +30,9 @@ services:
       - DISC_API=${DISC_API}
     extra_hosts:
       - ${DOMAIN_NAME}:127.0.0.1
-    expose:
-      - 443
-      - 80
+    ports:
+      - 443:443
+      - 80:80
     restart: unless-stopped
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy
