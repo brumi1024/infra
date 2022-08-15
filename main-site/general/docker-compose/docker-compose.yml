@@ -82,6 +82,8 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - POSTGRES_DB
+    expose:
+      - 5432
     restart: unless-stopped
   organizr:
     image: organizr/organizr:latest
