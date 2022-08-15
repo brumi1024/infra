@@ -12,8 +12,8 @@ services:
       - PUID=1000
       - PGID=1000
       - AUTO_UPDATE=true
-    expose:
-      - 9117
+    ports:
+      - 9117:9117
     restart: unless-stopped
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
@@ -25,8 +25,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Budapest
-    expose:
-      - 5055
+    ports:
+      - 5055:5055
     restart: unless-stopped
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -39,9 +39,8 @@ services:
       - PUID=1000
       - PGID=1000
       - WEBUI_PORT=8080
-    expose:
-      - 8080
     ports:
+      - 8080:8080
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
@@ -55,8 +54,8 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-    expose:
-      - 7878
+    ports:
+      - 7878:7878
     restart: unless-stopped
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -68,8 +67,8 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-    expose:
-      - 8989
+    ports:
+      - 8989:8989
     restart: unless-stopped
   syncthing:
     image: lscr.io/linuxserver/syncthing:latest
@@ -83,9 +82,8 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-    expose:
-      - 8384
     ports:
+      - 8384:8384
       - 22000:22000/tcp
       - 22000:22000/udp
       - 21027:21027/udp
@@ -100,8 +98,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Budapest
-    expose:
-      - 8181
+    ports:
+      - 8181:8181
     restart: unless-stopped
 
 networks:
