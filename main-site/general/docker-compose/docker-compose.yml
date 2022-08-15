@@ -62,6 +62,25 @@ services:
     labels:
       - swag=enable
       - swag_url=${AUTHELIA_URL}
+  authelia-redis:
+    image: redis:latest
+    container_name: redis
+    volumes:
+      - /home/benjamin/appdata/redis:/data
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - 6379
+    restart: unless-stopped
+  authelia-db:
+    restart: always
+    image: postgres:14
+    environment:
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+    - POSTGRES_DB
+    volumes:
+    - /home/benjamin/appdata/postgres:/var/lib/postgresql/data
+    - /etc/localtime:/etc/localtime:ro
   organizr:
     image: organizr/organizr:latest
     container_name: organizr
