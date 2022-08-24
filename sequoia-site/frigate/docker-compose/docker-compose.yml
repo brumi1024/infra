@@ -15,7 +15,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /root/appdata/frigate/config.yml:/config/config.yml:ro
       - /mnt/media/frigate:/media/frigate:rw
-      - /root/appdata/db:/db:rw
+      - /root/appdata/frigate/db:/db:rw
       - type: tmpfs
         target: /tmp/cache
         tmpfs:
