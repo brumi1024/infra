@@ -23,6 +23,7 @@ services:
     ports:
       - "5000:5000"
       - "1935:1935"
+      - "8554:8554"
     environment:
       - FRIGATE_RTSP_PASSWORD
       - LIBVA_DRIVER_NAME_JELLYFIN
