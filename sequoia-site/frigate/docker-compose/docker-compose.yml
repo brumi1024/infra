@@ -4,7 +4,7 @@ services:
     container_name: frigate
     privileged: true
     restart: unless-stopped
-    image: ghcr.io/blakeblackshear/frigate:stable
+    image: ghcr.io/blakeblackshear/frigate:v0.13.0-beta6
     shm_size: "512mb"
     devices:
       - /dev/bus/usb:/dev/bus/usb
@@ -13,7 +13,7 @@ services:
       - "c 189:* rmw"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /root/appdata/frigate/config.yml:/config/config.yml:ro
+      - /root/appdata/frigate/:/config/:rw
       - /mnt/media/frigate:/media/frigate:rw
       - /root/appdata/frigate/db:/db:rw
       - type: tmpfs
