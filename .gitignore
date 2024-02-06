@@ -1,3 +1,4 @@
 *.env
-config/
+main-site/*/config/
+sequoia-site/nordic-edge-node/config/
 .DS_Store
