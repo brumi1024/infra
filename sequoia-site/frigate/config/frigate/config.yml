@@ -24,6 +24,9 @@ birdseye:
   #   motion - cameras are included if motion was detected in the last 30 seconds
   #   continuous - all cameras are included always
   mode: motion
+audio:
+  # Optional: Enable audio events
+  enabled: True
 ffmpeg:
   # Optional: global ffmpeg args (default: shown below)
   global_args: -hide_banner -loglevel warning
@@ -64,11 +67,13 @@ objects:
   # Optional: list of objects to track from labelmap.txt (default: shown below)
   track:
     - person
+    - bicycle
     - cat
     - dog
     - car
     - motorcycle
     - bus
+    - licence_plate
   filters:
     person:
        # Optional: minimum width*height of the bounding box for the detected object (default: 0)
@@ -255,6 +260,8 @@ go2rtc:
       - "ffmpeg:shed#audio=opus"
     front_gate:
       - rtsp://192.168.1.1:7447/jIruFXNLqrEX5SEH
+    front_gate_sub:
+      - rtsp://192.168.1.1:7447/gcEGERg66Iw13NC8
 cameras:
   driveway:
     ffmpeg:
@@ -266,18 +273,41 @@ cameras:
           roles:
             - detect
             - audio
-  parking_area:
+    motion:
+      mask:
+        - 640,0,640,0,640,101,429,98,232,110,0,144,0,0
+    record:
+      events:
+        required_zones:
+          - entry
+          - road
+          - everywhere
+    snapshots:
+      required_zones:
+        - entry
+        - road
+        - everywhere
     zones:
-      entrance_zone:
-        coordinates: 0,271,0,576,0,711,154,687,485,617,473,554,458,497,441,435,445,197
+      entry:
+        coordinates: 619,184,640,280,428,271,456,230,425,213,449,187
         objects:
-        - motorcycle
+          - car
+          - motorcycle
+          - bus
+          - licence_plate
+      road:
+        coordinates: 619,185,640,138,607,131,552,155,510,183
+        objects:
+          - car
+          - motorcycle
+          - bus
       everywhere:
-        coordinates: 0,1080,1920,1080,1920,71,0,134
+        coordinates: 0,480,640,480,640,73,0,114
         objects:
           - person
           - cat
           - dog
+  parking_area:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/parking_area
@@ -286,22 +316,11 @@ cameras:
             - record
             - audio
     best_image_timeout: 120
-    snapshots:
-      required_zones:
-          - entrance_zone
-          - everywhere
-    record:
-      events:
-        required_zones:
-          - entrance_zone
-          - everywhere
     objects:
       track:
             - person
             - cat
             - dog
-            - motorcycle
-            - car
   main_terrace:
     ffmpeg:
       inputs:
@@ -310,6 +329,11 @@ cameras:
             - detect
             - record
             - audio
+    objects:
+      track:
+            - person
+            - cat
+            - dog
   shed:
     ffmpeg:
       inputs:
@@ -318,6 +342,11 @@ cameras:
             - detect
             - record
             - audio
+    objects:
+      track:
+            - person
+            - cat
+            - dog
   nordic_entrance:
     ffmpeg:
       inputs:
@@ -328,6 +357,42 @@ cameras:
           roles:
             - detect
             - audio
+    motion:
+      mask:
+        - 0,0,190,0,322,0,346,88,0,124
+        - 505,62,640,88,640,0,552,0,521,0
+    record:
+      events:
+        required_zones:
+          - gate
+          - entryway
+          - everywhere
+    snapshots:
+      required_zones:
+        - gate
+        - entryway
+        - everywhere
+    zones:
+      gate:
+        coordinates: 401,69,397,82,458,94,534,61,540,0,339,0,344,73
+        objects:
+          - car
+          - motorcycle
+          - bus
+          - licence_plate
+      entryway:
+        coordinates: 640,132,478,71,344,71,324,108,640,263
+        objects:
+          - car
+          - motorcycle
+          - bus
+          - licence_plate
+      everywhere:
+        coordinates: 0,480,640,480,640,196,640,54,562,30,330,34,341,77,0,118
+        objects:
+        - person
+        - cat
+        - dog
   nordic_front:
     ffmpeg:
       inputs:
@@ -338,25 +403,45 @@ cameras:
           roles:
             - detect
             - audio
+    objects:
+      track:
+            - person
+            - cat
+            - dog
+    motion:
+      mask:
+        - 0,176,0,0,157,0,285,0,297,62,160,80
   nordic_west:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/nordic_west
-          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/nordic_west_sub
           roles:
             - detect
-            - record
             - audio
       output_args:
         record: preset-record-generic-audio-copy
+    objects:
+      track:
+            - person
+            - cat
+            - dog
   front_gate:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/front_gate
           input_args: preset-rtsp-restream
           roles:
-            - detect
             - record
+        - path: rtsp://127.0.0.1:8554/front_gate_sub
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
             - audio
       output_args:
         record: preset-record-ubiquiti
+    motion:
+      mask:
+        - 0,0,1600,0,1600,219,1068,332,700,298,504,231,0,161
