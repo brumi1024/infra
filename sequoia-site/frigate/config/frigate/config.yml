@@ -74,20 +74,6 @@ objects:
     - motorcycle
     - bus
     - licence_plate
-  filters:
-    person:
-       # Optional: minimum width*height of the bounding box for the detected object (default: 0)
-      min_area: 5000
-      # Optional: maximum width*height of the bounding box for the detected object (default: 24000000)
-      max_area: 100000
-      # Optional: minimum width/height of the bounding box for the detected object (default: 0)
-      min_ratio: 0.5
-      # Optional: maximum width/height of the bounding box for the detected object (default: 24000000)
-      max_ratio: 2.0
-      # Optional: minimum score for the object to initiate tracking (default: shown below)
-      min_score: 0.5
-      # Optional: minimum decimal percentage for tracked object's computed score to be considered a true positive (default: shown below)
-      threshold: 0.7
 motion:
   # Optional: The threshold passed to cv2.threshold to determine if a pixel is different enough to be counted as motion. (default: shown below)
   # Increasing this value will make motion detection less sensitive and decreasing it will make motion detection more sensitive.
