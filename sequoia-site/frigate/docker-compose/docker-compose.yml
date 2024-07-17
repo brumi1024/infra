@@ -4,7 +4,7 @@ services:
     container_name: frigate
     privileged: true
     restart: unless-stopped
-    image: ghcr.io/blakeblackshear/frigate:0.14.0-beta2
+    image: ghcr.io/blakeblackshear/frigate:0.14.0-beta4
     shm_size: "512mb"
     devices:
       - /dev/bus/usb:/dev/bus/usb
