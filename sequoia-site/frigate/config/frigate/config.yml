@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=http://100.112.177.31:5000/api/config/schema
 mqtt:
   host: 192.168.1.5
-  user: "{FRIGATE_MQTT_USER}"
-  password: "{FRIGATE_MQTT_PASSWORD}"
+  user: '{FRIGATE_MQTT_USER}'
+  password: '{FRIGATE_MQTT_PASSWORD}'
 database:
   path: /db/frigate.db
 detectors:
@@ -11,7 +11,7 @@ detectors:
     device: usb
 birdseye:
   # Optional: Enable birdseye view (default: shown below)
-  enabled: True
+  enabled: true
   # Optional: Width of the output resolution (default: shown below)
   width: 1920
   # Optional: Height of the output resolution (default: shown below)
@@ -24,12 +24,9 @@ birdseye:
   #   motion - cameras are included if motion was detected in the last 30 seconds
   #   continuous - all cameras are included always
   mode: motion
-semantic_search:
-  enabled: True
-  model_size: large
 audio:
   # Optional: Enable audio events
-  enabled: True
+  enabled: true
 ffmpeg:
   # Optional: global ffmpeg args (default: shown below)
   global_args: -hide_banner -loglevel warning
@@ -44,7 +41,7 @@ ffmpeg:
 detect:
   # Optional: enables detection for the camera (default: True)
   # This value can be set via MQTT and will be updated in startup based on retained value
-  enabled: True
+  enabled: true
   # Optional: Configuration for stationary object tracking
   stationary:
     # Optional: Frequency for confirming stationary objects (default: shown below)
@@ -108,7 +105,7 @@ motion:
   # Optional: improve contrast (default: shown below)
   # Enables dynamic contrast improvement. This should help improve night detections at the cost of making motion detection more sensitive
   # for daytime.
-  improve_contrast: True
+  improve_contrast: true
   # Optional: Delay when updating camera motion through MQTT from ON -> OFF (default: shown below).
   mqtt_off_delay: 30
 record:
@@ -120,7 +117,7 @@ record:
   #          you must specify retention settings for a number of days that
   #          will fit within the available disk space of your drive or Frigate
   #          will crash.
-  enabled: True
+  enabled: true
   # Optional: Number of minutes to wait between cleanup runs (default: shown below)
   # This can be used to reduce the frequency of deleting recording segments from disk if you want to minimize i/o
   expire_interval: 60
@@ -144,45 +141,28 @@ record:
     # from 86400 seconds to 1800 seconds which would be 1800 / 86400 = 0.02.
     # The -r (framerate) dictates how smooth the output video is.
     # So the args would be -vf setpts=0.02*PTS -r 30 in that case.
-    timelapse_args: "-vf setpts=0.04*PTS -r 30"
+    timelapse_args: -vf setpts=0.04*PTS -r 30
   # Optional: Event recording settings
-  events:
-    # Optional: Number of seconds before the event to include (default: shown below)
-    pre_capture: 5
-    # Optional: Number of seconds after the event to include (default: shown below)
-    post_capture: 5
-    # Optional: Retention settings for recordings of events
+  alerts:
     retain:
-      # Required: Default retention days (default: shown below)
-      default: 10
-      # Optional: Mode for retention. (default: shown below)
-      #   all - save all recording segments for events regardless of activity
-      #   motion - save all recordings segments for events with any detected motion
-      #   active_objects - save all recording segments for event with active/moving objects
-      #
-      # NOTE: If the retain mode for the camera is more restrictive than the mode configured
-      #       here, the segments will already be gone by the time this mode is applied.
-      #       For example, if the camera retain mode is "motion", the segments without motion are
-      #       never stored, so setting the mode to "all" here won't bring them back.
-      mode: motion
-      # Optional: Per object retention days
-      objects:
-        person: 10
-        cat: 5
-        dog: 5
-        car: 5
-        motorcycle: 5
-        bus: 5
+      days: 10
+    pre_capture: 5
+    post_capture: 5
+  detections:
+    retain:
+      days: 10
+    pre_capture: 5
+    post_capture: 5
 snapshots:
   # Optional: Enable writing jpg snapshot to /media/frigate/clips (default: shown below)
   # This value can be set via MQTT and will be updated in startup based on retained value
-  enabled: True
+  enabled: true
   # Optional: print a timestamp on the snapshots (default: shown below)
-  timestamp: True
+  timestamp: true
   # Optional: draw bounding box on the snapshots (default: shown below)
-  bounding_box: True
+  bounding_box: true
   # Optional: crop the snapshot (default: shown below)
-  crop: False
+  crop: false
   # Optional: height to resize the snapshot to (default: original size)
   height: 175
   # Optional: Restrict snapshots to objects that entered any of the listed zones (default: no required zones)
@@ -209,42 +189,42 @@ live:
   quality: 8
 go2rtc:
   rtsp:
-    username: "{FRIGATE_GO2RTC_RTSP_USERNAME}"
-    password: "{FRIGATE_GO2RTC_RTSP_PASSWORD}"
+    username: '{FRIGATE_GO2RTC_RTSP_USERNAME}'
+    password: '{FRIGATE_GO2RTC_RTSP_PASSWORD}'
   streams:
     driveway:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h265Preview_01_main
-      - "ffmpeg:driveway#video=h264#hardware#audio=opus"
+      - ffmpeg:driveway#video=h264#hardware#audio=opus
     driveway_sub:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h264Preview_01_sub
-      - "ffmpeg:driveway_sub#video=h264#hardware#audio=opus"
+      - ffmpeg:driveway_sub#video=h264#hardware#audio=opus
     nordic_entrance:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.223:554/h265Preview_01_main
-      - "ffmpeg:nordic_entrance#video=h264#hardware#audio=opus"
+      - ffmpeg:nordic_entrance#video=h264#hardware#audio=opus
     nordic_entrance_sub:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.223:554/h264Preview_01_sub
-      - "ffmpeg:nordic_entrance_sub#video=h264#hardware#audio=opus"
+      - ffmpeg:nordic_entrance_sub#video=h264#hardware#audio=opus
     nordic_front:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.225:554/h265Preview_01_main
-      - "ffmpeg:nordic_front#video=h264#hardware#audio=opus"
+      - ffmpeg:nordic_front#video=h264#hardware#audio=opus
     nordic_front_sub:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.225:554/h264Preview_01_sub
-      - "ffmpeg:nordic_front_sub#video=h264#hardware#audio=opus"
+      - ffmpeg:nordic_front_sub#video=h264#hardware#audio=opus
     nordic_west:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.224:554/h265Preview_01_main
-      - "ffmpeg:nordic_west#video=h264#hardware#audio=opus"
+      - ffmpeg:nordic_west#video=h264#hardware#audio=opus
     nordic_west_sub:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.224:554/h264Preview_01_sub
-      - "ffmpeg:nordic_west_sub#video=h264#hardware#audio=opus"
+      - ffmpeg:nordic_west_sub#video=h264#hardware#audio=opus
     parking_area:
       - rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
-      - "ffmpeg:parking_area#audio=opus"
+      - ffmpeg:parking_area#audio=opus
     main_terrace:
       - rtsp://192.168.1.222:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
-      - "ffmpeg:main_terrace#audio=opus"
+      - ffmpeg:main_terrace#audio=opus
     shed:
       - rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
-      - "ffmpeg:shed#audio=opus"
+      - ffmpeg:shed#audio=opus
     front_gate:
       - rtsp://192.168.1.1:7447/jIruFXNLqrEX5SEH
     front_gate_sub:
@@ -263,12 +243,6 @@ cameras:
     motion:
       mask:
         - 640,0,640,0,640,101,429,98,232,110,0,144,0,0
-    record:
-      events:
-        required_zones:
-          - entry
-          - road
-          - everywhere
     snapshots:
       required_zones:
         - entry
@@ -294,6 +268,12 @@ cameras:
           - person
           - cat
           - dog
+    review:
+      alerts:
+        required_zones:
+          - entry
+          - road
+          - everywhere
   parking_area:
     ffmpeg:
       inputs:
@@ -305,9 +285,9 @@ cameras:
     best_image_timeout: 120
     objects:
       track:
-            - person
-            - cat
-            - dog
+        - person
+        - cat
+        - dog
   main_terrace:
     ffmpeg:
       inputs:
@@ -318,9 +298,9 @@ cameras:
             - audio
     objects:
       track:
-            - person
-            - cat
-            - dog
+        - person
+        - cat
+        - dog
   shed:
     ffmpeg:
       inputs:
@@ -331,9 +311,9 @@ cameras:
             - audio
     objects:
       track:
-            - person
-            - cat
-            - dog
+        - person
+        - cat
+        - dog
   nordic_entrance:
     ffmpeg:
       inputs:
@@ -348,12 +328,6 @@ cameras:
       mask:
         - 0,0,190,0,322,0,346,88,0,124
         - 505,62,640,88,640,0,552,0,521,0
-    record:
-      events:
-        required_zones:
-          - gate
-          - entryway
-          - everywhere
     snapshots:
       required_zones:
         - gate
@@ -377,9 +351,15 @@ cameras:
       everywhere:
         coordinates: 0,480,640,480,640,196,640,54,562,30,330,34,341,77,0,118
         objects:
-        - person
-        - cat
-        - dog
+          - person
+          - cat
+          - dog
+    review:
+      alerts:
+        required_zones:
+          - gate
+          - entryway
+          - everywhere
   nordic_front:
     ffmpeg:
       inputs:
@@ -392,9 +372,9 @@ cameras:
             - audio
     objects:
       track:
-            - person
-            - cat
-            - dog
+        - person
+        - cat
+        - dog
     motion:
       mask:
         - 0,176,0,0,157,0,285,0,297,62,160,80
@@ -412,9 +392,9 @@ cameras:
         record: preset-record-generic-audio-copy
     objects:
       track:
-            - person
-            - cat
-            - dog
+        - person
+        - cat
+        - dog
   front_gate:
     ffmpeg:
       inputs:
@@ -432,3 +412,4 @@ cameras:
     motion:
       mask:
         - 0,0,1600,0,1600,219,1068,332,700,298,504,231,0,161
+version: 0.15-0
