@@ -24,6 +24,9 @@ birdseye:
   #   motion - cameras are included if motion was detected in the last 30 seconds
   #   continuous - all cameras are included always
   mode: motion
+semantic_search:
+  enabled: True
+  model_size: large
 audio:
   # Optional: Enable audio events
   enabled: true
