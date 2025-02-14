@@ -4,7 +4,7 @@ services:
     container_name: frigate
     privileged: true
     restart: unless-stopped
-    image: ghcr.io/blakeblackshear/frigate:0.15.0-rc2
+    image: ghcr.io/blakeblackshear/frigate:0.15.0
     shm_size: "512mb"
     devices:
       - /dev/bus/usb:/dev/bus/usb
@@ -23,7 +23,7 @@ services:
     ports:
       - "5000:5000"
       - "1935:1935"
-      - "8554:8554"
+      - "8971:8971"
     environment:
       - FRIGATE_MQTT_USER
       - FRIGATE_MQTT_PASSWORD

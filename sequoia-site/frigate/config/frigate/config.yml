@@ -9,6 +9,13 @@ detectors:
   coral:
     type: edgetpu
     device: usb
+auth:
+  enabled: false
+  trusted_proxies:
+    - [100.69.226.0/24]
+proxy:
+  header_map:
+    user: x-authentik-username
 birdseye:
   # Optional: Enable birdseye view (default: shown below)
   enabled: true
