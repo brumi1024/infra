@@ -58,6 +58,7 @@ services:
       - PUID=1000
       - PGID=1001
       - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
     ports:
       - 8080:8080
       - 6881:6881
