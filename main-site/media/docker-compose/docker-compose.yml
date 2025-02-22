@@ -9,6 +9,12 @@ volumes:
       type: nfs
       o: addr=192.168.50.4,rw,vers=4.1
       device: ":/mnt/blackbox/media"
+  appdata:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.50.4,rw,vers=4.1
+      device: ":/mnt/blackbox/appdata"
 
 services:
   prowlarr:
@@ -19,7 +25,7 @@ services:
       - PGID=1001
       - TZ=Etc/UTC
     volumes:
-      - media/appdata/prowlarr:/config
+      - appdata:/config
     ports:
       - 9696:9696
     restart: unless-stopped
