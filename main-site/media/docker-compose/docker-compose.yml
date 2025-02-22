@@ -25,7 +25,7 @@ services:
       - PGID=1001
       - TZ=Etc/UTC
     volumes:
-      - appdata:/config
+      - appdata/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
