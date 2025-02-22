@@ -7,7 +7,7 @@ services:
       - PGID=1001
       - TZ=Etc/UTC
     volumes:
-      - /mnt/media/appdata/prowlarr:/config
+      - media/appdata/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -102,3 +102,10 @@ networks:
   default:
     external: true
     name: servarr
+volumes:
+  media:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.50.4,rw,vers=4.1
+      device: ":/mnt/blackbox/media"
