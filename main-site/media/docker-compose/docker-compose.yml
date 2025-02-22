@@ -25,11 +25,8 @@ services:
       - PGID=1001
       - TZ=Etc/UTC
     volumes:
-      - type: volume
-        source: appdata
-        target: /config
-        volume:
-          subpath: prowlarr
+      - /root/appdata/prowlarr:/config
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -37,11 +34,7 @@ services:
     image: lscr.io/linuxserver/overseerr:latest
     container_name: overseerr
     volumes:
-      - type: volume
-        source: appdata
-        target: /config
-        volume:
-          subpath: overseerr
+      - /root/appdata/overseerr:/config
       - /etc/localtime:/etc/localtime:ro
     environment:
       - PUID=1000
@@ -54,11 +47,7 @@ services:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
     volumes:
-      - type: volume
-        source: appdata
-        target: /config
-        volume:
-          subpath: qbittorrent
+      - /root/appdata/qbittorrent:/config
       - type: volume
         source: media
         target: /data/downloads
@@ -78,11 +67,7 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     volumes:
-      - type: volume
-        source: appdata
-        target: /config
-        volume:
-          subpath: radarr
+      - /root/appdata/radarr:/config
       - media:/data
       - /etc/localtime:/etc/localtime:ro
     environment:
@@ -95,11 +80,7 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     volumes:
-      - type: volume
-        source: appdata
-        target: /config
-        volume:
-          subpath: sonarr
+      - /root/appdata/sonarr:/config
       - media:/data
       - /etc/localtime:/etc/localtime:ro
     environment:
