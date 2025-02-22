@@ -37,7 +37,11 @@ services:
     image: lscr.io/linuxserver/overseerr:latest
     container_name: overseerr
     volumes:
-      - /mnt/media/appdata/overseerr:/config
+      - type: volume
+        source: appdata
+        target: /config
+        volume:
+          subpath: overseerr
       - /etc/localtime:/etc/localtime:ro
     environment:
       - PUID=1000
@@ -50,8 +54,16 @@ services:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
     volumes:
-      - /mnt/media/appdata/qbittorrent:/config
-      - /mnt/media/downloads:/data/downloads
+      - type: volume
+        source: appdata
+        target: /config
+        volume:
+          subpath: qbittorrent
+      - type: volume
+        source: media
+        target: /data/downloads
+        volume:
+          subpath: downloads
       - /etc/localtime:/etc/localtime:ro
     environment:
       - PUID=1000
@@ -66,8 +78,12 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     volumes:
-      - /mnt/media/appdata/radarr:/config
-      - /mnt/media/:/data
+      - type: volume
+        source: appdata
+        target: /config
+        volume:
+          subpath: radarr
+      - media:/data
       - /etc/localtime:/etc/localtime:ro
     environment:
       - PUID=1000
@@ -79,43 +95,16 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     volumes:
-      - /mnt/media/appdata/sonarr:/config
-      - /mnt/media/:/data
+      - type: volume
+        source: appdata
+        target: /config
+        volume:
+          subpath: sonarr
+      - media:/data
       - /etc/localtime:/etc/localtime:ro
     environment:
       - PUID=1000
       - PGID=1001
     ports:
       - 8989:8989
-    restart: unless-stopped
-  syncthing:
-    image: lscr.io/linuxserver/syncthing:latest
-    container_name: syncthing
-    hostname: susanoo
-    volumes:
-      - /mnt/media/appdata/syncthing:/config
-      - /mnt/media/movies:/data/movies
-      - /mnt/media/tv:/data/tv
-      - /etc/localtime:/etc/localtime:ro
-    environment:
-      - PUID=1000
-      - PGID=1001
-    ports:
-      - 8384:8384
-      - 22000:22000/tcp
-      - 22000:22000/udp
-      - 21027:21027/udp
-    restart: unless-stopped
-  tautulli:
-    image: lscr.io/linuxserver/tautulli
-    container_name: tautulli
-    volumes:
-      - /mnt/media/appdata/tautulli:/config
-      - /etc/localtime:/etc/localtime:ro
-    environment:
-      - PUID=1000
-      - PGID=1001
-      - TZ=Europe/Budapest
-    ports:
-      - 8181:8181
     restart: unless-stopped
