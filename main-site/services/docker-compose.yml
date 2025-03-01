@@ -26,7 +26,7 @@ services:
       - redisdata:/data
 
   db:
-    container_name: postgres
+    container_name: paperless-postgres
     image: docker.io/library/postgres:16
     restart: unless-stopped
     volumes:
