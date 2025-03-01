@@ -1,6 +1,5 @@
 networks:
   default:
-    external: true
     name: services
 volumes:
   media:
