@@ -1,0 +1,71 @@
+networks:
+  default:
+    external: true
+    name: services
+volumes:
+  media:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.50.4,rw,vers=4.1
+      device: ":/mnt/blackbox/media"
+  appdata:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.50.4,rw,vers=4.1
+      device: ":/mnt/blackbox/appdata"
+  pgdata:
+  redisdata:
+
+services:
+  broker:
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+
+  db:
+    image: docker.io/library/postgres:16
+    restart: unless-stopped
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: paperless
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+    ports:
+      - "8000:8000"
+    volumes:
+      - type: volume
+        source: appdata
+        target: /usr/src/paperless/data
+        volume:
+          subpath: paperless
+      - type: volume
+        source: media
+        target: /usr/src/paperless/media
+        volume:
+          subpath: documents/paperless/data
+      - type: volume
+        source: media
+        target: /usr/src/paperless/export
+        volume:
+          subpath: documents/paperless/export
+      - type: volume
+        source: media
+        target: /usr/src/paperless/consume
+        volume:
+          subpath: documents/paperless/consume
+
+    env_file: paperless.env
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBHOST: db
