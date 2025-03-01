@@ -90,3 +90,15 @@ services:
     ports:
       - 8989:8989
     restart: unless-stopped
+  tautulli:
+    image: ghcr.io/tautulli/tautulli
+    container_name: tautulli
+    restart: unless-stopped
+    volumes:
+      - /root/appdata/sonarr:/config
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - PUID=1000
+      - PGID=1001
+    ports:
+      - 8181:8181
