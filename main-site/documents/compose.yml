@@ -1,6 +1,6 @@
 networks:
   default:
-    name: services
+    name: documents
 volumes:
   media:
     driver: local
@@ -31,10 +31,7 @@ services:
     restart: unless-stopped
     volumes:
       - pgdata:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
+    env_file: paperless.env
 
   paperless-webserver:
     container_name: paperless-ngx
