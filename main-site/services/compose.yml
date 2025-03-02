@@ -31,7 +31,10 @@ services:
     restart: unless-stopped
     volumes:
       - pgdata:/var/lib/postgresql/data
-    env_file: postgres.env
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
 
   paperless-webserver:
     container_name: paperless-ngx
