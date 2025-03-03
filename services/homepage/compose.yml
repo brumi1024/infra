@@ -35,11 +35,7 @@ services:
       LOG_LEVEL: 'debug'
 
     volumes:
-      - type: volume
-        source: appdata
-        target: /app/config
-        volume:
-          subpath: homepage
+      - ${CONFIGDIR}:/app/config
 
     healthcheck:
       test: wget --spider http://${SERVER_URL}:${PORT_SOCKY_PROXY}/version || exit 1
