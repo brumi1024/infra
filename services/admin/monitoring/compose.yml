@@ -39,7 +39,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./config/prometheus.yaml:/etc/prometheus.yaml
+      - config/prometheus.yaml:/etc/prometheus.yaml
 
   loki:
     image: grafana/loki:${LOKI_TAG:-latest}
