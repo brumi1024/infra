@@ -1,0 +1,100 @@
+services:
+
+  grafana:
+    image: grafana/grafana:${GRAFANA_TAG:-latest}
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    networks:
+      - default
+    ports:
+      - ${GRAFANA_HTTP:-3000}:3000
+    volumes:
+      - ./config/grafana.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+    environment:
+      - GF_SERVER_ROOT_URL=https://grafana.${ADMIN_DOMAIN}
+      - GF_AUTH_SIGNOUT_REDIRECT_URL=https://auth.${DOMAIN}/application/o/grafana/end-session/
+      - GF_AUTH_OATH_AUTO_LOGIN=true
+      - GF_AUTH_GENERIC_OAUTH_NAME=authentik
+      - GF_AUTH_GENERIC_OAUTH_ENABLED=true
+      - GF_AUTH_GENERIC_OAUTH_CLIENT_ID=${GRAFANA_CLIENT_ID}
+      - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=${GRAFANA_CLIENT_SECRET}
+      - GF_AUTH_GENERIC_OAUTH_SCOPES=openid email profile
+      - GF_AUTH_GENERIC_OAUTH_AUTH_URL=https://auth.${DOMAIN}/application/o/authorize/
+      - GF_AUTH_GENERIC_OAUTH_TOKEN_URL=https://auth.${DOMAIN}/application/o/token/
+      - GF_AUTH_GENERIC_OAUTH_API_URL=https://auth.${DOMAIN}/application/o/userinfo/
+      - GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH=contains(groups, 'site-admins') && 'Admin' || 'Viewer'
+
+  prometheus:
+    image: prom/prometheus:${PROMETHEUS_TAG:-latest}
+    command:
+      - --config.file=/etc/prometheus.yaml
+      - --web.enable-remote-write-receiver
+      - --enable-feature=exemplar-storage
+      - --enable-feature=native-histograms
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    networks:
+      - default
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yaml:/etc/prometheus.yaml
+
+  loki:
+    image: grafana/loki:${LOKI_TAG:-latest}
+    command: -config.file=/etc/loki/local-config.yaml
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    networks:
+      - default
+    ports:
+      - "3100:3100"
+
+  # Tempo runs as user 10001, and docker compose creates the volume as root.
+  # As such, we need to chown the volume in order for Tempo to start correctly.
+  tempo-init:
+    image: &tempoImage grafana/tempo:${TEMPO_TAG:-latest}
+    user: root
+    entrypoint:
+      - "chown"
+      - "10001:10001"
+      - "/var/tempo"
+    volumes:
+      - tempo-data:/var/tempo
+
+  tempo:
+    image: *tempoImage
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    networks:
+      - default
+    ports:
+      - "4317:4317"
+      - "3200:3200"
+    volumes:
+      - ./config/tempo.yaml:/etc/tempo.yaml
+      - tempo-data:/var/tempo
+    depends_on:
+      - tempo-init
+      - memcached
+
+  memcached:
+    image: memcached:${MEMCACHED_TAG:-latest}
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    networks:
+      - default
+    ports:
+      - "11211:11211"
+    environment:
+      - MEMCACHED_MAX_MEMORY=64m  # Set the maximum memory usage
+      - MEMCACHED_THREADS=4       # Number of threads to use
+
+volumes:
+  tempo-data:
+
+networks:
+    default:
+      name: caddy-net
+      external: true

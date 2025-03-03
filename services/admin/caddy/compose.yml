@@ -12,7 +12,7 @@ services:
     container_name: caddy
     build:
       context: ./dockerfile
-      dockerfile: caddy.dockerfile #Custom build which uses duckdns. Control image version in this file
+      dockerfile: caddy.dockerfile # Custom build which uses cloudflare ddns
 
     ports:
       - ${PORT_CADDY_HTTP}:80
