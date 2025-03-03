@@ -28,7 +28,7 @@ services:
   prometheus:
     image: prom/prometheus:${PROMETHEUS_TAG:-latest}
     command:
-      - --config.file=/etc/prometheus.yaml
+      - --config.file=/etc/prometheus/prometheus.yaml
       - --web.enable-remote-write-receiver
       - --enable-feature=exemplar-storage
       - --enable-feature=native-histograms
@@ -39,7 +39,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./config/prometheus.yaml:/etc/prometheus.yaml
+      - ./config/:/etc/prometheus/
 
   loki:
     image: grafana/loki:${LOKI_TAG:-latest}
