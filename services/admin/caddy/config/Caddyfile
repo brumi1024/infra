@@ -189,7 +189,7 @@ frigate.seq.{$DOMAIN} {
 dash.{$DOMAIN} {
     import authenticate
     import cloudflare
-    reverse_proxy homepage:3000
+    reverse_proxy docker:3000
 }
 
 actual.{$DOMAIN} {
