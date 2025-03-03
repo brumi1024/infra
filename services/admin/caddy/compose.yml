@@ -22,9 +22,9 @@ services:
     environment:
       LOG_FILE: ${LOGDIR}/caddy/access.log
       DOMAIN: ${DOMAIN}
+      ADMIN_DOMAIN: ${ADMIN_DOMAIN}
       EMAIL: ${EMAIL_ADMIN}
-      DUCKDNS_API_TOKEN: ${DUCKDNS_TOKEN}
-      BOUNCER_CADDY_TOKEN: ${BOUNCER_CADDY_TOKEN}
+      CF_API_TOKEN: ${CF_API_TOKEN}
 
     volumes:
       - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile:ro # Required. Needs to be an extension-less file NOT a directory
