@@ -9,7 +9,7 @@ services:
     ports:
       - ${PORT_GRAFANA_HTTP:-3000}:3000
     volumes:
-      - ./config/:/etc/grafana/provisioning/datasources/
+      - ./config/grafana.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
     environment:
       - GF_SERVER_ROOT_URL=https://grafana.${ADMIN_DOMAIN}
       - GF_AUTH_SIGNOUT_REDIRECT_URL=https://auth.${DOMAIN}/application/o/grafana/end-session/
@@ -39,7 +39,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./config/:/etc/prometheus/
+      - ./config/prometheus.yaml:/etc/prometheus/prometheus.yaml
 
   loki:
     image: grafana/loki:${LOKI_TAG:-latest}
