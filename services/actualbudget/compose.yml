@@ -15,7 +15,7 @@ services:
     container_name: actual_server
     image: docker.io/actualbudget/actual-server:latest
     ports:
-      - ${PORT_ACTUAL}:5006
+      - ${PORT_ACTUAL_HTTP}:5006
     volumes:
       - type: volume
         source: appdata
