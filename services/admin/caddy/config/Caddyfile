@@ -70,4 +70,180 @@
 # Routing  #
 ############
 
-import *.caddy
+# Admin
+
+susanoo.{$ADMIN_DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy https://susanoo:8006 {
+        transport http {
+                tls
+                tls_insecure_skip_verify
+        }
+    }
+}
+
+eurus.{$ADMIN_DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy https://eurus:8006 {
+        transport http {
+                tls
+                tls_insecure_skip_verify
+        }
+    }
+}
+
+truenas.{$ADMIN_DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy truenas
+}
+
+grafana.{$ADMIN_DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy grafana:3000
+}
+
+komodo.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy docker:9120
+}
+
+# Auth
+
+auth.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy authentik:9000
+}
+
+# Home Assistant
+
+homeassistant.{$DOMAIN} {
+  import cloudflare
+  import headers
+  reverse_proxy homeassistant:8123
+}
+
+homeassistant.seq.{$DOMAIN} {
+  import cloudflare
+  import headers
+  reverse_proxy homeassistant-seq:8123
+}
+
+homeassistant.kalasz.{$DOMAIN} {
+  import cloudflare
+  import headers
+  reverse_proxy homeassistant-kalasz:8123
+}
+
+# Media Stack
+
+prowlarr.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy servarr:9696
+}
+
+sonarr.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy servarr:8989
+}
+
+radarr.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy servarr:7878
+}
+
+syncthing.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy syncthing:8384
+}
+
+overseerr.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy servarr:5055
+}
+
+tautulli.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy servarr:8181
+}
+
+qbittorrent.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy servarr:8080
+}
+
+plex.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy plex:32400
+}
+
+plex.seq.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy plex-seq:32400
+}
+
+tautulli.seq.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy tautulli-seq:8181
+}
+
+# Sequoia
+
+zephyrus.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy zephyrus:5000
+}
+
+frigate.seq.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy https://argestes:8971 {
+        transport http {
+                tls
+                tls_insecure_skip_verify
+        }
+    }
+}
+
+# Services
+
+dash.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy homepage:3000
+}
+
+actual.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy docker:5006
+}
+
+paperless.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy docker:8000
+}

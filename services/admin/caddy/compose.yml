@@ -27,7 +27,7 @@ services:
       CF_API_TOKEN: ${CF_API_TOKEN}
 
     volumes:
-      - ./config/caddy:/etc/caddy:ro # Required. 
+      - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile:ro # Required. 
       - ${CONFIGDIR}/caddy/data:/data # Optional, house for certs. Caddy adds its own /caddy/ directory
       - ${CONFIGDIR}/caddy/config:/config # Optional, JSON Config files. Caddy adds its own /caddy/ directory
       - ${STATICDIR}/tandoor_media:/www/tandoor:ro # recipe image files for Tandoor
