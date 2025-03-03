@@ -31,7 +31,10 @@ services:
     restart: unless-stopped
     volumes:
       - pgdata:/var/lib/postgresql/data
-    env_file: paperless.env
+    environment:
+      POSTGRES_DB: ${PAPERLESS_DB_NAME}
+      POSTGRES_USER: ${PAPERLESS_DB_USER}
+      POSTGRES_PASSWORD: ${PAPERLESS_DB_PASSWORD}
 
   paperless-webserver:
     container_name: paperless-ngx
@@ -63,27 +66,23 @@ services:
         target: /usr/src/paperless/consume
         volume:
           subpath: documents/paperless/consume
-    env_file: paperless.env
     environment:
+      PAPERLESS_TIME_ZONE: ${TZ}
+      PAPERLESS_OCR_LANGUAGE: 'eng'
+      PAPERLESS_OCR_LANGUAGES: 'hun'
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRETKEY}
+      PAPERLESS_DATE_ORDER: MDY
+
+      PAPERLESS_WEBSERVER_WORKERS: 2
+      PAPERLESS_CONSUMER_POLLING: 600
+
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
+      PAPERLESS_DBNAME: ${PAPERLESS_DB_NAME}
+      PAPERLESS_DBUSER: ${PAPERLESS_DB_USER}
+      PAPERLESS_DBPASS: ${PAPERLESS_DB_PASSWORD}
 
-  actual_server:
-    container_name: actual_server
-    image: docker.io/actualbudget/actual-server:latest
-    ports:
-      - '5006:5006'
-    volumes:
-      - type: volume
-        source: appdata
-        target: /data
-        volume:
-          subpath: actual
-    healthcheck:
-      # Enable health check for the instance
-      test: ['CMD-SHELL', 'node src/scripts/health-check.js']
-      interval: 60s
-      timeout: 10s
-      retries: 3
-      start_period: 20s
-    restart: unless-stopped
+      PAPERLESS_URL: ${PAPERLESS_URL}
+      PAPERLESS_ENABLE_ALLAUTH: true
+      PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
+      PAPERLESS_SOCIALACCOUNT_PROVIDERS: ${PAPERLESS_SOCIALACCOUNT_PROVIDERS}

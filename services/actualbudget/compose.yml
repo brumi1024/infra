@@ -9,7 +9,6 @@ volumes:
       o: addr=192.168.50.4,rw,vers=4.1
       device: ":/mnt/blackbox/appdata"
 
-
 services:
   actual_server:
     container_name: actual_server
