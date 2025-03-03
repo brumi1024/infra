@@ -36,11 +36,7 @@ services:
     image: docker.io/library/postgres:16
     restart: unless-stopped
     volumes:
-      - type: volume
-        source: appdata
-        target: /var/lib/postgresql/data
-        volume:
-          subpath: paperless/db
+      - pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${PAPERLESS_DB_NAME}
       POSTGRES_USER: ${PAPERLESS_DB_USER}
