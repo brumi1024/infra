@@ -40,5 +40,5 @@ services:
         target: /app/config
         volume:
           subpath: homepage
-          
+
     restart: unless-stopped
