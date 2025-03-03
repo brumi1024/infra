@@ -1,6 +1,7 @@
 networks:
   default:
     name: caddy-net
+    external: true
 volumes:
   appdata:
     driver: local
@@ -14,7 +15,7 @@ services:
     container_name: actual_server
     image: docker.io/actualbudget/actual-server:latest
     ports:
-      - '5006:5006'
+      - ${PORT_ACTUAL}:5006
     volumes:
       - type: volume
         source: appdata

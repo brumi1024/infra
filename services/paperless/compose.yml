@@ -1,6 +1,7 @@
 networks:
   default:
     name: caddy-net
+    external: true
 volumes:
   media:
     driver: local

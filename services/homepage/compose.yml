@@ -1,0 +1,56 @@
+name: "dashboard"
+
+networks:
+  socky_proxy-net:
+    name: socky_proxy-net
+    external: true
+volumes:
+  appdata:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.50.4,rw,vers=4.1
+      device: ":/mnt/blackbox/appdata"
+
+services:
+
+####################
+# Dashboard
+####################
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+
+    networks:
+      - socky_proxy-net
+
+    ports:
+      - ${PORT_DASH_HTTP}:3000
+
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      LOG_LEVEL: 'debug'
+
+    volumes:
+      - type: volume
+        source: appdata
+        target: /app/config
+        volume:
+          subpath: homepage
+
+    healthcheck:
+      test: wget --spider http://${SERVER_URL}:${PORT_SOCKY_PROXY}/version || exit 1
+      interval: "180s"
+      timeout: "5s"
+      retries: 3
+      start_period: "30s"
+
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 128M
+    restart: unless-stopped
