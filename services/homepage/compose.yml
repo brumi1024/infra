@@ -40,10 +40,5 @@ services:
         target: /app/config
         volume:
           subpath: homepage
-
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 128M
+          
     restart: unless-stopped
