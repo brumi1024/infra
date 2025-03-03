@@ -7,7 +7,7 @@ services:
     networks:
       - default
     ports:
-      - ${GRAFANA_HTTP:-3000}:3000
+      - ${PORT_GRAFANA_HTTP:-3000}:3000
     volumes:
       - ./config/grafana.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
     environment:
