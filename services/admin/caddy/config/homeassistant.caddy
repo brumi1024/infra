@@ -1,0 +1,17 @@
+homeassistant.{$DOMAIN} {
+  import cloudflare
+  import headers
+  reverse_proxy homeassistant:8123
+}
+
+homeassistant.seq.{$DOMAIN} {
+  import cloudflare
+  import headers
+  reverse_proxy homeassistant-seq:8123
+}
+
+homeassistant.kalasz.{$DOMAIN} {
+  import cloudflare
+  import headers
+  reverse_proxy homeassistant-kalasz:8123
+}

@@ -1,0 +1,37 @@
+networks:
+  default:
+    name: caddy-net
+
+services:
+####################
+# Reverse Proxy
+####################
+
+  caddy:
+    container_name: caddy
+    build:
+      context: ./dockerfile
+      dockerfile: caddy.dockerfile #Custom build which uses duckdns. Control image version in this file
+
+    ports:
+      - ${PORT_CADDY_HTTP}:80
+      - ${PORT_CADDY_HTTPS}:443
+      - ${PORT_CADDY_HTTPS}:443/udp
+      - ${PORT_CADDY_ADMIN}:2019
+
+    environment:
+      LOG_FILE: ${LOGDIR}/caddy/access.log
+      DOMAIN: ${DOMAIN}
+      EMAIL: ${EMAIL_ADMIN}
+      DUCKDNS_API_TOKEN: ${DUCKDNS_TOKEN}
+      BOUNCER_CADDY_TOKEN: ${BOUNCER_CADDY_TOKEN}
+
+    volumes:
+      - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile:ro # Required. Needs to be an extension-less file NOT a directory
+      - ${CONFIGDIR}/caddy/data:/data # Optional, house for certs. Caddy adds its own /caddy/ directory
+      - ${CONFIGDIR}/caddy/config:/config # Optional, JSON Config files. Caddy adds its own /caddy/ directory
+      - ${STATICDIR}/tandoor_media:/www/tandoor:ro # recipe image files for Tandoor
+
+    healthcheck:
+      test: ["CMD", "caddy", "version"]
+    restart: unless-stopped

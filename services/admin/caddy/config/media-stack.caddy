@@ -1,0 +1,64 @@
+prowlarr.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy servarr:9696
+}
+
+sonarr.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy servarr:8989
+}
+
+radarr.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy servarr:7878
+}
+
+syncthing.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy syncthing:8384
+}
+
+overseerr.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy servarr:5055
+}
+
+tautulli.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy servarr:8181
+}
+
+qbittorrent.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    import headers
+    reverse_proxy servarr:8080
+}
+
+plex.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy plex:32400
+}
+
+plex.seq.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy plex-seq:32400
+}
+
+tautulli.seq.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy tautulli-seq:8181
+}

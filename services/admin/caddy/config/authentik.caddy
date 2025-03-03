@@ -1,0 +1,5 @@
+auth.{$DOMAIN} {
+    import cloudflare
+    import headers
+    reverse_proxy authentik:9000
+}

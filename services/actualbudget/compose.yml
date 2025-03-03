@@ -1,6 +1,6 @@
 networks:
   default:
-    name: documents
+    name: caddy-net
 volumes:
   appdata:
     driver: local
