@@ -8,6 +8,7 @@ sources:
   container_logs:
     type: docker_logs
     include_containers:
+      - grafana
       - caddy
 
   vector_logs:
@@ -33,11 +34,3 @@ sinks:
     endpoint: ${LOKI_ENDPOINT}
     labels:
       logsource: docker
-
-  print:
-    type: console
-    inputs:
-      - vector_logs
-      - container_logs
-    encoding:
-      codec: json
