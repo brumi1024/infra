@@ -2,7 +2,6 @@
 
 A repo for collecting the deployed homelab services.
 
-
 ## Installation
 
 Create an env file based on the latest env.template, fill out the necessary information, and launch the services using docker compose:

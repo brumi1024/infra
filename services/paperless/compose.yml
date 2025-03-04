@@ -19,8 +19,8 @@ volumes:
   redisdata:
 
 services:
-  broker:
-    container_name: redis
+  paperless-broker:
+    container_name: paperless-redis
     image: docker.io/library/redis:7
     restart: unless-stopped
     volumes:
@@ -31,7 +31,7 @@ services:
       test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
       timeout: 45s
 
-  db:
+  paperless-db:
     container_name: paperless-postgres
     image: docker.io/library/postgres:16
     restart: unless-stopped
@@ -59,9 +59,9 @@ services:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     restart: unless-stopped
     depends_on:
-      db:
+      paperless-db:
         condition: service_healthy
-      broker:
+      paperless-broker:
         condition: service_healthy
     ports:
       - "8000:8000"
