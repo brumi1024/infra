@@ -37,7 +37,7 @@ sinks:
   print:
     type: console
     inputs:
-      - internal_logs
-      - docker_logs
+      - vector_logs
+      - container_logs
     encoding:
       codec: json
