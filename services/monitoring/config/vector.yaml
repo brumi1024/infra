@@ -6,8 +6,9 @@ api:
 # Ingest data by tailing one or more files
 sources:
   container_logs:
-    type: "docker_logs"
-    include_containers: ["caddy"]
+    type: docker_logs
+    include_containers:
+      - caddy
 
   vector_logs:
     type: internal_logs
