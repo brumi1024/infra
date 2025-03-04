@@ -5,6 +5,30 @@ api:
 
 # Ingest data by tailing one or more files
 sources:
-  docker_logs_source:
+  container_logs:
     type: "docker_logs"
     include_containers: ["caddy"]
+
+  vector_logs:
+    type: internal_logs
+
+sinks:
+  loki_vectorlogs:
+    type: loki
+    inputs:
+      - vector_logs
+    encoding:
+      codec: json
+    endpoint: 'http://loki:${PORT_LOKI_HTTP:-3100}'
+    labels:
+      logsource: vector
+
+  loki_dockersyslog:
+    type: loki
+    inputs:
+      - container_logs
+    encoding:
+      codec: json
+    endpoint: 'http://loki:${PORT_LOKI_HTTP:-3100}'
+    labels:
+      logsource: docker
