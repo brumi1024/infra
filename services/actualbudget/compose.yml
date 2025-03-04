@@ -1,14 +1,4 @@
-networks:
-  default:
-    name: caddy-net
-    external: true
-volumes:
-  appdata:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=192.168.50.4,rw,vers=4.1
-      device: ":/mnt/blackbox/appdata"
+name: "actualbudget"
 
 services:
   actual_server:
@@ -30,3 +20,15 @@ services:
       retries: 3
       start_period: 20s
     restart: unless-stopped
+
+networks:
+  default:
+    name: caddy-net
+    external: true
+volumes:
+  appdata:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.50.4,rw,vers=4.1
+      device: ":/mnt/blackbox/appdata"

@@ -1,22 +1,4 @@
-networks:
-  default:
-    name: caddy-net
-    external: true
-volumes:
-  media:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=192.168.50.4,rw,vers=4.1
-      device: ":/mnt/blackbox/media"
-  appdata:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=192.168.50.4,rw,vers=4.1
-      device: ":/mnt/blackbox/appdata"
-  pgdata:
-  redisdata:
+name: "paperless"
 
 services:
   paperless-broker:
@@ -111,3 +93,23 @@ services:
       interval: 360s
       timeout: 10s
       retries: 5
+
+networks:
+  default:
+    name: caddy-net
+    external: true
+volumes:
+  media:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.50.4,rw,vers=4.1
+      device: ":/mnt/blackbox/media"
+  appdata:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.50.4,rw,vers=4.1
+      device: ":/mnt/blackbox/appdata"
+  pgdata:
+  redisdata:

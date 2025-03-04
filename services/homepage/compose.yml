@@ -1,17 +1,4 @@
 name: "dashboard"
-
-networks:
-  socky_proxy-net:
-    name: socky_proxy-net
-    external: true
-volumes:
-  appdata:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=192.168.50.4,rw,vers=4.1
-      device: ":/mnt/blackbox/appdata"
-
 services:
 
 ####################
@@ -42,3 +29,15 @@ services:
           subpath: homepage
 
     restart: unless-stopped
+
+networks:
+  socky_proxy-net:
+    name: socky_proxy-net
+    external: true
+volumes:
+  appdata:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.50.4,rw,vers=4.1
+      device: ":/mnt/blackbox/appdata"

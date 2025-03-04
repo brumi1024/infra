@@ -1,7 +1,4 @@
-networks:
-  default:
-    name: caddy-net
-    external: true
+name: "reverse_proxy"
 
 services:
 ####################
@@ -35,3 +32,8 @@ services:
     healthcheck:
       test: ["CMD", "caddy", "version"]
     restart: unless-stopped
+
+networks:
+  default:
+    name: caddy-net
+    external: true

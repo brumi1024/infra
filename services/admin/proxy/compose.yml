@@ -1,7 +1,6 @@
-name: "infra"
+name: "proxy"
 
 services:
-
 ####################
 # Back End Services
 ####################

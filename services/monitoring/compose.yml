@@ -1,5 +1,6 @@
-services:
+name: "monitoring"
 
+services:
   grafana:
     image: grafana/grafana:${GRAFANA_TAG:-latest}
     logging:
@@ -92,10 +93,9 @@ services:
       - MEMCACHED_MAX_MEMORY=64m  # Set the maximum memory usage
       - MEMCACHED_THREADS=4       # Number of threads to use
 
-volumes:
-  tempo-data:
-
 networks:
     default:
       name: caddy-net
       external: true
+volumes:
+  tempo-data:
