@@ -19,7 +19,7 @@ sinks:
       - vector_logs
     encoding:
       codec: json
-    endpoint: 'http://loki:${PORT_LOKI_HTTP:-3100}'
+    endpoint: ${LOKI_ENDPOINT}
     labels:
       logsource: vector
 
@@ -29,6 +29,6 @@ sinks:
       - container_logs
     encoding:
       codec: json
-    endpoint: 'http://loki:${PORT_LOKI_HTTP:-3100}'
+    endpoint: ${LOKI_ENDPOINT}
     labels:
       logsource: docker
