@@ -87,12 +87,12 @@ services:
 
   vector:
     image: timberio/vector:${VECTOR_TAG:-latest-debian}
-    command: --config /config/config.toml --config /parsers/*.toml
+    command: --config /config/vector.yaml --config /parsers/*.toml
     logging:
       driver: ${LOGGING_DRIVER:-local}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${REPODIR}/services/monitoring/config/config.toml:/config/config.toml
+      - ${REPODIR}/services/monitoring/config/vector.yaml:/config/vector.yaml
       - ${REPODIR}/services/monitoring/config/parsers:/parsers
     environment:
       LOKI_ENDPOINT: http://loki:${PORT_LOKI_HTTP:-3100}

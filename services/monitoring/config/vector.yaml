@@ -1,0 +1,9 @@
+data_dir: "/var/lib/vector"
+
+api:
+  enabled: false
+
+# Ingest data by tailing one or more files
+sources:
+  docker_logs_source:
+    type: "docker_logs"
