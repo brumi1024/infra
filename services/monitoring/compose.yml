@@ -9,7 +9,7 @@ services:
     ports:
       - ${PORT_GRAFANA_HTTP:-3000}:3000
     volumes:
-      - ./config/grafana.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - ${REPODIR}/services/monitoring/config/grafana.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
     environment:
       - GF_SERVER_ROOT_URL=https://grafana.${ADMIN_DOMAIN}
       - GF_AUTH_SIGNOUT_REDIRECT_URL=https://auth.${DOMAIN}/application/o/grafana/end-session/
@@ -39,7 +39,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./config/prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - ${REPODIR}/services/monitoring/config/prometheus.yaml:/etc/prometheus/prometheus.yaml
 
   loki:
     image: grafana/loki:${LOKI_TAG:-latest}
@@ -74,7 +74,7 @@ services:
       - "4317:4317"
       - "3200:3200"
     volumes:
-      - ./config/tempo.yaml:/etc/tempo.yaml
+      - ${REPODIR}/services/monitoring/config/tempo.yaml:/etc/tempo.yaml
       - tempo-data:/var/tempo
     depends_on:
       - tempo-init

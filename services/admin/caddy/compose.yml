@@ -11,7 +11,7 @@ services:
   caddy:
     container_name: caddy
     build:
-      context: ./dockerfile
+      context: ${REPODIR}/services/admin/caddy/dockerfile
       dockerfile: caddy.dockerfile # Custom build which uses cloudflare ddns
 
     ports:
@@ -28,7 +28,7 @@ services:
       CF_API_TOKEN: ${CF_API_TOKEN}
 
     volumes:
-      - ./config/Caddyfile:/etc/caddy/Caddyfile:ro # Required.
+      - ${REPODIR}/services/admin/config/Caddyfile:/etc/caddy/Caddyfile:ro # Required.
       - ${CONFIGDIR}/caddy/data:/data # Optional, house for certs. Caddy adds its own /caddy/ directory
       - ${CONFIGDIR}/caddy/config:/config # Optional, JSON Config files. Caddy adds its own /caddy/ directory
 

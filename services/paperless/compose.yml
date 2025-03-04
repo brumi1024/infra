@@ -70,7 +70,7 @@ services:
         source: appdata
         target: /usr/src/paperless/data
         volume:
-          subpath: paperless/webserver
+          subpath: paperless
       - type: volume
         source: media
         target: /usr/src/paperless/media
