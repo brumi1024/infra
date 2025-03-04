@@ -24,7 +24,7 @@ sinks:
     labels:
       logsource: vector
 
-  loki_dockersyslog:
+  loki_container_log:
     type: loki
     inputs:
       - container_logs
@@ -33,3 +33,11 @@ sinks:
     endpoint: ${LOKI_ENDPOINT}
     labels:
       logsource: docker
+
+  print:
+    type: console
+    inputs:
+      - internal_logs
+      - docker_logs
+    encoding:
+      codec: json
