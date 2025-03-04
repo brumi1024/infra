@@ -17,9 +17,6 @@ services:
       - ${PORT_CADDY_HTTPS}:443/udp
       - ${PORT_CADDY_ADMIN}:2019
 
-    labels:
-      - vector.parser=json
-
     environment:
       LOG_FILE: ${LOGDIR}/caddy/access.log
       DOMAIN: ${DOMAIN}

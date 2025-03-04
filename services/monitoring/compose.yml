@@ -85,18 +85,6 @@ services:
       - MEMCACHED_MAX_MEMORY=64m  # Set the maximum memory usage
       - MEMCACHED_THREADS=4       # Number of threads to use
 
-  vector:
-    image: timberio/vector:${VECTOR_TAG:-latest-debian}
-    command: --config /config/vector.yaml --config /parsers/*.toml
-    logging:
-      driver: ${LOGGING_DRIVER:-local}
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ${REPODIR}/services/monitoring/config/vector.yaml:/config/vector.yaml
-      - ${REPODIR}/services/monitoring/config/parsers:/parsers
-    environment:
-      LOKI_ENDPOINT: http://loki:${PORT_LOKI_HTTP:-3100}
-
 networks:
     default:
       name: caddy-net
