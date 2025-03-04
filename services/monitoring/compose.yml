@@ -5,8 +5,6 @@ services:
     image: grafana/grafana:${GRAFANA_TAG:-latest}
     logging:
       driver: ${LOGGING_DRIVER:-local}
-    networks:
-      - default
     ports:
       - ${PORT_GRAFANA_HTTP:-3000}:3000
     volumes:
@@ -47,8 +45,6 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     logging:
       driver: ${LOGGING_DRIVER:-local}
-    networks:
-      - default
     ports:
       - "3100:3100"
 
@@ -69,8 +65,6 @@ services:
     command: [ "-config.file=/etc/tempo.yaml" ]
     logging:
       driver: ${LOGGING_DRIVER:-local}
-    networks:
-      - default
     ports:
       - "4317:4317"
       - "3200:3200"
@@ -85,8 +79,6 @@ services:
     image: memcached:${MEMCACHED_TAG:-latest}
     logging:
       driver: ${LOGGING_DRIVER:-local}
-    networks:
-      - default
     ports:
       - "11211:11211"
     environment:
