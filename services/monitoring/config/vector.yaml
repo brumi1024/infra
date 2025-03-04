@@ -7,5 +7,4 @@ api:
 sources:
   docker_logs_source:
     type: "docker_logs"
-    exclude_containers:
-      - "vector"
+    include_containers: ["caddy"]
