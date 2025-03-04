@@ -1,0 +1,33 @@
+[sources.rust_logs]
+type = "docker_logs"
+include_labels = ["vector.parser=rust"]
+
+[transforms.rust_output]
+type = "remap"
+inputs = ["rust_logs"]
+drop_on_abort = false
+source = """
+del(.container_id)
+del(.label)
+del(.source_type)
+
+.message = strip_ansi_escape_codes!(.message)
+split_msg = split(.message, r'[ \t]+', limit: 3)
+
+.timestamp = split_msg[0]
+.level = split_msg[1]
+.message = split_msg[2]
+"""
+
+[sinks.rust_loki]
+type = "loki"
+inputs = ["rust_output"]
+endpoint = "${LOKI_ENDPOINT:?must set LOKI_ENDPOINT in env}"
+encoding.codec = "json"
+
+[sinks.rust_loki.labels]
+source = "rust"
+container = "{{ .container_name }}"
+image = "{{ .image }}"
+stream = "{{ .stream }}"
+level = "{{ .level }}"

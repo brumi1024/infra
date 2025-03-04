@@ -36,7 +36,7 @@ services:
     networks:
       - default
     ports:
-      - "9090:9090"
+      - "${PORT_PROMETHEUS_HTTP:-9090}:9090"
     volumes:
       - ${REPODIR}/services/monitoring/config/prometheus.yaml:/etc/prometheus/prometheus.yaml
 
@@ -46,7 +46,7 @@ services:
     logging:
       driver: ${LOGGING_DRIVER:-local}
     ports:
-      - "3100:3100"
+      - "${PORT_LOKI_HTTP:-3100}:3100"
 
   # Tempo runs as user 10001, and docker compose creates the volume as root.
   # As such, we need to chown the volume in order for Tempo to start correctly.
@@ -67,7 +67,7 @@ services:
       driver: ${LOGGING_DRIVER:-local}
     ports:
       - "4317:4317"
-      - "3200:3200"
+      - "{PORT_TEMPO_HTTP:-3200}:3200"
     volumes:
       - ${REPODIR}/services/monitoring/config/tempo.yaml:/etc/tempo.yaml
       - tempo-data:/var/tempo
@@ -84,6 +84,19 @@ services:
     environment:
       - MEMCACHED_MAX_MEMORY=64m  # Set the maximum memory usage
       - MEMCACHED_THREADS=4       # Number of threads to use
+
+  vector:
+    image: timberio/vector:${VECTOR_TAG:-latest-debian}
+    command: --config /config/config.toml --config /parsers/*.toml
+    network_mode: ${NETWORK_MODE:-bridge}
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${REPODIR}/services/monitoring/config/config.toml:/config/config.toml
+      - ${REPODIR}/services/monitoring/config/parsers:/parsers
+    environment:
+      LOKI_ENDPOINT: http://loki:${PORT_LOKI_HTTP:-3100}
 
 networks:
     default:

@@ -46,7 +46,7 @@ services:
       paperless-broker:
         condition: service_healthy
     ports:
-      - "8000:8000"
+      - "${PORT_PAPERLESS_HTTP:-8000}:8000"
     volumes:
       - type: volume
         source: appdata
@@ -103,13 +103,13 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.50.4,rw,vers=4.1
+      o: addr=${NAS_IP},rw,vers=4.1
       device: ":/mnt/blackbox/media"
   appdata:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.50.4,rw,vers=4.1
+      o: addr=${NAS_IP},rw,vers=4.1
       device: ":/mnt/blackbox/appdata"
   pgdata:
   redisdata:

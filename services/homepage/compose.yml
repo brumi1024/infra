@@ -6,7 +6,7 @@ services:
 ####################
 
   homepage:
-    image: ghcr.io/gethomepage/homepage:latest
+    image: ghcr.io/gethomepage/homepage:${HOMEPAGE_TAG:-latest}
     container_name: homepage
 
     networks:
@@ -39,5 +39,5 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.50.4,rw,vers=4.1
+      o: addr=${NAS_IP},rw,vers=4.1
       device: ":/mnt/blackbox/appdata"

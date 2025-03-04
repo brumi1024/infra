@@ -3,7 +3,7 @@ name: "actualbudget"
 services:
   actual_server:
     container_name: actual_server
-    image: docker.io/actualbudget/actual-server:latest
+    image: docker.io/actualbudget/actual-server:${ACTUALBUDGET_TAG:-latest}
     ports:
       - ${PORT_ACTUAL_HTTP}:5006
     volumes:
@@ -30,5 +30,5 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.50.4,rw,vers=4.1
+      o: addr=${NAS_IP},rw,vers=4.1
       device: ":/mnt/blackbox/appdata"

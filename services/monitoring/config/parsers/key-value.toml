@@ -1,0 +1,31 @@
+[sources.key_value_logs]
+type = "docker_logs"
+include_labels = ["vector.parser=key-value"]
+
+[transforms.key_value_output]
+type = "remap"
+inputs = ["key_value_logs"]
+drop_on_abort = false
+source = """
+del(.container_id)
+del(.label)
+del(.source_type)
+
+.message = parse_key_value!(.message)
+
+.level = upcase!(.message.level)
+del(.message.level)
+"""
+
+[sinks.key_value_loki]
+type = "loki"
+inputs = ["key_value_output"]
+endpoint = "${LOKI_ENDPOINT:?must set LOKI_ENDPOINT in env}"
+encoding.codec = "json"
+
+[sinks.key_value_loki.labels]
+source = "key_value"
+container = "{{ .container_name }}"
+image = "{{ .image }}"
+stream = "{{ .stream }}"
+level = "{{ .level }}"

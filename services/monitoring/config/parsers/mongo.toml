@@ -1,0 +1,46 @@
+[sources.mongo_logs]
+type = "docker_logs"
+include_labels = ["vector.parser=mongo"]
+
+[transforms.mongo_output]
+type = "remap"
+inputs = ["mongo_logs"]
+drop_on_abort = false
+source = """
+del(.container_id)
+del(.label)
+del(.source_type)
+
+.message = parse_json!(.message)
+
+.component = .message.c
+del(.message.c)
+
+if .message.s == "I" {
+	.level = "INFO"
+} else if .message.s == "W" {
+	.level = "WARN"
+} else if .message.s == "E" {
+	.level = "ERROR"
+} else if .message.s == "F" {
+	.level = "FATAL"
+} else {
+	.level = "DEBUG"
+}
+
+del(.message.s)
+"""
+
+[sinks.mongo_loki]
+type = "loki"
+inputs = ["mongo_output"]
+endpoint = "${LOKI_ENDPOINT:?must set LOKI_ENDPOINT in env}"
+encoding.codec = "json"
+
+[sinks.mongo_loki.labels]
+source = "mongo"
+container = "{{ .container_name }}"
+image = "{{ .image }}"
+stream = "{{ .stream }}"
+level = "{{ .level }}"
+component = "{{ .component }}"
