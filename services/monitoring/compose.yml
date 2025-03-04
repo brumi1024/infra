@@ -88,7 +88,6 @@ services:
   vector:
     image: timberio/vector:${VECTOR_TAG:-latest-debian}
     command: --config /config/config.toml --config /parsers/*.toml
-    network_mode: ${NETWORK_MODE:-bridge}
     logging:
       driver: ${LOGGING_DRIVER:-local}
     volumes:
