@@ -7,9 +7,8 @@ api:
 sources:
   container_logs:
     type: docker_logs
-    include_containers:
-      - grafana
-      - caddy
+    include_labels:
+      - vector.log.category
 
   vector_logs:
     type: internal_logs
