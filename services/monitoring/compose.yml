@@ -67,7 +67,7 @@ services:
       driver: ${LOGGING_DRIVER:-local}
     ports:
       - "4317:4317"
-      - "{PORT_TEMPO_HTTP:-3200}:3200"
+      - "${PORT_TEMPO_HTTP:-3200}:3200"
     volumes:
       - ${REPODIR}/services/monitoring/config/tempo.yaml:/etc/tempo.yaml
       - tempo-data:/var/tempo
