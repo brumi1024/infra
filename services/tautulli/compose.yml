@@ -25,6 +25,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - $HOST_NAME=${HOSTNAME}
     ports:
       - ${PORT_TAUTULLI_HTTP}:8181
     restart: unless-stopped
