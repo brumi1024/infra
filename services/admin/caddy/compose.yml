@@ -29,6 +29,7 @@ services:
       - homepage.widget.type=caddy
       - homepage.widget.url=http://${HOST_NAME}:${PORT_CADDY_ADMIN}
     environment:
+      TZ: ${TZ}
       LOG_FILE: ${LOGDIR}/caddy/access.log
       DOMAIN: ${DOMAIN}
       ADMIN_DOMAIN: ${ADMIN_DOMAIN}

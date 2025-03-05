@@ -14,6 +14,8 @@ services:
         target: /data
         volume:
           subpath: actual
+    environment:
+      - TZ=${TZ}
     labels:
       - homepage.group=Personal Apps
       - homepage.name=Actual Budget

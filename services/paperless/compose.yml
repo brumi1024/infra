@@ -29,7 +29,7 @@ services:
       POSTGRES_PASSWORD: ${PAPERLESS_DB_PASSWORD}
     healthcheck:
       interval: 30s
-      retries: 10
+      retries: 5
       test:
         - CMD
         - pg_isready

@@ -15,6 +15,7 @@ services:
       - homepage.icon=grafana.svg
       - homepage.href=https://grafana.${ADMIN_DOMAIN}
     environment:
+      - TZ=${TZ}
       - GF_SERVER_ROOT_URL=https://grafana.${ADMIN_DOMAIN}
       - GF_AUTH_SIGNOUT_REDIRECT_URL=https://auth.${DOMAIN}/application/o/grafana/end-session/
       - GF_AUTH_OATH_AUTO_LOGIN=true
@@ -44,6 +45,8 @@ services:
       - "${PORT_PROMETHEUS_HTTP:-9090}:9090"
     volumes:
       - ${REPODIR}/services/monitoring/config/prometheus.yaml:/etc/prometheus/prometheus.yaml
+    environment:
+      - TZ=${TZ}
 
   loki:
     image: grafana/loki:${LOKI_TAG:-latest}
@@ -74,6 +77,8 @@ services:
     volumes:
       - ${REPODIR}/services/monitoring/config/tempo.yaml:/etc/tempo.yaml
       - tempo-data:/var/tempo
+    environment:
+      - TZ=${TZ}
     depends_on:
       - tempo-init
       - memcached
@@ -85,6 +90,7 @@ services:
     ports:
       - "11211:11211"
     environment:
+      - TZ=${TZ}
       - MEMCACHED_MAX_MEMORY=64m  # Set the maximum memory usage
       - MEMCACHED_THREADS=4       # Number of threads to use
 
@@ -105,6 +111,8 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /:/rootfs:ro
+    environment:
+      - TZ=${TZ}
     expose:
       - "${PORT_NODEEXPORTER_HTTP:-9100}:9100"
     labels:
@@ -127,6 +135,8 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker:/var/lib/docker:ro
       - /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
+    environment:
+      - TZ=${TZ}
     expose:
       - "${PORT_CADVISOR_HTTP:-3003}:3000"
     labels:
