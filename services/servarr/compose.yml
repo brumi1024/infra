@@ -10,6 +10,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - $HOST_NAME=${HOSTNAME}
     volumes:
       - ${CONFIGDIR}/prowlarr:/config
       - /etc/localtime:/etc/localtime:ro
@@ -20,7 +21,7 @@ services:
       - homepage.href=https://prowlarr.${DOMAIN}
       - homepage.description=Indexer
       - homepage.widget.type=prowlarr
-      - homepage.widget.url=http://${HOSTNAME}:${PORT_PROWLARR_HTTP}
+      - homepage.widget.url=http://${HOST_NAME}:${PORT_PROWLARR_HTTP}
       - homepage.widget.key=${PROWLARR_API_AUTH_TOKEN}
     ports:
       - ${PORT_PROWLARR_HTTP}:9696
@@ -40,12 +41,13 @@ services:
       - homepage.href=https://overseerr.${DOMAIN}
       - homepage.description=Request Management
       - homepage.widget.type=overseerr
-      - homepage.widget.url=http://${HOSTNAME}:${PORT_OVERSEERR_HTTP}
+      - homepage.widget.url=http://${HOST_NAME}:${PORT_OVERSEERR_HTTP}
       - homepage.widget.key=${PLEX_AUTH_TOKEN}
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - $HOST_NAME=${HOSTNAME}
     ports:
       - ${PORT_OVERSEERR_HTTP}:5055
     restart: unless-stopped
@@ -68,7 +70,7 @@ services:
       - homepage.icon=qbittorrent.svg
       - homepage.href=https://qbittorrent.${DOMAIN}
       - homepage.widget.type=qbittorrent
-      - homepage.widget.url=http://${HOSTNAME}:${PORT_QBITTORRENT_HTTP}
+      - homepage.widget.url=http://${HOST_NAME}:${PORT_QBITTORRENT_HTTP}
       - homepage.widget.enableLeechProgress=true
     environment:
       - PUID=${PUID}
@@ -76,6 +78,7 @@ services:
       - TZ=${TZ}
       - WEBUI_PORT=${PORT_QBITTORRENT_HTTP}
       - TORRENTING_PORT=${PORT_QBITTORRENT_TORRENTING}
+      - $HOST_NAME=${HOSTNAME}
     ports:
       - ${PORT_QBITTORRENT_HTTP}:8080
       - ${PORT_QBITTORRENT_TORRENTING}:6881
@@ -97,12 +100,13 @@ services:
       - homepage.href=https://radarr.${DOMAIN}
       - homepage.description=Movie Requests
       - homepage.widget.type=radarr
-      - homepage.widget.url=http://${HOSTNAME}:${PORT_RADARR_HTTP}
+      - homepage.widget.url=http://${HOST_NAME}:${PORT_RADARR_HTTP}
       - homepage.widget.key=${RADARR_API_AUTH_TOKEN}
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - $HOST_NAME=${HOSTNAME}
     ports:
       - ${PORT_RADARR_HTTP}:7878
     restart: unless-stopped
