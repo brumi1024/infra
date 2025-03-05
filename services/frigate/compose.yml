@@ -5,7 +5,7 @@ services:
     container_name: frigate
     privileged: true
     restart: unless-stopped
-    image: ghcr.io/blakeblackshear/frigate:${FRIGATE_TAG:-0.15.0}
+    image: ghcr.io/blakeblackshear/frigate:${FRIGATE_TAG:-stable}
     shm_size: "512mb"
     devices:
       - /dev/bus/usb:/dev/bus/usb
