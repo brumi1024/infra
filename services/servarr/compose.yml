@@ -122,12 +122,13 @@ services:
       - homepage.href=https://sonarr.${DOMAIN}
       - homepage.description=TV Show Requests
       - homepage.widget.type=sonarr
-      - homepage.widget.url=http://${HOSTNAME}:${PORT_SONARR_HTTP}
+      - homepage.widget.url=http://${HOST_NAME}:${PORT_SONARR_HTTP}
       - homepage.widget.key=${SONARR_API_AUTH_TOKEN}
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - $HOST_NAME=${HOSTNAME}
     ports:
       - ${PORT_SONARR_HTTP}:8989
     restart: unless-stopped
