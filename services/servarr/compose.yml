@@ -1,53 +1,37 @@
-networks:
-  default:
-    external: true
-    name: servarr
-volumes:
-  media:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=192.168.50.4,rw,vers=4.1
-      device: ":/mnt/blackbox/media"
-  appdata:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=192.168.50.4,rw,vers=4.1
-      device: ":/mnt/blackbox/appdata"
+name: "servarr"
 
 services:
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
+    image: lscr.io/linuxserver/prowlarr:${PROWLARR_TAG:-latest}
     container_name: prowlarr
     environment:
-      - PUID=1000
-      - PGID=1001
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /root/appdata/prowlarr:/config
+      - ${CONFIGDIR}/prowlarr:/config
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - 9696:9696
+      - ${PORT_PROWLARR_HTTP}:9696
     restart: unless-stopped
   overseerr:
-    image: lscr.io/linuxserver/overseerr:latest
+    image: lscr.io/linuxserver/overseerr:${OVERSEERR_TAG:-latest}
     container_name: overseerr
     volumes:
-      - /root/appdata/overseerr:/config
+      - ${CONFIGDIR}/overseerr:/config
       - /etc/localtime:/etc/localtime:ro
     environment:
-      - PUID=1000
-      - PGID=1001
-      - TZ=Europe/Budapest
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     ports:
-      - 5055:5055
+      - ${PORT_OVERSEERR_HTTP}:5055
     restart: unless-stopped
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
+    image: lscr.io/linuxserver/qbittorrent:${QBITTORRENT_TAG:-latest}
     container_name: qbittorrent
     volumes:
-      - /root/appdata/qbittorrent:/config
+      - ${CONFIGDIR}/qbittorrent:/config
       - type: volume
         source: media
         target: /data/downloads
@@ -55,50 +39,53 @@ services:
           subpath: downloads
       - /etc/localtime:/etc/localtime:ro
     environment:
-      - PUID=1000
-      - PGID=1001
-      - WEBUI_PORT=8080
-      - TORRENTING_PORT=6881
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=${PORT_QBITTORRENT_HTTP}
+      - TORRENTING_PORT=${PORT_QBITTORRENT_TORRENTING}
     ports:
-      - 8080:8080
-      - 6881:6881
-      - 6881:6881/udp
+      - ${PORT_QBITTORRENT_HTTP}:8080
+      - ${PORT_QBITTORRENT_TORRENTING}:6881
+      - ${PORT_QBITTORRENT_TORRENTING}:6881/udp
     restart: unless-stopped
   radarr:
-    image: lscr.io/linuxserver/radarr:latest
+    image: lscr.io/linuxserver/radarr:${RADARR_TAG:-latest}
     container_name: radarr
     volumes:
-      - /root/appdata/radarr:/config
+      - ${CONFIGDIR}/radarr:/config
       - media:/data
       - /etc/localtime:/etc/localtime:ro
     environment:
-      - PUID=1000
-      - PGID=1001
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     ports:
-      - 7878:7878
+      - ${PORT_RADARR_HTTP}:7878
     restart: unless-stopped
   sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
+    image: lscr.io/linuxserver/sonarr:${SONARR_TAG:-latest}
     container_name: sonarr
     volumes:
-      - /root/appdata/sonarr:/config
+      - ${CONFIGDIR}/sonarr:/config
       - media:/data
       - /etc/localtime:/etc/localtime:ro
     environment:
-      - PUID=1000
-      - PGID=1001
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     ports:
-      - 8989:8989
+      - ${PORT_SONARR_HTTP}:8989
     restart: unless-stopped
-  tautulli:
-    image: ghcr.io/tautulli/tautulli
-    container_name: tautulli
-    restart: unless-stopped
-    volumes:
-      - /root/appdata/sonarr:/config
-      - /etc/localtime:/etc/localtime:ro
-    environment:
-      - PUID=1000
-      - PGID=1001
-    ports:
-      - 8181:8181
+
+networks:
+  default:
+    name: caddy-net
+    external: true
+volumes:
+  media:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${NAS_IP},rw,vers=4.1
+      device: ":/mnt/blackbox/media"

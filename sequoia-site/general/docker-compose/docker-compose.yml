@@ -13,9 +13,9 @@ services:
     image: lscr.io/linuxserver/tautulli
     container_name: tautulli
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Budapest
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
       - /root/appdata/tautulli:/config
     ports:

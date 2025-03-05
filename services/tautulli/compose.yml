@@ -1,0 +1,20 @@
+name: "tautulli"
+services:
+  tautulli:
+    image: ghcr.io/tautulli/tautulli
+    container_name: tautulli
+    volumes:
+      - ${CONFIGDIR}/tautulli:/config
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - ${PORT_TAUTULLI_HTTP}:8181
+    restart: unless-stopped
+
+networks:
+  socky_proxy-net:
+    name: socky_proxy-net
+    external: true
