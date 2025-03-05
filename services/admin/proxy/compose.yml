@@ -19,7 +19,7 @@ services:
       - POST=0 # Disallow any POST operations (effectively read-only)
     labels:
       - homepage.group=Administration
-      - homepage.name=Docker Socket Proxy
+      - homepage.name=${HOST_NAME} Docker Socket Proxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     healthcheck:
