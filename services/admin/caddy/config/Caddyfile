@@ -28,6 +28,12 @@
   encode zstd gzip
 }
 
+(log_common) {
+  log {
+    output file /var/log/caddy/caddy_access.log
+  }
+}
+
 (authenticate) {
       # always forward outpost path to actual outpost
       reverse_proxy /outpost.goauthentik.io/* http://authentik:9000
@@ -52,6 +58,7 @@
 
 susanoo.{$ADMIN_DOMAIN} {
     import cloudflare
+    import log_common
     reverse_proxy https://susanoo:8006 {
         transport http {
                 tls
