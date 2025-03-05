@@ -122,7 +122,7 @@ services:
       - homepage.href=https://sonarr.${DOMAIN}
       - homepage.description=TV Show Requests
       - homepage.widget.type=sonarr
-      - homepage.widget.url=http://sonarr:${PORT_SONARR_HTTP}
+      - homepage.widget.url=http://${SERVER_URL}:${PORT_SONARR_HTTP}
       - homepage.widget.key=${SONARR_API_AUTH_TOKEN}
     environment:
       - PUID=${PUID}
