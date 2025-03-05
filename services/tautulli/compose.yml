@@ -1,4 +1,5 @@
 name: "tautulli"
+
 services:
   tautulli:
     image: ghcr.io/tautulli/tautulli
