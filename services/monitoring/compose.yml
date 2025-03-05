@@ -9,6 +9,7 @@ services:
       - ${PORT_GRAFANA_HTTP:-3000}:3000
     volumes:
       - ${REPODIR}/services/monitoring/config/grafana.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - grafana-storage:/var/lib/grafana
     labels:
       - homepage.group=Monitoring
       - homepage.name=Grafana
@@ -148,4 +149,5 @@ networks:
       name: caddy-net
       external: true
 volumes:
+  grafana-storage:
   tempo-data:
