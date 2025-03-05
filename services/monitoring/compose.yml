@@ -121,7 +121,7 @@ services:
 
   # DOCKER CONTAINERS METRICS EXPORTER
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.47.2
+    image: gcr.io/cadvisor/cadvisor:latest
     logging:
       driver: ${LOGGING_DRIVER:-local}
     container_name: cadvisor
