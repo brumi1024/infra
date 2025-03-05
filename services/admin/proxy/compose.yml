@@ -4,8 +4,6 @@ services:
   socky_proxy:
     container_name: socky_proxy
     image: ghcr.io/tecnativa/docker-socket-proxy:latest # A security-enhanced proxy for the Docker Socket.
-    logging:
-      driver: ${LOGGING_DRIVER:-local}
     privileged: true
     networks:
       - socky_proxy-net
@@ -15,6 +13,7 @@ services:
       # Variables match the URL prefix (i.e. AUTH blocks access to /auth/* parts of the API, etc).
       #   0 - revoke access
       #   1 - grant access
+      - TZ=${TZ}
       - CONTAINERS=1 # Allow access to viewing containers
       - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
       - TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
