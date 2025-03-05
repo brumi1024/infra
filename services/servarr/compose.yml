@@ -3,6 +3,8 @@ name: "servarr"
 services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:${PROWLARR_TAG:-latest}
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
     container_name: prowlarr
     environment:
       - PUID=${PUID}
@@ -25,6 +27,8 @@ services:
     restart: unless-stopped
   overseerr:
     image: lscr.io/linuxserver/overseerr:${OVERSEERR_TAG:-latest}
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
     container_name: overseerr
     volumes:
       - ${CONFIGDIR}/overseerr:/config
@@ -47,6 +51,8 @@ services:
     restart: unless-stopped
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:${QBITTORRENT_TAG:-latest}
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
     container_name: qbittorrent
     volumes:
       - ${CONFIGDIR}/qbittorrent:/config
@@ -77,6 +83,8 @@ services:
     restart: unless-stopped
   radarr:
     image: lscr.io/linuxserver/radarr:${RADARR_TAG:-latest}
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
     container_name: radarr
     volumes:
       - ${CONFIGDIR}/radarr:/config
@@ -100,6 +108,8 @@ services:
     restart: unless-stopped
   sonarr:
     image: lscr.io/linuxserver/sonarr:${SONARR_TAG:-latest}
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
     container_name: sonarr
     volumes:
       - ${CONFIGDIR}/sonarr:/config

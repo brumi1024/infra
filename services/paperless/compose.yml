@@ -39,6 +39,8 @@ services:
   paperless-webserver:
     container_name: paperless-ngx
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
     restart: unless-stopped
     depends_on:
       paperless-db:

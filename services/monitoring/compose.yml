@@ -93,6 +93,8 @@ services:
     # HOST LINUX MACHINE METRICS EXPORTER
   nodeexporter:
     image: prom/node-exporter:latest
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
     container_name: nodeexporter
     hostname: nodeexporter
     restart: unless-stopped
@@ -113,6 +115,8 @@ services:
   # DOCKER CONTAINERS METRICS EXPORTER
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.47.2
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
     container_name: cadvisor
     hostname: cadvisor
     restart: unless-stopped
