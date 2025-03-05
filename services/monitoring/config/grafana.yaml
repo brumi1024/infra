@@ -6,7 +6,7 @@ datasources:
   uid: prometheus
   access: proxy
   orgId: 1
-  url: http://prometheus:${PORT_PROMETHEUS_HTTP:-9090}
+  url: http://prometheus:${PORT_PROMETHEUS_HTTP}
   basicAuth: false
   isDefault: false
   version: 1
@@ -17,7 +17,7 @@ datasources:
   type: loki
   access: proxy
   orgId: 1
-  url: http://loki:${PORT_LOKI_HTTP:-3100}
+  url: http://loki:${PORT_LOKI_HTTP}
   basicAuth: false
   isDefault: false
   version: 1
@@ -26,7 +26,7 @@ datasources:
   type: tempo
   access: proxy
   orgId: 1
-  url: http://tempo:${PORT_TEMPO_HTTP:-3200}
+  url: http://tempo:${PORT_TEMPO_HTTP}
   basicAuth: false
   isDefault: true
   version: 1

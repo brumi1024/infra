@@ -5,16 +5,16 @@ global:
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['localhost:${PORT_PROMETHEUS_HTTP:-9090}']
+      - targets: ['localhost:${PORT_PROMETHEUS_HTTP}']
   - job_name: 'tempo'
     static_configs:
-      - targets: [ 'tempo:${PORT_TEMPO_HTTP:-3200}' ]
+      - targets: [ 'tempo:${PORT_TEMPO_HTTP}' ]
   - job_name: 'caddy'
     static_configs:
       - targets: ['caddy:${PORT_CADDY_ADMIN}']
   - job_name: 'nodeexporter'
     static_configs:
-      - targets: ['nodeexporter:${PORT_NODEEXPORTER_HTTP:-9100}']
+      - targets: ['nodeexporter:${PORT_NODEEXPORTER_HTTP}']
   - job_name: 'cadvisor'
     static_configs:
-      - targets: ['cadvisor:${PORT_CADVISOR_HTTP:-3003}']
+      - targets: ['cadvisor:${PORT_CADVISOR_HTTP}']
