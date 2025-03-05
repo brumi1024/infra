@@ -28,7 +28,7 @@ services:
       POSTGRES_USER: ${PAPERLESS_DB_USER}
       POSTGRES_PASSWORD: ${PAPERLESS_DB_PASSWORD}
     healthcheck:
-      interval: 360s
+      interval: 30s
       retries: 10
       test:
         - CMD
@@ -38,7 +38,7 @@ services:
         - ${PAPERLESS_DB_NAME}
         - '-U'
         - ${PAPERLESS_DB_USER}
-      timeout: 25s
+      timeout: 60s
 
   paperless-webserver:
     container_name: paperless-ngx
