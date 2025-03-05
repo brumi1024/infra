@@ -17,7 +17,7 @@ services:
       - homepage.widget.key=${TAUTULLI_API_AUTH_TOKEN}
       - homepage.widget.enableUser=true
       - homepage.widget.showEpisodeNumber=true
-      - homepage.widget.expandOneStreamToTwoRows=true
+      - homepage.widget.expandOneStreamToTwoRows=false
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
