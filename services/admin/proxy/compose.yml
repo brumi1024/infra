@@ -23,7 +23,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     healthcheck:
-      test: wget --spider http://${SERVER_URL}:${PORT_SOCKY_PROXY}/version || exit 1
+      test: wget --spider http://${HOST_NAME}:${PORT_SOCKY_PROXY}/version || exit 1
       interval: "30s"
       timeout: "5s"
       retries: 3
