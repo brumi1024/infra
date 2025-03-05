@@ -7,7 +7,7 @@ services:
 
   socky_proxy:
     container_name: socky_proxy
-    image: ghcr.io/tecnativa/docker-socket-proxy:0.3.0 # A security-enhanced proxy for the Docker Socket.
+    image: ghcr.io/tecnativa/docker-socket-proxy:latest # A security-enhanced proxy for the Docker Socket.
 
     privileged: true
 
@@ -21,12 +21,12 @@ services:
       # Variables match the URL prefix (i.e. AUTH blocks access to /auth/* parts of the API, etc).
       #   0 - revoke access
       #   1 - grant access
-      CONTAINERS: 1 # crowdsec, diun, homepage. dozzle
-      IMAGES: 1 # diun
-      INFO: 1 # crowdsec
+    - CONTAINERS=1 # Allow access to viewing containers
+    - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
+    - TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
+    - POST=0 # Disallow any POST operations (effectively read-only)
 
     labels:
-      - diun.enable=true
       - homepage.group=Back End
       - homepage.name=Docker Socket Proxy
 
