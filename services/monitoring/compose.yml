@@ -47,7 +47,7 @@ services:
 
   loki:
     image: grafana/loki:${LOKI_TAG:-latest}
-    command: -config.expand-env=true -config.file=/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
     logging:
       driver: ${LOGGING_DRIVER:-local}
     ports:
@@ -67,7 +67,7 @@ services:
 
   tempo:
     image: *tempoImage
-    command: [ "-config.expand-env=true -config.file=/etc/tempo.yaml" ]
+    command: [ "-config.file=/etc/tempo.yaml" ]
     ports:
       - "4317:4317"
       - "${PORT_TEMPO_HTTP:-3200}:3200"
