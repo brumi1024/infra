@@ -6,6 +6,18 @@ services:
     volumes:
       - ${CONFIGDIR}/tautulli:/config
       - /etc/localtime:/etc/localtime:ro
+    labels:
+      - homepage.group=Media
+      - homepage.name=Tautulli
+      - homepage.icon=tautulli.svg
+      - homepage.href=https://tautulli.${DOMAIN}
+      - homepage.description=Home Tautulli
+      - homepage.widget.type=tautulli
+      - homepage.widget.url=http://${HOST_NAME}:${PORT_TAUTULLI_HTTP}
+      - homepage.widget.key=${TAUTULLI_API_AUTH_TOKEN}
+      - homepage.widget.enableUser=true
+      - homepage.widget.showEpisodeNumber=true
+      - homepage.widget.expandOneStreamToTwoRows=true
     environment:
       - PUID=${PUID}
       - PGID=${PGID}

@@ -142,7 +142,7 @@ overseerr.{$DOMAIN} {
 
 tautulli.{$DOMAIN} {
     import cloudflare
-    reverse_proxy servarr:8181
+    reverse_proxy docker:8181
 }
 
 qbittorrent.{$DOMAIN} {
