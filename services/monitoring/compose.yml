@@ -36,7 +36,6 @@ services:
       - --web.enable-remote-write-receiver
       - --enable-feature=exemplar-storage
       - --enable-feature=native-histograms
-      - --enable-feature=expand-external-labels
     logging:
       driver: ${LOGGING_DRIVER:-local}
     networks:
