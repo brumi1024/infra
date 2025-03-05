@@ -8,26 +8,21 @@ services:
   homepage:
     image: ghcr.io/gethomepage/homepage:${HOMEPAGE_TAG:-latest}
     container_name: homepage
-
     networks:
       - socky_proxy-net
-
     ports:
       - ${PORT_DASH_HTTP}:3000
-
     environment:
       PUID: ${PUID}
       PGID: ${PGID}
       TZ: ${TZ}
       LOG_LEVEL: 'debug'
-
     volumes:
       - type: volume
         source: appdata
         target: /app/config
         volume:
           subpath: homepage
-
     restart: unless-stopped
 
 networks:

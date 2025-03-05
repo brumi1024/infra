@@ -68,6 +68,15 @@ services:
         target: /usr/src/paperless/consume
         volume:
           subpath: documents/paperless/consume
+    labels:
+      - homepage.group=Personal Apps
+      - homepage.name=Paperless
+      - homepage.icon=paperless-ngx.svg
+      - homepage.href=https://paperless.${DOMAIN}
+      - homepage.description=Documents
+      - homepage.widget.type=paperlessngx
+      - homepage.widget.url=http://paperless-webserver:${PORT_PAPERLESS_HTTP}
+      - homepage.widget.key=${PAPERLESS_API_AUTH_TOKEN}
     environment:
       PAPERLESS_TIME_ZONE: ${TZ}
       PAPERLESS_OCR_LANGUAGE: 'eng'

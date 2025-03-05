@@ -12,14 +12,12 @@ services:
         target: /data
         volume:
           subpath: actual
-
     labels:
       - homepage.group=Personal Apps
       - homepage.name=Actual Budget
       - homepage.icon=actual-budget.svg
       - homepage.href=https://actual.${DOMAIN}
       - homepage.description=Personal Finance
-
     healthcheck:
       # Enable health check for the instance
       test: ['CMD-SHELL', 'node src/scripts/health-check.js']
