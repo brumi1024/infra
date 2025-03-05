@@ -183,7 +183,7 @@ zephyrus.{$DOMAIN} {
 frigate.seq.{$DOMAIN} {
     import authenticate
     import cloudflare
-    reverse_proxy https://sequoia-docker:8971 {
+    reverse_proxy https://argestes:8971 {
         transport http {
                 tls
                 tls_insecure_skip_verify
