@@ -9,6 +9,11 @@ services:
       - ${PORT_GRAFANA_HTTP:-3000}:3000
     volumes:
       - ${REPODIR}/services/monitoring/config/grafana.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+    labels:
+      - homepage.group=Monitoring
+      - homepage.name=Grafana
+      - homepage.icon=grafana.svg
+      - homepage.href=https://grafana.${ADMIN_DOMAIN}
     environment:
       - GF_SERVER_ROOT_URL=https://grafana.${ADMIN_DOMAIN}
       - GF_AUTH_SIGNOUT_REDIRECT_URL=https://auth.${DOMAIN}/application/o/grafana/end-session/
