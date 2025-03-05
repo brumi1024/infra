@@ -18,6 +18,7 @@ services:
       - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
       - TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
       - POST=0 # Disallow any POST operations (effectively read-only)
+      - HOST_NAME=${HOSTNAME}
     labels:
       - homepage.group=Administration
       - homepage.name=${HOST_NAME} Docker Socket Proxy
