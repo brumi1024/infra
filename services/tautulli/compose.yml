@@ -27,6 +27,6 @@ services:
     restart: unless-stopped
 
 networks:
-  socky_proxy-net:
-    name: socky_proxy-net
+  default:
+    name: caddy-net
     external: true
