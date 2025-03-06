@@ -218,3 +218,8 @@ paperless.{$DOMAIN} {
     import cloudflare
     reverse_proxy docker:8000
 }
+
+immich.{$DOMAIN} {
+    import cloudflare
+    reverse_proxy docker:2283
+}
