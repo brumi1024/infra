@@ -10,7 +10,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - $HOST_NAME=${HOSTNAME}
+      - $HOSTNAME=${HOSTNAME}
     volumes:
       - ${CONFIGDIR}/prowlarr:/config
       - /etc/localtime:/etc/localtime:ro
@@ -21,7 +21,7 @@ services:
       - homepage.href=https://prowlarr.${DOMAIN}
       - homepage.description=Indexer
       - homepage.widget.type=prowlarr
-      - homepage.widget.url=http://${HOST_NAME}:${PORT_PROWLARR_HTTP}
+      - homepage.widget.url=http://${HOSTNAME}:${PORT_PROWLARR_HTTP}
       - homepage.widget.key=${PROWLARR_API_AUTH_TOKEN}
     ports:
       - ${PORT_PROWLARR_HTTP}:9696
@@ -41,13 +41,13 @@ services:
       - homepage.href=https://overseerr.${DOMAIN}
       - homepage.description=Request Management
       - homepage.widget.type=overseerr
-      - homepage.widget.url=http://${HOST_NAME}:${PORT_OVERSEERR_HTTP}
+      - homepage.widget.url=http://${HOSTNAME}:${PORT_OVERSEERR_HTTP}
       - homepage.widget.key=${PLEX_AUTH_TOKEN}
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - $HOST_NAME=${HOSTNAME}
+      - $HOSTNAME=${HOSTNAME}
     ports:
       - ${PORT_OVERSEERR_HTTP}:5055
     restart: unless-stopped
