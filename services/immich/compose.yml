@@ -10,6 +10,13 @@ services:
     volumes:
       - media:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
+    environment:
+      - DB_USERNAME=${IMMICH_DB_USERNAME}
+      - DB_PASSWORD=${IMMICH_DB_PASSWORD}
+      - DB_DATABASE_NAME=${IMMICH_DB_DATABASE_NAME}
+      - POSTGRES_INITDB_ARGS='--data-checksums'
+      - TZ=${TZ}
+      - IMMICH_VERSION=${IMMICH_TAG:-release}
     ports:
       - '${PORT_IMMICH_HTTP:-2283}:2283'
     depends_on:
