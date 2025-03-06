@@ -18,14 +18,14 @@ services:
       - SERVICES=1 # Allow access to viewing services (necessary when using Docker Swarm)
       - TASKS=1 # Allow access to viewing tasks (necessary when using Docker Swarm)
       - POST=0 # Disallow any POST operations (effectively read-only)
-      - HOST_NAME=${HOSTNAME}
+      - HOSTNAME=${HOSTNAME}
     labels:
       - homepage.group=Administration
-      - homepage.name=${HOST_NAME} Docker Socket Proxy
+      - homepage.name=${HOSTNAME} Docker Socket Proxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     healthcheck:
-      test: wget --spider http://${HOST_NAME}:${PORT_SOCKY_PROXY}/version || exit 1
+      test: wget --spider http://${HOSTNAME}:${PORT_SOCKY_PROXY}/version || exit 1
       interval: "30s"
       timeout: "5s"
       retries: 3
