@@ -77,6 +77,16 @@ eurus.{$ADMIN_DOMAIN} {
     }
 }
 
+pbs.{$ADMIN_DOMAIN} {
+    import cloudflare
+    reverse_proxy https://proxmox-backup-server:8006 {
+        transport http {
+                tls
+                tls_insecure_skip_verify
+        }
+    }
+}
+
 truenas.{$ADMIN_DOMAIN} {
     import cloudflare
     reverse_proxy truenas
