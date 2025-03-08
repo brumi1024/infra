@@ -236,9 +236,9 @@ go2rtc:
       - ffmpeg:rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       #- ffmpeg:shed#audio=opus
     front_gate:
-      - rtsp://192.168.1.1:7447/nYyBpEANSAfrQgbo
+      - rtspx://192.168.1.1:7447/nYyBpEANSAfrQgbo
     front_gate_sub:
-      - rtsp://192.168.1.1:7447/gcEGERg66Iw13NC8
+      - rtspx://192.168.1.1:7447/gcEGERg66Iw13NC8
 cameras:
   #driveway:
   #  ffmpeg:
