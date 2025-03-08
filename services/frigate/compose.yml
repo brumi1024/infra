@@ -5,6 +5,7 @@ services:
     container_name: frigate
     privileged: true
     restart: unless-stopped
+    stop_grace_period: 30s # allow enough time to shut down the various services
     image: ghcr.io/blakeblackshear/frigate:${FRIGATE_TAG:-stable}
     shm_size: "512mb"
     devices:
