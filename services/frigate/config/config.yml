@@ -291,7 +291,7 @@ cameras:
           roles:
             - detect
             - record
-            - audio
+            #- audio
     best_image_timeout: 120
     objects:
       track:
@@ -305,7 +305,7 @@ cameras:
           roles:
             - detect
             - record
-            - audio
+            #- audio
     objects:
       track:
         - person
@@ -318,7 +318,7 @@ cameras:
           roles:
             - detect
             - record
-            - audio
+            #- audio
     objects:
       track:
         - person
