@@ -235,10 +235,10 @@ go2rtc:
     shed:
       - ffmpeg:rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       #- ffmpeg:shed#audio=opus
-    front_gate:
-      - rtspx://192.168.1.1:7441/nYyBpEANSAfrQgbo
-    front_gate_sub:
-      - rtspx://192.168.1.1:7441/gcEGERg66Iw13NC8
+    #front_gate:
+    #  - rtspx://192.168.1.1:7441/nYyBpEANSAfrQgbo
+    #front_gate_sub:
+    #  - rtspx://192.168.1.1:7441/gcEGERg66Iw13NC8
 cameras:
   #driveway:
   #  ffmpeg:
@@ -405,21 +405,21 @@ cameras:
         - person
         - cat
         - dog
-  front_gate:
-    ffmpeg:
-      inputs:
-        - path: rtsp://127.0.0.1:8554/front_gate
-          input_args: preset-rtsp-restream
-          roles:
-            - record
-        - path: rtsp://127.0.0.1:8554/front_gate_sub
-          input_args: preset-rtsp-restream
-          roles:
-            - detect
-            #- audio
-      output_args:
-        record: preset-record-ubiquiti
-    motion:
-      mask:
-        - 0,0,1600,0,1600,219,1068,332,700,298,504,231,0,161
+  #front_gate:
+  #  ffmpeg:
+  #    inputs:
+  #      - path: rtsp://127.0.0.1:8554/front_gate
+  #        input_args: preset-rtsp-restream
+  #        roles:
+  #          - record
+  #      - path: rtsp://127.0.0.1:8554/front_gate_sub
+  #        input_args: preset-rtsp-restream
+  #        roles:
+  #          - detect
+  #          #- audio
+  #    output_args:
+  #      record: preset-record-ubiquiti
+  #  motion:
+  #    mask:
+  #      - 0,0,1600,0,1600,219,1068,332,700,298,504,231,0,161
 version: 0.15-1
