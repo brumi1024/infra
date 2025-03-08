@@ -34,9 +34,9 @@ birdseye:
 semantic_search:
   enabled: true
   model_size: large
-audio:
+#audio:
   # Optional: Enable audio events
-  enabled: true
+ # enabled: true
 ffmpeg:
   # Optional: global ffmpeg args (default: shown below)
   global_args: -hide_banner -loglevel warning
@@ -333,7 +333,7 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_entrance_sub
           roles:
             - detect
-            - audio
+            #- audio
     motion:
       mask:
         - 0,0,190,0,322,0,346,88,0,124
@@ -379,7 +379,7 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_front_sub
           roles:
             - detect
-            - audio
+            #- audio
     objects:
       track:
         - person
@@ -397,7 +397,7 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_west_sub
           roles:
             - detect
-            - audio
+            #- audio
       output_args:
         record: preset-record-generic-audio-copy
     objects:
@@ -416,7 +416,7 @@ cameras:
           input_args: preset-rtsp-restream
           roles:
             - detect
-            - audio
+            #- audio
       output_args:
         record: preset-record-ubiquiti
     motion:
