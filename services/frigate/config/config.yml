@@ -227,14 +227,14 @@ go2rtc:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.224:554/h264Preview_01_sub
       - ffmpeg:nordic_west_sub#video=h264#hardware#audio=opus
     parking_area:
-      - ffmpeg:rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
-      #- ffmpeg:parking_area#audio=opus
+      - rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
+      - ffmpeg:parking_area#audio=opus
     main_terrace:
-      - ffmpeg:rtsp://192.168.1.222:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
-      #- ffmpeg:main_terrace#audio=opus
+      - rtsp://192.168.1.222:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
+      - ffmpeg:main_terrace#audio=opus
     shed:
-      - ffmpeg:rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
-      #- ffmpeg:shed#audio=opus
+      - rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
+      - ffmpeg:shed#audio=opus
     #front_gate:
     #  - rtspx://192.168.1.1:7441/nYyBpEANSAfrQgbo
     #front_gate_sub:
