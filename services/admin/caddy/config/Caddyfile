@@ -141,12 +141,6 @@ radarr.{$DOMAIN} {
     reverse_proxy docker:7878
 }
 
-syncthing.{$DOMAIN} {
-    import authenticate
-    import cloudflare
-    reverse_proxy syncthing:8384
-}
-
 overseerr.{$DOMAIN} {
     import cloudflare
     reverse_proxy docker:5055
