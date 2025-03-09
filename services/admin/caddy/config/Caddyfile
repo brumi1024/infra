@@ -59,12 +59,7 @@
 susanoo.{$ADMIN_DOMAIN} {
     import cloudflare
     import log_common
-    reverse_proxy https://susanoo:8006 {
-        transport http {
-                tls
-                tls_insecure_skip_verify
-        }
-    }
+    reverse_proxy https://susanoo.van-tetra.ts.net:8006 {
 }
 
 eurus.{$ADMIN_DOMAIN} {
