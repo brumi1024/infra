@@ -10,7 +10,7 @@ detectors:
     type: edgetpu
     device: usb
 auth:
-  enabled: false
+  enabled: true
   trusted_proxies:
     - 100.69.226.0/24
 proxy:
@@ -34,9 +34,9 @@ birdseye:
 semantic_search:
   enabled: true
   model_size: large
-#audio:
-  # Optional: Enable audio events
- # enabled: true
+audio:
+ # Optional: Enable audio events
+  enabled: true
 ffmpeg:
   # Optional: global ffmpeg args (default: shown below)
   global_args: -hide_banner -loglevel warning
@@ -219,7 +219,7 @@ go2rtc:
     nordic_west:
       - "ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
     nordic_west_sub:
-      - "ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
+      - "ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}"
     parking_area:
       - rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:parking_area#audio=opus
