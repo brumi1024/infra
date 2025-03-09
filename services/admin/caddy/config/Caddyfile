@@ -173,16 +173,6 @@ plex.{$DOMAIN} {
     reverse_proxy plex:32400
 }
 
-plex.seq.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy plex-seq:32400
-}
-
-tautulli.seq.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy tautulli-seq:8181
-}
-
 # Sequoia
 
 zephyrus.{$DOMAIN} {
@@ -193,7 +183,7 @@ zephyrus.{$DOMAIN} {
 frigate.seq.{$DOMAIN} {
     import authenticate
     import cloudflare
-    reverse_proxy https://argestes:8971 {
+    reverse_proxy https://sequoia-docker:8971 {
         transport http {
                 tls
                 tls_insecure_skip_verify
