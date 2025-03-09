@@ -42,7 +42,7 @@ ffmpeg:
   global_args: -hide_banner -loglevel warning
   # Optional: global hwaccel args (default: shown below)
   # NOTE: See hardware acceleration docs for your specific device
-  hwaccel_args: preset-vaapi
+  hwaccel_args: preset-intel-qsv-h264
   # Optional: global input args
   input_args: preset-rtsp-restream
   # Optional: global output args
@@ -219,7 +219,7 @@ go2rtc:
     nordic_west:
       - "ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
     nordic_west_sub:
-      - "ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}"
+      - "ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
     parking_area:
       - rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:parking_area#audio=opus
@@ -411,6 +411,7 @@ cameras:
           roles:
             - detect
             - audio
+      hwaccel_args: preset-vaapi
       output_args:
         record: preset-record-ubiquiti
     motion:
