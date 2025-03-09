@@ -210,24 +210,16 @@ go2rtc:
     #  - ffmpeg:driveway_sub#video=h264#hardware#audio=opus
     nordic_entrance:
       - "ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
-      #- rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.223:554/h265Preview_01_main
-      #- ffmpeg:nordic_entrance#video=h264#hardware#audio=opus
     nordic_entrance_sub:
-      - "ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}"
-      #- rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.223:554/h264Preview_01_sub
-      #- ffmpeg:nordic_entrance_sub#video=h264#hardware#audio=opus
+      - "ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
     nordic_front:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.225:554/h265Preview_01_main
-      - ffmpeg:nordic_front#video=h264#hardware#audio=opus
+      - "ffmpeg:http://192.168.1.225/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
     nordic_front_sub:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.225:554/h264Preview_01_sub
-      - ffmpeg:nordic_front_sub#video=h264#hardware#audio=opus
+      - "ffmpeg:http://192.168.1.225/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
     nordic_west:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.224:554/h265Preview_01_main
-      - ffmpeg:nordic_west#video=h264#hardware#audio=opus
+      - "ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
     nordic_west_sub:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.224:554/h264Preview_01_sub
-      - ffmpeg:nordic_west_sub#video=h264#hardware#audio=opus
+      - "ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
     parking_area:
       - rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:parking_area#audio=opus
