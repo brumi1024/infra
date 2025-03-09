@@ -291,7 +291,7 @@ cameras:
           roles:
             - detect
             - record
-            #- audio
+            - audio
     best_image_timeout: 120
     objects:
       track:
@@ -305,7 +305,7 @@ cameras:
           roles:
             - detect
             - record
-            #- audio
+            - audio
     objects:
       track:
         - person
@@ -318,7 +318,7 @@ cameras:
           roles:
             - detect
             - record
-            #- audio
+            - audio
     objects:
       track:
         - person
@@ -333,7 +333,7 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_entrance_sub
           roles:
             - detect
-            #- audio
+            - audio
     motion:
       mask:
         - 0,0,190,0,322,0,346,88,0,124
@@ -379,7 +379,7 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_front_sub
           roles:
             - detect
-            #- audio
+            - audio
     objects:
       track:
         - person
@@ -397,7 +397,7 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_west_sub
           roles:
             - detect
-            #- audio
+            - audio
       output_args:
         record: preset-record-generic-audio-copy
     objects:
@@ -405,21 +405,21 @@ cameras:
         - person
         - cat
         - dog
-  #front_gate:
-  #  ffmpeg:
-  #    inputs:
-  #      - path: rtsp://127.0.0.1:8554/front_gate
-  #        input_args: preset-rtsp-restream
-  #        roles:
-  #          - record
-  #      - path: rtsp://127.0.0.1:8554/front_gate_sub
-  #        input_args: preset-rtsp-restream
-  #        roles:
-  #          - detect
-  #          #- audio
-  #    output_args:
-  #      record: preset-record-ubiquiti
-  #  motion:
-  #    mask:
-  #      - 0,0,1600,0,1600,219,1068,332,700,298,504,231,0,161
+  front_gate:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/front_gate
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/front_gate_sub
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+            #- audio
+      output_args:
+        record: preset-record-ubiquiti
+    motion:
+      mask:
+        - 0,0,1600,0,1600,219,1068,332,700,298,504,231,0,161
 version: 0.15-1
