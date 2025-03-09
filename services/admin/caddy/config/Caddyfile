@@ -131,19 +131,19 @@ homeassistant.kalasz.{$DOMAIN} {
 prowlarr.{$DOMAIN} {
     import authenticate
     import cloudflare
-    reverse_proxy servarr:9696
+    reverse_proxy docker:9696
 }
 
 sonarr.{$DOMAIN} {
     import authenticate
     import cloudflare
-    reverse_proxy servarr:8989
+    reverse_proxy docker:8989
 }
 
 radarr.{$DOMAIN} {
     import authenticate
     import cloudflare
-    reverse_proxy servarr:7878
+    reverse_proxy docker:7878
 }
 
 syncthing.{$DOMAIN} {
@@ -154,7 +154,7 @@ syncthing.{$DOMAIN} {
 
 overseerr.{$DOMAIN} {
     import cloudflare
-    reverse_proxy servarr:5055
+    reverse_proxy docker:5055
 }
 
 tautulli.{$DOMAIN} {
@@ -165,7 +165,7 @@ tautulli.{$DOMAIN} {
 qbittorrent.{$DOMAIN} {
     import authenticate
     import cloudflare
-    reverse_proxy servarr:8080
+    reverse_proxy docker:8080
 }
 
 plex.{$DOMAIN} {
