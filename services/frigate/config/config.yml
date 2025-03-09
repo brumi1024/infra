@@ -411,7 +411,7 @@ cameras:
           roles:
             - detect
             - audio
-      hwaccel_args: preset-intel-qsv-h265
+      hwaccel_args: preset-vaapi
       output_args:
         record: preset-record-ubiquiti
     motion:
