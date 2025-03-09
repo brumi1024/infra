@@ -13,6 +13,8 @@ services:
       - /dev/dri/renderD128
     device_cgroup_rules:
       - "c 189:* rmw"
+    cap_add:
+      - CAP_PERFMON
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${REPODIR}/services/frigate/config/:/config/:rw
