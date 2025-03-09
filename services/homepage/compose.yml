@@ -15,10 +15,11 @@ services:
     ports:
       - ${PORT_DASH_HTTP}:3000
     environment:
-      PUID: ${PUID}
-      PGID: ${PGID}
-      TZ: ${TZ}
-      LOG_LEVEL: 'debug'
+      - PUID=${PUID}
+      - PGI=${PGID}
+      - TZ=${TZ}
+      - HOMEPAGE_VAR_ADMIN_DOMAIN=${ADMIN_DOMAIN}
+      - HOMEPAGE_VAR_DOMAIN=${DOMAIN}
     volumes:
       - type: volume
         source: appdata
