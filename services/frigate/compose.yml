@@ -28,8 +28,17 @@ services:
       - "${PORT_FRIGATE_HTTP}:8971"
       - "8554:8554" # RTSP feeds
       - "8555:8555/tcp" # WebRTC over tcp
+    labels:
+      - homepage.group=Smart Home
+      - homepage.name=Frigate Sequoia
+      - homepage.icon=frigate.svg
+      - homepage.href=https://frigate.seq.${DOMAIN}
+      - homepage.description=Sequoia Frigate NVR
+      - homepage.widget.type=frigate
+      - homepage.widget.url=http://${HOST_NAME}:${PORT_FRIGATE_INTERNAL}
     environment:
       - TZ=${TZ}
+      - HOST_NAME=${HOST_NAME}
       - FRIGATE_MQTT_USER=${FRIGATE_MQTT_USER}
       - FRIGATE_MQTT_PASSWORD=${FRIGATE_MQTT_PASSWORD}
       - FRIGATE_RTSP_USER=${FRIGATE_RTSP_USER}
