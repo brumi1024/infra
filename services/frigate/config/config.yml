@@ -42,7 +42,7 @@ ffmpeg:
   global_args: -hide_banner -loglevel warning
   # Optional: global hwaccel args (default: shown below)
   # NOTE: See hardware acceleration docs for your specific device
-  hwaccel_args: preset-intel-qsv-h265
+  hwaccel_args: preset-intel-qsv-h264
   # Optional: global input args
   input_args: preset-rtsp-restream
   # Optional: global output args
