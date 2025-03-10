@@ -78,7 +78,7 @@ pbs.{$ADMIN_DOMAIN} {
 truenas.{$ADMIN_DOMAIN} {
     import cloudflare
     import log_common
-    reverse_proxy truenas
+    reverse_proxy truenas.{$TAILNET}
 }
 
 grafana.{$ADMIN_DOMAIN} {
@@ -97,7 +97,7 @@ komodo.{$DOMAIN} {
 
 auth.{$DOMAIN} {
     import cloudflare
-    reverse_proxy homelab-vps.{$TAILNET}.net:{$PORT_AUTHENTIK_HTTP}
+    reverse_proxy homelab-vps.{$TAILNET}:{$PORT_AUTHENTIK_HTTP}
 }
 
 # Home Assistant
