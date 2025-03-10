@@ -1,0 +1,420 @@
+# yaml-language-server: $schema=http://100.112.177.31:5000/api/config/schema
+mqtt:
+  host: 192.168.1.5
+  user: '{FRIGATE_MQTT_USER}'
+  password: '{FRIGATE_MQTT_PASSWORD}'
+database:
+  path: /db/frigate.db
+detectors:
+  coral:
+    type: edgetpu
+    device: usb
+auth:
+  enabled: false
+  trusted_proxies:
+    - 100.69.226.0/24
+proxy:
+  header_map:
+    user: x-authentik-username
+birdseye:
+  # Optional: Enable birdseye view (default: shown below)
+  enabled: true
+  # Optional: Width of the output resolution (default: shown below)
+  width: 1920
+  # Optional: Height of the output resolution (default: shown below)
+  height: 1080
+  # Optional: Encoding quality of the mpeg1 feed (default: shown below)
+  # 1 is the highest quality, and 31 is the lowest. Lower quality feeds utilize less CPU resources.
+  quality: 8
+  # Optional: Mode of the view. Available options are: objects, motion, and continuous
+  #   objects - cameras are included if they have had a tracked object within the last 30 seconds
+  #   motion - cameras are included if motion was detected in the last 30 seconds
+  #   continuous - all cameras are included always
+  mode: motion
+semantic_search:
+  enabled: true
+  model_size: large
+audio:
+ # Optional: Enable audio events
+  enabled: true
+ffmpeg:
+  # Optional: global ffmpeg args (default: shown below)
+  global_args: -hide_banner -loglevel warning
+  # Optional: global hwaccel args (default: shown below)
+  # NOTE: See hardware acceleration docs for your specific device
+  hwaccel_args: preset-intel-qsv-h264
+  # Optional: global input args
+  input_args: preset-rtsp-restream
+  # Optional: global output args
+  output_args:
+    record: preset-record-generic-audio-copy
+detect:
+  # Optional: enables detection for the camera (default: True)
+  # This value can be set via MQTT and will be updated in startup based on retained value
+  enabled: true
+  # Optional: Configuration for stationary object tracking
+  stationary:
+    # Optional: Frequency for confirming stationary objects (default: shown below)
+    # When set to 0, object detection will not confirm stationary objects until movement is detected.
+    # If set to 10, object detection will run to confirm the object still exists on every 10th frame.
+    interval: 50
+    # Optional: Number of frames without a position change for an object to be considered stationary (default: 10x the frame rate or 10s)
+    threshold: 50
+    # Optional: Define a maximum number of frames for tracking a stationary object (default: not set, track forever)
+    # This can help with false positives for objects that should only be stationary for a limited amount of time.
+    # It can also be used to disable stationary object tracking. For example, you may want to set a value for person, but leave
+    # car at the default.
+    # WARNING: Setting these values overrides default behavior and disables stationary object tracking.
+    #          There are very few situations where you would want it disabled. It is NOT recommended to
+    #          copy these values from the example config into your config unless you know they are needed.
+    max_frames:
+      # Optional: Default for all object types (default: not set, track forever)
+      default: 3000
+      # Optional: Object specific values
+      objects:
+        person: 1000
+objects:
+  # Optional: list of objects to track from labelmap.txt (default: shown below)
+  track:
+    - person
+    - bicycle
+    - cat
+    - dog
+    - car
+    - motorcycle
+    - bus
+    - licence_plate
+motion:
+  # Optional: The threshold passed to cv2.threshold to determine if a pixel is different enough to be counted as motion. (default: shown below)
+  # Increasing this value will make motion detection less sensitive and decreasing it will make motion detection more sensitive.
+  # The value should be between 1 and 255.
+  threshold: 30
+  # Optional: The percentage of the image used to detect lightning or other substantial changes where motion detection
+  #           needs to recalibrate. (default: shown below)
+  # Increasing this value will make motion detection more likely to consider lightning or ir mode changes as valid motion.
+  # Decreasing this value will make motion detection more likely to ignore large amounts of motion such as a person approaching
+  # a doorbell camera.
+  lightning_threshold: 0.8
+  # Optional: Minimum size in pixels in the resized motion image that counts as motion (default: shown below)
+  # Increasing this value will prevent smaller areas of motion from being detected. Decreasing will
+  # make motion detection more sensitive to smaller moving objects.
+  # As a rule of thumb:
+  #  - 10 - high sensitivity
+  #  - 30 - medium sensitivity
+  #  - 50 - low sensitivity
+  contour_area: 10
+  # Optional: Alpha value passed to cv2.accumulateWeighted when averaging frames to determine the background (default: shown below)
+  # Higher values mean the current frame impacts the average a lot, and a new object will be averaged into the background faster.
+  # Low values will cause things like moving shadows to be detected as motion for longer.
+  # https://www.geeksforgeeks.org/background-subtraction-in-an-image-using-concept-of-running-average/
+  frame_alpha: 0.01
+  # Optional: Height of the resized motion frame  (default: 100)
+  # Higher values will result in more granular motion detection at the expense of higher CPU usage.
+  # Lower values result in less CPU, but small changes may not register as motion.
+  frame_height: 100
+  # Optional: improve contrast (default: shown below)
+  # Enables dynamic contrast improvement. This should help improve night detections at the cost of making motion detection more sensitive
+  # for daytime.
+  improve_contrast: true
+  # Optional: Delay when updating camera motion through MQTT from ON -> OFF (default: shown below).
+  mqtt_off_delay: 30
+record:
+  # Optional: Enable recording (default: shown below)
+  # WARNING: If recording is disabled in the config, turning it on via
+  #          the UI or MQTT later will have no effect.
+  # WARNING: Frigate does not currently support limiting recordings based
+  #          on available disk space automatically. If using recordings,
+  #          you must specify retention settings for a number of days that
+  #          will fit within the available disk space of your drive or Frigate
+  #          will crash.
+  enabled: true
+  # Optional: Number of minutes to wait between cleanup runs (default: shown below)
+  # This can be used to reduce the frequency of deleting recording segments from disk if you want to minimize i/o
+  expire_interval: 60
+  # Optional: Retention settings for recording
+  retain:
+    # Optional: Number of days to retain recordings regardless of events (default: shown below)
+    # NOTE: This should be set to 0 and retention should be defined in events section below
+    #       if you only want to retain recordings of events.
+    days: 10
+    # Optional: Mode for retention. Available options are: all, motion, and active_objects
+    #   all - save all recording segments regardless of activity
+    #   motion - save all recordings segments with any detected motion
+    #   active_objects - save all recording segments with active/moving objects
+    # NOTE: this mode only applies when the days setting above is greater than 0
+    mode: all
+  export:
+    # Optional: Timelapse Output Args (default: shown below).
+    # NOTE: The default args are set to fit 24 hours of recording into 1 hour playback.
+    # See https://stackoverflow.com/a/58268695 for more info on how these args work.
+    # As an example: if you wanted to go from 24 hours to 30 minutes that would be going
+    # from 86400 seconds to 1800 seconds which would be 1800 / 86400 = 0.02.
+    # The -r (framerate) dictates how smooth the output video is.
+    # So the args would be -vf setpts=0.02*PTS -r 30 in that case.
+    timelapse_args: -vf setpts=0.04*PTS -r 30
+  # Optional: Event recording settings
+  alerts:
+    retain:
+      days: 10
+    pre_capture: 5
+    post_capture: 5
+  detections:
+    retain:
+      days: 10
+    pre_capture: 5
+    post_capture: 5
+snapshots:
+  # Optional: Enable writing jpg snapshot to /media/frigate/clips (default: shown below)
+  # This value can be set via MQTT and will be updated in startup based on retained value
+  enabled: true
+  # Optional: print a timestamp on the snapshots (default: shown below)
+  timestamp: true
+  # Optional: draw bounding box on the snapshots (default: shown below)
+  bounding_box: true
+  # Optional: crop the snapshot (default: shown below)
+  crop: false
+  # Optional: height to resize the snapshot to (default: original size)
+  height: 175
+  # Optional: Restrict snapshots to objects that entered any of the listed zones (default: no required zones)
+  required_zones: []
+  # Optional: Camera override for retention settings (default: global values)
+  retain:
+    # Required: Default retention days (default: shown below)
+    default: 10
+    # Optional: Per object retention days
+    objects:
+      person: 10
+      cat: 5
+      dog: 5
+      car: 5
+      motorcycle: 5
+      bus: 5
+live:
+  # Optional: Set the height of the live stream. (default: 720)
+  # This must be less than or equal to the height of the detect stream. Lower resolutions
+  # reduce bandwidth required for viewing the live stream. Width is computed to match known aspect ratio.
+  height: 720
+  # Optional: Set the encode quality of the live stream (default: shown below)
+  # 1 is the highest quality, and 31 is the lowest. Lower quality feeds utilize less CPU resources.
+  quality: 8
+go2rtc:
+  rtsp:
+    username: '{FRIGATE_GO2RTC_RTSP_USERNAME}'
+    password: '{FRIGATE_GO2RTC_RTSP_PASSWORD}'
+  streams:
+    #driveway:
+    #  - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h265Preview_01_main
+    #  - ffmpeg:driveway#video=h264#hardware#audio=opus
+    #driveway_sub:
+    #  - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h264Preview_01_sub
+    #  - ffmpeg:driveway_sub#video=h264#hardware#audio=opus
+    nordic_entrance:
+      - "ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
+    nordic_entrance_sub:
+      - "ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
+    nordic_front:
+      - "ffmpeg:http://192.168.1.225/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
+    nordic_front_sub:
+      - "ffmpeg:http://192.168.1.225/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
+    nordic_west:
+      - "ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
+    nordic_west_sub:
+      - "ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus"
+    parking_area:
+      - rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
+      - ffmpeg:parking_area#audio=opus
+    main_terrace:
+      - rtsp://192.168.1.222:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
+      - ffmpeg:main_terrace#audio=opus
+    shed:
+      - rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
+      - ffmpeg:shed#audio=opus
+    front_gate:
+      - rtspx://192.168.1.1:7441/nYyBpEANSAfrQgbo
+    front_gate_sub:
+      - rtspx://192.168.1.1:7441/gcEGERg66Iw13NC8
+cameras:
+  #driveway:
+  #  ffmpeg:
+  #    inputs:
+  #      - path: rtsp://127.0.0.1:8554/driveway
+  #        roles:
+  #          - record
+  #      - path: rtsp://127.0.0.1:8554/driveway_sub
+  #        roles:
+  #          - detect
+  #          - audio
+  #  motion:
+  #    mask:
+  #      - 640,0,640,0,640,101,429,98,232,110,0,144,0,0
+  #  snapshots:
+  #    required_zones:
+  #      - entry
+  #      - road
+  #      - everywhere
+  #  zones:
+  #    entry:
+  #      coordinates: 619,184,640,280,428,271,456,230,425,213,449,187
+  #      objects:
+  #        - car
+  #        - motorcycle
+  #        - bus
+  #        - licence_plate
+  #    road:
+  #      coordinates: 619,185,640,138,607,131,552,155,510,183
+  #      objects:
+  #        - car
+  #        - motorcycle
+  #        - bus
+  #    everywhere:
+  #      coordinates: 0,480,640,480,640,73,0,114
+  #      objects:
+  #        - person
+  #        - cat
+  #        - dog
+  #  review:
+  #    alerts:
+  #      required_zones:
+  #        - entry
+  #        - road
+  #        - everywhere
+  parking_area:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/parking_area
+          roles:
+            - detect
+            - record
+            - audio
+    best_image_timeout: 120
+    objects:
+      track:
+        - person
+        - cat
+        - dog
+  main_terrace:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/main_terrace
+          roles:
+            - detect
+            - record
+            - audio
+    objects:
+      track:
+        - person
+        - cat
+        - dog
+  shed:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/shed
+          roles:
+            - detect
+            - record
+            - audio
+    objects:
+      track:
+        - person
+        - cat
+        - dog
+  nordic_entrance:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/nordic_entrance
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/nordic_entrance_sub
+          roles:
+            - detect
+            - audio
+    motion:
+      mask:
+        - 0,0,190,0,322,0,346,88,0,124
+        - 505,62,640,88,640,0,552,0,521,0
+    snapshots:
+      required_zones:
+        - gate
+        - entryway
+        - everywhere
+    zones:
+      gate:
+        coordinates: 401,69,397,82,458,94,534,61,540,0,339,0,344,73
+        objects:
+          - car
+          - motorcycle
+          - bus
+          - licence_plate
+      entryway:
+        coordinates: 640,132,478,71,344,71,324,108,640,263
+        objects:
+          - car
+          - motorcycle
+          - bus
+          - licence_plate
+      everywhere:
+        coordinates: 0,480,640,480,640,196,640,54,562,30,330,34,341,77,0,118
+        objects:
+          - person
+          - cat
+          - dog
+    review:
+      alerts:
+        required_zones:
+          - gate
+          - entryway
+          - everywhere
+  nordic_front:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/nordic_front
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/nordic_front_sub
+          roles:
+            - detect
+            - audio
+    objects:
+      track:
+        - person
+        - cat
+        - dog
+    motion:
+      mask:
+        - 0,176,0,0,157,0,285,0,297,62,160,80
+  nordic_west:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/nordic_west
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/nordic_west_sub
+          roles:
+            - detect
+            - audio
+      output_args:
+        record: preset-record-generic-audio-copy
+    objects:
+      track:
+        - person
+        - cat
+        - dog
+  front_gate:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/front_gate
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/front_gate_sub
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+            - audio
+      hwaccel_args: preset-vaapi
+      output_args:
+        record: preset-record-ubiquiti
+    motion:
+      mask:
+        - 0,0,1600,0,1600,219,1068,332,700,298,504,231,0,161
+version: 0.15-1

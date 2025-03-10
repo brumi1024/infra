@@ -1,0 +1,153 @@
+name: "monitoring"
+
+services:
+  grafana:
+    image: grafana/grafana:${GRAFANA_TAG:-latest}
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    ports:
+      - ${PORT_GRAFANA_HTTP:-3000}:3000
+    volumes:
+      - ${REPODIR}/services/monitoring/config/grafana.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - grafana-storage:/var/lib/grafana
+    labels:
+      - homepage.group=Monitoring
+      - homepage.name=Grafana
+      - homepage.icon=grafana.svg
+      - homepage.href=https://grafana.${ADMIN_DOMAIN}
+    environment:
+      - TZ=${TZ}
+      - GF_SERVER_ROOT_URL=https://grafana.${ADMIN_DOMAIN}
+      - GF_AUTH_SIGNOUT_REDIRECT_URL=https://auth.${DOMAIN}/application/o/grafana/end-session/
+      - GF_AUTH_OATH_AUTO_LOGIN=true
+      - GF_AUTH_GENERIC_OAUTH_NAME=authentik
+      - GF_AUTH_GENERIC_OAUTH_ENABLED=true
+      - GF_AUTH_GENERIC_OAUTH_CLIENT_ID=${GRAFANA_CLIENT_ID}
+      - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET=${GRAFANA_CLIENT_SECRET}
+      - GF_AUTH_GENERIC_OAUTH_SCOPES=openid email profile
+      - GF_AUTH_GENERIC_OAUTH_AUTH_URL=https://auth.${DOMAIN}/application/o/authorize/
+      - GF_AUTH_GENERIC_OAUTH_TOKEN_URL=https://auth.${DOMAIN}/application/o/token/
+      - GF_AUTH_GENERIC_OAUTH_API_URL=https://auth.${DOMAIN}/application/o/userinfo/
+      - GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH=contains(groups, 'site-admins') && 'Admin' || 'Viewer'
+      - GF_FEATURE_TOGGLES_ENABLE=traceqlEditor traceQLStreaming metricsSummary
+
+  prometheus:
+    image: prom/prometheus:${PROMETHEUS_TAG:-latest}
+    command:
+      - --config.file=/etc/prometheus/prometheus.yaml
+      - --web.enable-remote-write-receiver
+      - --enable-feature=exemplar-storage
+      - --enable-feature=native-histograms
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    networks:
+      - default
+    ports:
+      - "${PORT_PROMETHEUS_HTTP:-9090}:9090"
+    volumes:
+      - ${REPODIR}/services/monitoring/config/prometheus.yaml:/etc/prometheus/prometheus.yaml
+    environment:
+      - TZ=${TZ}
+
+  loki:
+    image: grafana/loki:${LOKI_TAG:-latest}
+    command: -config.file=/etc/loki/local-config.yaml
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    ports:
+      - "${PORT_LOKI_HTTP:-3100}:3100"
+
+  # Tempo runs as user 10001, and docker compose creates the volume as root.
+  # As such, we need to chown the volume in order for Tempo to start correctly.
+  tempo-init:
+    image: &tempoImage grafana/tempo:${TEMPO_TAG:-latest}
+    user: root
+    entrypoint:
+      - "chown"
+      - "10001:10001"
+      - "/var/tempo"
+    volumes:
+      - tempo-data:/var/tempo
+
+  tempo:
+    image: *tempoImage
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    ports:
+      - "4317:4317"
+      - "${PORT_TEMPO_HTTP:-3200}:3200"
+    volumes:
+      - ${REPODIR}/services/monitoring/config/tempo.yaml:/etc/tempo.yaml
+      - tempo-data:/var/tempo
+    environment:
+      - TZ=${TZ}
+    depends_on:
+      - tempo-init
+      - memcached
+
+  memcached:
+    image: memcached:${MEMCACHED_TAG:-latest}
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    ports:
+      - "11211:11211"
+    environment:
+      - TZ=${TZ}
+      - MEMCACHED_MAX_MEMORY=64m  # Set the maximum memory usage
+      - MEMCACHED_THREADS=4       # Number of threads to use
+
+    # HOST LINUX MACHINE METRICS EXPORTER
+  nodeexporter:
+    image: prom/node-exporter:latest
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    container_name: nodeexporter
+    hostname: nodeexporter
+    restart: unless-stopped
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    environment:
+      - TZ=${TZ}
+    expose:
+      - "${PORT_NODEEXPORTER_HTTP:-9100}:9100"
+    labels:
+      org.label-schema.group: "monitoring"
+
+  # DOCKER CONTAINERS METRICS EXPORTER
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    container_name: cadvisor
+    hostname: cadvisor
+    restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/kmsg:/dev/kmsg
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
+    environment:
+      - TZ=${TZ}
+    expose:
+      - "${PORT_CADVISOR_HTTP:-3003}:3000"
+    labels:
+      org.label-schema.group: "monitoring"
+
+
+networks:
+    default:
+      name: caddy-net
+      external: true
+volumes:
+  grafana-storage:
+  tempo-data:

@@ -1,0 +1,41 @@
+name: "dashboard"
+services:
+
+####################
+# Dashboard
+####################
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:${HOMEPAGE_TAG:-latest}
+    container_name: homepage
+    logging:
+      driver: ${LOGGING_DRIVER:-local}
+    networks:
+      - socky_proxy-net
+    ports:
+      - ${PORT_DASH_HTTP}:3000
+    environment:
+      - PUID=${PUID}
+      - PGI=${PGID}
+      - TZ=${TZ}
+      - HOMEPAGE_VAR_ADMIN_DOMAIN=${ADMIN_DOMAIN}
+      - HOMEPAGE_VAR_DOMAIN=${DOMAIN}
+    volumes:
+      - type: volume
+        source: appdata
+        target: /app/config
+        volume:
+          subpath: homepage
+    restart: unless-stopped
+
+networks:
+  socky_proxy-net:
+    name: socky_proxy-net
+    external: true
+volumes:
+  appdata:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${NAS_IP},rw,vers=4.1
+      device: ":/mnt/blackbox/appdata"
