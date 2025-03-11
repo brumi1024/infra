@@ -94,6 +94,7 @@ komodo.{$DOMAIN} {
 uptime.{$DOMAIN} {
     import cloudflare
     import log_common
+    import authenticate
     reverse_proxy homelab-vps.{$TAILNET}:{$PORT_UPTIME_KUMA}
 }
 
