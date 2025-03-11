@@ -114,7 +114,7 @@ homeassistant.{$DOMAIN} {
 
 homeassistant.seq.{$DOMAIN} {
   import cloudflare
-  reverse_proxy homeassistant-seq.{$TAILNET}:{$PORT_HOMEASSISTANT_HTTP}
+  reverse_proxy homeassistant-seq:{$PORT_HOMEASSISTANT_HTTP}
 }
 
 homeassistant.kalasz.{$DOMAIN} {
