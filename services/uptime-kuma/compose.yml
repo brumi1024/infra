@@ -4,8 +4,15 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
+    networks:
+      - socky_proxy-net
     volumes:
       - ${CONFIGDIR}/uptime-kuma-data:/app/data
     ports:
       - ${PORT_UPTIME_KUMA:-3002}:3001  # <Host Port>:<Container Port>
     restart: always
+
+networks:
+  socky_proxy-net:
+    name: socky_proxy-net
+    external: true
