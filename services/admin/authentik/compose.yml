@@ -43,6 +43,15 @@ services:
     volumes:
       - ${CONFIGDIR}/authentik/media:/media
       - ${CONFIGDIR}/authentik/custom-templates:/templates
+    labels:
+      - homepage.group=Addministration
+      - homepage.name=Authentik
+      - homepage.icon=authentik.svg
+      - homepage.href=https://auth.${DOMAIN}
+      - homepage.description=Authentication Service
+      - homepage.widget.type=authentik
+      - homepage.widget.url=http://${HOST_NAME}:${PORT_AUTHENTIK_HTTP}
+      - homepage.widget.key=${AUTHENTIK_HOMEPAGE_TOKEN}
     env_file:
       - ${REPODIR}/docker.env
     ports:
