@@ -21,6 +21,7 @@ services:
       - HOMEPAGE_VAR_ADMIN_DOMAIN=${ADMIN_DOMAIN}
       - HOMEPAGE_VAR_DOMAIN=${DOMAIN}
       - HOMEPAGE_VAR_TAILNET=${TAILNET}
+      - HOMEPAGE_VAR_PORT_SOCKY_PROXY=${PORT_SOCKY_PROXY}
       - HOMEPAGE_VAR_PORT_PROXMOX_HTTPS=${PORT_PROXMOX_HTTPS}
       - HOMEPAGE_VAR_SUSANOO_MONITORING_USER=${SUSANOO_MONITORING_USER}
       - HOMEPAGE_VAR_SUSANOO_MONITORING_TOKEN=${SUSANOO_MONITORING_TOKEN}
@@ -34,21 +35,10 @@ services:
       - HOMEPAGE_VAR_PORT_PLEX_HTTP=${PORT_PLEX_HTTP}
       - HOMEPAGE_VAR_PLEX_TOKEN=${PLEX_HOMEPAGE_TOKEN}
     volumes:
-      - type: volume
-        source: appdata
-        target: /app/config
-        volume:
-          subpath: homepage
+      - ${REPODIR}/services/homepage/config:/app/config
     restart: unless-stopped
 
 networks:
   socky_proxy-net:
     name: socky_proxy-net
     external: true
-volumes:
-  appdata:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=${NAS_IP},rw,vers=4.1
-      device: ":/mnt/blackbox/appdata"
