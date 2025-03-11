@@ -78,7 +78,7 @@ pbs.{$ADMIN_DOMAIN} {
 truenas.{$ADMIN_DOMAIN} {
     import cloudflare
     import log_common
-    reverse_proxy truenas.{$TAILNET}
+    reverse_proxy truenas-scale.{$TAILNET}
 }
 
 grafana.{$ADMIN_DOMAIN} {
