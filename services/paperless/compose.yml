@@ -122,4 +122,6 @@ volumes:
       o: addr=${NAS_IP},rw,vers=4.1
       device: ":/mnt/blackbox/appdata"
   pgdata:
+    name: pgdata
+    driver: local
   redisdata:
