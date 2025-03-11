@@ -121,9 +121,9 @@ volumes:
       type: nfs
       o: addr=${NAS_IP},rw,vers=4.1
       device: ":/mnt/blackbox/appdata"
-  pgdata:
+  paperless-pgdata:
     name: paperless-pgdata
     driver: local
-  redisdata:
+  paperless-redisdata:
     name: paperless-redisdata
     driver: local
