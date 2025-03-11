@@ -79,8 +79,6 @@ services:
       - homepage.widget.key=${PAPERLESS_API_AUTH_TOKEN}
     environment:
       - HOST_NAME=${HOST_NAME}
-      - PORT_PAPERLESS_HTTP=${PORT_PAPERLESS_HTTP}
-      - TAILNET=${TAILNET}
       - PAPERLESS_TIME_ZONE=${TZ}
       - PAPERLESS_OCR_LANGUAGE=eng
       - PAPERLESS_OCR_LANGUAGES=hun
@@ -100,7 +98,6 @@ services:
       - PAPERLESS_ENABLE_ALLAUTH=true
       - PAPERLESS_APPS=allauth.socialaccount.providers.openid_connect
       - PAPERLESS_SOCIALACCOUNT_PROVIDERS=${PAPERLESS_SOCIALACCOUNT_PROVIDERS}
-      - PAPERLESS_API_AUTH_TOKEN=${PAPERLESS_API_AUTH_TOKEN}
     healthcheck:
       test: ["CMD", "curl", "-fs", "-S", "--max-time", "2", "http://localhost:8000"]
       interval: 30s
