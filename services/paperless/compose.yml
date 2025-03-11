@@ -8,7 +8,7 @@ services:
       driver: ${LOGGING_DRIVER:-local}
     restart: unless-stopped
     volumes:
-      - redisdata:/data
+      - paperless-redisdata:/data
     healthcheck:
       interval: 60s
       retries: 5
@@ -22,7 +22,7 @@ services:
       driver: ${LOGGING_DRIVER:-local}
     restart: unless-stopped
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - paperless-pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${PAPERLESS_DB_NAME}
       POSTGRES_USER: ${PAPERLESS_DB_USER}
@@ -122,6 +122,8 @@ volumes:
       o: addr=${NAS_IP},rw,vers=4.1
       device: ":/mnt/blackbox/appdata"
   pgdata:
-    name: pgdata
+    name: paperless-pgdata
     driver: local
   redisdata:
+    name: paperless-redisdata
+    driver: local
