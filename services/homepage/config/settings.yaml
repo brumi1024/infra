@@ -28,7 +28,7 @@ layout:
     columns: 4
   Administration:
     header: true
-  Personal Apps: 
+  Personal Apps:
     header: true
   Media:
     header: true
