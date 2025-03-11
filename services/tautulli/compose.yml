@@ -16,7 +16,7 @@ services:
       - homepage.href=https://tautulli.${DOMAIN}
       - homepage.description=Home Tautulli
       - homepage.widget.type=tautulli
-      - homepage.widget.url=http://${HOST_NAME}:${PORT_TAUTULLI_HTTP}
+      - homepage.widget.url=http://${HOST_NAME}.${TAILNET}:${PORT_TAUTULLI_HTTP}
       - homepage.widget.key=${TAUTULLI_API_AUTH_TOKEN}
       - homepage.widget.enableUser=true
       - homepage.widget.showEpisodeNumber=true

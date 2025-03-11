@@ -37,7 +37,7 @@ services:
       - homepage.href=https://frigate.seq.${DOMAIN}
       - homepage.description=Sequoia Frigate NVR
       - homepage.widget.type=frigate
-      - homepage.widget.url=http://${HOST_NAME}:${PORT_FRIGATE_INTERNAL}
+      - homepage.widget.url=http://${HOST_NAME}.${TAILNET}:${PORT_FRIGATE_INTERNAL}
     environment:
       - TZ=${TZ}
       - HOST_NAME=${HOST_NAME}

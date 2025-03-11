@@ -75,7 +75,7 @@ services:
       - homepage.href=https://paperless.${DOMAIN}
       - homepage.description=Documents
       - homepage.widget.type=paperlessngx
-      - homepage.widget.url=http://${HOST_NAME}:${PORT_PAPERLESS_HTTP}
+      - homepage.widget.url=http://${HOST_NAME}.${TAILNET}:${PORT_PAPERLESS_HTTP}
       - homepage.widget.key=${PAPERLESS_API_AUTH_TOKEN}
     environment:
       - HOST_NAME=${HOST_NAME}

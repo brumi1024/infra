@@ -14,6 +14,16 @@ services:
         volume:
           subpath: photos
       - /etc/localtime:/etc/localtime:ro
+    labels:
+      - homepage.group=Personal Apps
+      - homepage.name=Immich
+      - homepage.icon=immich.svg
+      - homepage.href=https://immich.${DOMAIN}
+      - homepage.description=Photos
+      - homepage.widget.type=immich
+      - homepage.widget.url=http://${HOST_NAME}:${PORT_IMMICH_HTTP}
+      - homepage.widget.key=${IMMICH_API_AUTH_TOKEN}
+      - homepage.widget.version=2
     environment:
       - DB_USERNAME=${IMMICH_DB_USERNAME}
       - DB_PASSWORD=${IMMICH_DB_PASSWORD}
@@ -45,16 +55,6 @@ services:
       - DB_DATABASE_NAME=${IMMICH_DB_DATABASE_NAME}
       - TZ=${TZ}
       - IMMICH_VERSION=${IMMICH_TAG:-release}
-    labels:
-      - homepage.group=Personal Apps
-      - homepage.name=Immich
-      - homepage.icon=immich.svg
-      - homepage.href=https://immich.${DOMAIN}
-      - homepage.description=Photos
-      - homepage.widget.type=immich
-      - homepage.widget.url=http://${HOST_NAME}:${PORT_IMMICH_HTTP}
-      - homepage.widget.key=${IMMICH_API_AUTH_TOKEN}
-      - homepage.widget.version=2
     restart: always
     healthcheck:
       disable: false
