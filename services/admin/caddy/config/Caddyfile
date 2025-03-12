@@ -79,16 +79,17 @@ truenas.{$ADMIN_DOMAIN} {
     reverse_proxy truenas-scale.{$TAILNET}
 }
 
-grafana.{$ADMIN_DOMAIN} {
-    import cloudflare
-    import log_common
-    reverse_proxy docker:{$PORT_GRAFANA_HTTP}
-}
-
 komodo.{$DOMAIN} {
     import cloudflare
     import log_common
     reverse_proxy docker:9120
+}
+
+
+beszel.{$DOMAIN} {
+    import cloudflare
+    import log_common
+    reverse_proxy homelab-vps.{$TAILNET}:{$PORT_BESZEL_HTTP}
 }
 
 uptime.{$DOMAIN} {
