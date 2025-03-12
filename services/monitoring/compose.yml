@@ -10,8 +10,8 @@ services:
     environment:
       - USER_CREATION=true
     volumes:
-      - ${CONFDIR}/beszel_data:/beszel_data
-      - ${CONFDIR}/beszel_socket:/beszel_socket
+      - ${CONFIGDIR}/beszel/beszel_data:/beszel_data
+      - ${CONFIGDIR}/beszel/beszel_socket:/beszel_socket
   beszel-agent:
     image: "henrygd/beszel-agent"
     container_name: "beszel-agent"
