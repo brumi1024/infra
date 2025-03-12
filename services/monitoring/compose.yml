@@ -12,6 +12,12 @@ services:
     volumes:
       - ${CONFIGDIR}/beszel/beszel_data:/beszel_data
       - ${CONFIGDIR}/beszel/beszel_socket:/beszel_socket
+    labels:
+      - homepage.group=Monitoring
+      - homepage.name=Beszel
+      - homepage.icon=beszel.svg
+      - homepage.href=https://beszel.${DOMAIN}
+      - homepage.description=Simple monitoring tool
   beszel-agent:
     image: "henrygd/beszel-agent"
     container_name: "beszel-agent"

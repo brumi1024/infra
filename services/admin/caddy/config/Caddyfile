@@ -70,7 +70,12 @@ eurus.{$ADMIN_DOMAIN} {
 pbs.{$ADMIN_DOMAIN} {
     import cloudflare
     import log_common
-    reverse_proxy https://proxmox-backup-server.{$TAILNET}:{$PORT_PBS_HTTPS}
+    reverse_proxy https://proxmox-backup-server.{$TAILNET}:{$PORT_PBS_HTTPS} {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
 }
 
 truenas.{$ADMIN_DOMAIN} {
@@ -84,7 +89,6 @@ komodo.{$DOMAIN} {
     import log_common
     reverse_proxy docker:9120
 }
-
 
 beszel.{$DOMAIN} {
     import cloudflare
