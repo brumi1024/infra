@@ -23,4 +23,4 @@ services:
       # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
     environment:
       LISTEN: ${PORT_BESZEL_LISTEN}
-      KEY: ${BESZEL_DOCKER_AGENT_KEY}
+      KEY: ${BESZEL_AGENT_KEY}
