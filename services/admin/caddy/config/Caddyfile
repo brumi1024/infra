@@ -112,17 +112,17 @@ auth.{$DOMAIN} {
 
 # Home Assistant
 
-homeassistant.{$DOMAIN} {
+homeassistant.{$DOMAIN}, homeassistant.seq.{$BACKUP_DOMAIN} {
   import cloudflare
   reverse_proxy homeassistant:{$PORT_HOMEASSISTANT_HTTP}
 }
 
-homeassistant.seq.{$DOMAIN} {
+homeassistant.seq.{$DOMAIN}, homeassistant.seq.{$BACKUP_DOMAIN} {
   import cloudflare
   reverse_proxy homeassistant-seq:{$PORT_HOMEASSISTANT_HTTP}
 }
 
-homeassistant.kalasz.{$DOMAIN} {
+homeassistant.kalasz.{$DOMAIN}, homeassistant.kalasz.{$BACKUP_DOMAIN} {
   import cloudflare
   reverse_proxy homeassistant-kalasz:{$PORT_HOMEASSISTANT_HTTP}
 }
@@ -191,7 +191,7 @@ frigate.seq.{$DOMAIN} {
 dash.{$DOMAIN} {
     import authenticate
     import cloudflare
-    reverse_proxy docker:{$PORT_DASH_HTTP}
+    reverse_proxy homelab-vps:{$PORT_DASH_HTTP}
 }
 
 actual.{$DOMAIN} {
