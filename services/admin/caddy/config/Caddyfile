@@ -191,7 +191,7 @@ frigate.seq.{$DOMAIN} {
 dash.{$DOMAIN} {
     import authenticate
     import cloudflare
-    reverse_proxy homelab-vps:{$PORT_DASH_HTTP}
+    reverse_proxy homelab-vps.{$TAILNET}:{$PORT_DASH_HTTP}
 }
 
 actual.{$DOMAIN} {
