@@ -147,6 +147,12 @@ radarr.{$DOMAIN} {
     reverse_proxy docker:{$PORT_RADARR_HTTP}
 }
 
+recommendarr.{$DOMAIN} {
+    import authenticate
+    import cloudflare
+    reverse_proxy docker:{$PORT_RECOMMENDARR}
+}
+
 overseerr.{$DOMAIN} {
     import cloudflare
     reverse_proxy docker:{$PORT_OVERSEERR_HTTP}

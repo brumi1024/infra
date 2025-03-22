@@ -136,12 +136,48 @@ services:
     ports:
       - ${PORT_SONARR_HTTP}:8989
     restart: unless-stopped
+  recommendarr:
+    # For reverse proxy setup uncomment and setup the URLs:
+    build:
+      context: .
+      args:
+       # Build time arguments - set these for the Vue.js build process
+       # Only needed for reverse proxy setup:
+        - PUBLIC_URL=https://recommendarr.${DOMAIN}
+        - BASE_URL=/
+    container_name: recommendarr
+    ports:
+      - "${PORT_RECOMMENDARR}:${PORT_RECOMMENDARR}"  # Unified port for both frontend and API
+    # This is needed to allow the container to access services on the host machine
+    # For example, when connecting to Sonarr, Radarr, Plex etc. running on the host (I think?)
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - NODE_ENV=production
+      - DOCKER_ENV=true
+      - PORT=${PORT_RECOMMENDARR}
+      # Runtime environment variables
+      # For reverse proxy setups, uncomment and modify these do NOT forget the build section above
+      #- PUBLIC_URL=https://recommendarr.yourdomain.com
+      - PUBLIC_URL=https://recommendarr.${DOMAIN}
+      # Uncomment to force secure cookies even over HTTP (only use if behind HTTPS reverse proxy)
+      #- FORCE_SECURE_COOKIES=true
+    labels:
+      - homepage.group=Media Tools
+      - homepage.name=Recommendarr
+      - homepage.icon=recommendarr.svg
+      - homepage.href=https://recommendarr.${DOMAIN}
+      - homepage.description=Media Recommendations Requests
+    volumes:
+      - recommendarr-data:/app/server/data
+    restart: unless-stopped
 
 networks:
   default:
     name: caddy-net
     external: true
 volumes:
+  recommendarr-data:
   media:
     driver: local
     driver_opts:
