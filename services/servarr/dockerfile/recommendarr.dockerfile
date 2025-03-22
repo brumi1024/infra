@@ -43,4 +43,4 @@ RUN apk add --no-cache dos2unix && dos2unix /start-unified.sh && chmod +x /start
 EXPOSE 3000
 
 # Start unified server
-CMD ["sh", "/start-unified.sh"]
+CMD ["sh", "node server/server.js"]
