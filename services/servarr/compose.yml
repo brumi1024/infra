@@ -140,6 +140,7 @@ services:
     # For reverse proxy setup uncomment and setup the URLs:
     build:
       context: ${REPODIR}/services/servarr/dockerfile
+      dockerfile: recommendarr.dockerfile
       args:
        # Build time arguments - set these for the Vue.js build process
        # Only needed for reverse proxy setup:
