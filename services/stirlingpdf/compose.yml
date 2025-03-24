@@ -12,7 +12,7 @@ services:
       - ${CONFIGDIR}/StirlingPDF/logs:/logs/
       - ${CONFIGDIR}/StirlingPDF/pipeline:/pipeline/
     environment:
-      - DOCKER_ENABLE_SECURITY=false
+      - DOCKER_ENABLE_SECURITY=true
       - LANGS=en_GB,hu
       - UI_APPNAME=Stirling PDF
       - UI_HOMEDESCRIPTION=Your locally hosted one-stop-shop for all your PDF needs.
@@ -25,6 +25,7 @@ services:
       - SECURITY_OAUTH2_CLIENTSECRET=${STIRLING_OAUTH_CLIENT_SECRET}
       - SECURITY_OAUTH2_AUTOCREATEUSER=true
       - SECURITY_OAUTH2_BLOCKREGISTRATION=false
+      - SECURITY_OAUTH2_SCOPES="openid, profile, email"
       - SECURITY_OAUTH2_USEASUSERNAME=email
       - SECURITY_OAUTH2_PROVIDER=authentik
     labels:
