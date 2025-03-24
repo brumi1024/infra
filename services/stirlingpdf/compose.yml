@@ -18,6 +18,7 @@ services:
       - UI_HOMEDESCRIPTION=Your locally hosted one-stop-shop for all your PDF needs.
       - UI_APPNAVBARNAME=Stirling PDF
       - SECURITY_ENABLELOGIN=true
+      - SECURITY_LOGINMETHOD=oauth2
       - SECURITY_OAUTH2_ENABLED=true
       - SECURITY_OAUTH2_ISSUER=${STIRLING_OAUTH_ISSUER}
       - SECURITY_OAUTH2_CLIENTID=${STIRLING_OAUTH_CLIENT_ID}
