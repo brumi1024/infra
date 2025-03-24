@@ -210,6 +210,11 @@ paperless.{$DOMAIN} {
     reverse_proxy docker:{$PORT_PAPERLESS_HTTP}
 }
 
+stirling.{$DOMAIN} {
+    import cloudflare
+    reverse_proxy docker:{$PORT_STIRLING_HTTP}
+}
+
 immich.{$DOMAIN} {
     import cloudflare
     reverse_proxy docker:{$PORT_IMMICH_HTTP}
