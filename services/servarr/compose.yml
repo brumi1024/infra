@@ -177,10 +177,10 @@ networks:
     name: caddy-net
     external: true
 volumes:
-  recommendarr-data:
   media:
     driver: local
     driver_opts:
       type: nfs
       o: addr=${NAS_IP},rw,vers=4.1
       device: ":/mnt/blackbox/media"
+  recommendarr-data:

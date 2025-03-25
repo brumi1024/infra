@@ -35,6 +35,7 @@ services:
       - HOMEPAGE_VAR_HOMEASSISTANT_KALASZ_KEY=${HOMEASSISTANT_KALASZ_KEY}
       - HOMEPAGE_VAR_PORT_PLEX_HTTP=${PORT_PLEX_HTTP}
       - HOMEPAGE_VAR_PLEX_TOKEN=${PLEX_HOMEPAGE_TOKEN}
+      - HOMEPAGE_VAR_PIHOLE1_APP_PASSWORD=${PIHOLE1_APP_PASSWORD}
     volumes:
       - ${REPODIR}/services/homepage/config:/app/config
     restart: unless-stopped

@@ -78,6 +78,12 @@ pbs.{$ADMIN_DOMAIN} {
     }
 }
 
+pihole1.{$ADMIN_DOMAIN} {
+    import cloudflare
+    import log_common
+    reverse_proxy https://pihole1.{$TAILNET}/admin
+}
+
 truenas.{$ADMIN_DOMAIN} {
     import cloudflare
     import log_common
