@@ -82,7 +82,12 @@ pihole1.{$ADMIN_DOMAIN} {
     import cloudflare
     import log_common
     redir / /admin{uri}
-    reverse_proxy https://pihole1.{$TAILNET}
+    reverse_proxy https://pihole1.{$TAILNET} {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
 }
 
 truenas.{$ADMIN_DOMAIN} {
