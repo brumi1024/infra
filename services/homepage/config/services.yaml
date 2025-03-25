@@ -31,6 +31,7 @@
         ping: pihole1.{{HOMEPAGE_VAR_TAILNET}}
         widget:
             type: pihole
+            version: 6
             url: http://pihole1.{{HOMEPAGE_VAR_TAILNET}}
             key: {{HOMEPAGE_VAR_PIHOLE1_APP_PASSWORD}}
 
