@@ -25,7 +25,7 @@
             key: {{HOMEPAGE_VAR_TRUENAS_SCALE_TOKEN}}
             enablePools: true
     - Pi-hole1:
-        icon: pihole.svg
+        icon: pi-hole.svg
         href: https://pihole1.{{HOMEPAGE_VAR_ADMIN_DOMAIN}}
         description: Primary Pi-hole instance.
         ping: pihole1.{{HOMEPAGE_VAR_TAILNET}}
