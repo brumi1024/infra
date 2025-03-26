@@ -27,7 +27,7 @@
     - Pi-hole1:
         icon: pi-hole.svg
         href: https://pihole1.{{HOMEPAGE_VAR_ADMIN_DOMAIN}}
-        description: Primary Pi-hole instance.
+        description: Primary Pi-hole instance. {{HOMEPAGE_VAR_PIHOLE1_APP_PASSWORD}}
         ping: pihole1.{{HOMEPAGE_VAR_TAILNET}}
         widget:
             type: pihole
