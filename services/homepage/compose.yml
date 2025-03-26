@@ -36,6 +36,7 @@ services:
       - HOMEPAGE_VAR_PORT_PLEX_HTTP=${PORT_PLEX_HTTP}
       - HOMEPAGE_VAR_PLEX_TOKEN=${PLEX_HOMEPAGE_TOKEN}
       - HOMEPAGE_VAR_PIHOLE_1_APP_PASSWORD=${PIHOLE_1_APP_PASSWORD}
+      - HOMEPAGE_VAR_PIHOLE_2_APP_PASSWORD=${PIHOLE_2_APP_PASSWORD}
     volumes:
       - ${REPODIR}/services/homepage/config:/app/config
     restart: unless-stopped
