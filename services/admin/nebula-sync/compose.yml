@@ -6,7 +6,7 @@ services:
     container_name: nebula-sync
     environment:
     - PRIMARY=http://192.168.50.11|${PIHOLE_1_APP_PASSWORD}
-    - REPLICAS=https://192.168.50.12|${PIHOLE_2_APP_PASSWORD}
+    - REPLICAS=http://192.168.50.12|${PIHOLE_2_APP_PASSWORD}
     - FULL_SYNC=true
     - RUN_GRAVITY=true
     - CRON=0 * * * *
