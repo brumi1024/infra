@@ -12,6 +12,7 @@ services:
     - CRON=0 * * * *
     - TZ=${TZ}
     - CLIENT_SKIP_TLS_VERIFICATION=true
+    - NS_DEBUG=true
 
 networks:
   default:
