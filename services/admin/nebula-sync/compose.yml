@@ -12,8 +12,3 @@ services:
     - CRON=0 * * * *
     - TZ=${TZ}
     - NS_DEBUG=true
-
-networks:
-  default:
-    name: caddy-net
-    external: true
