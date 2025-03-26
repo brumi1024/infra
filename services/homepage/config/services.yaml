@@ -27,13 +27,13 @@
     - Pi-hole1:
         icon: pi-hole.svg
         href: https://pihole1.{{HOMEPAGE_VAR_ADMIN_DOMAIN}}
-        description: Primary Pi-hole instance. {{HOMEPAGE_VAR_PIHOLE1_APP_PASSWORD}}
+        description: Primary Pi-hole instance.
         ping: pihole1.{{HOMEPAGE_VAR_TAILNET}}
         widget:
             type: pihole
             version: 6
             url: http://pihole1.{{HOMEPAGE_VAR_TAILNET}}
-            key: {{HOMEPAGE_VAR_PIHOLE1_APP_PASSWORD}}
+            key: {{HOMEPAGE_VAR_PIHOLE_1_APP_PASSWORD}}
 
 - Sequoia:
     - Proxmox:
