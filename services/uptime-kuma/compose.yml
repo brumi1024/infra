@@ -13,7 +13,7 @@ services:
       - homepage.name=Uptime Kuma
       - homepage.icon=uptime-kuma.svg
       - homepage.href=https://uptime.${DOMAIN}
-      - homepage.description=Uptime monitor
+      - homepage.description=Uptime monitor http://${HOST_NAME}.${TAILNET}:${PORT_UPTIME_KUMA}
       - homepage.widget.type=uptimekuma
       - homepage.widget.url=http://${HOST_NAME}.${TAILNET}:${PORT_UPTIME_KUMA}
     ports:
