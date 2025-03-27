@@ -67,7 +67,7 @@
             url: http://zephyrus.{{HOMEPAGE_VAR_TAILNET}}:{{HOMEPAGE_VAR_PORT_ZEPHYRUS_HTTP}}
             username: remote_stats
             password: JOAN!enduring5apples
-    - Pi-hole 1:
+    - Pi-hole Sequoia 1:
         icon: pi-hole.svg
         href: https://pihole1.seq.{{HOMEPAGE_VAR_ADMIN_DOMAIN}}
         description: Primary Pi-hole instance.
