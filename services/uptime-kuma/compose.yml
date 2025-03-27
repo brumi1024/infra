@@ -16,7 +16,7 @@ services:
       - homepage.description=Uptime monitor
       - homepage.widget.type=uptimekuma
       - homepage.widget.url=http://${HOST_NAME}.${TAILNET}:${PORT_UPTIME_KUMA}
-      - homepage.widget.statuspageslug=services
+      - homepage.widget.slug=services
     ports:
       - ${PORT_UPTIME_KUMA:-3002}:3001  # <Host Port>:<Container Port>
     restart: always
