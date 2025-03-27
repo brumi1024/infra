@@ -67,10 +67,16 @@
             url: http://zephyrus.{{HOMEPAGE_VAR_TAILNET}}:{{HOMEPAGE_VAR_PORT_ZEPHYRUS_HTTP}}
             username: remote_stats
             password: JOAN!enduring5apples
-    - Unifi:
-        icon: unifi.svg
-        href: https://unifi.ui.com/
-        description: Sequoia Unifi
+    - Pi-hole 1:
+        icon: pi-hole.svg
+        href: https://pihole1.seq.{{HOMEPAGE_VAR_ADMIN_DOMAIN}}
+        description: Primary Pi-hole instance.
+        ping: pihole-seq-1.{{HOMEPAGE_VAR_TAILNET}}
+        widget:
+            type: pihole
+            version: 6
+            url: http://pihole1.seq.{{HOMEPAGE_VAR_TAILNET}}
+            key: {{HOMEPAGE_VAR_SEQUOIA_PIHOLE_1_APP_PASSWORD}}
 
 - Smart Home:
     - Home Assistant:
@@ -100,6 +106,12 @@
             type: homeassistant
             url: https://homeassistant.kalasz.{{HOMEPAGE_VAR_DOMAIN}}
             key: {{HOMEPAGE_VAR_HOMEASSISTANT_KALASZ_KEY}}
+
+- Administration:
+    - Unifi:
+        icon: unifi.svg
+        href: https://unifi.ui.com/
+        description: Unifi Controller
 
 - Media:
     - Plex:
