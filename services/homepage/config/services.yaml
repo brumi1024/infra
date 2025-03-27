@@ -75,7 +75,7 @@
         widget:
             type: pihole
             version: 6
-            url: http://pihole1.seq.{{HOMEPAGE_VAR_TAILNET}}
+            url: http://pihole-seq-1.{{HOMEPAGE_VAR_TAILNET}}
             key: {{HOMEPAGE_VAR_SEQUOIA_PIHOLE_1_APP_PASSWORD}}
 
 - Smart Home:
