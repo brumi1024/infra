@@ -143,16 +143,7 @@ services:
     container_name: readarr
     volumes:
       - ${CONFIGDIR}/readarr:/config
-      - type: volume
-        source: media
-        target: /downloads
-        volume:
-          subpath: downloads
-      - type: volume
-        source: media
-        target: /books
-        volume:
-          subpath: books
+      - media:/data
     labels:
       - homepage.group=Media Tools
       - homepage.name=Readarr
