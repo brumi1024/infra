@@ -87,7 +87,7 @@ services:
       - PAPERLESS_DATE_ORDER=MDY
 
       - PAPERLESS_WEBSERVER_WORKERS=2
-      - PAPERLESS_CONSUMER_POLLING=600
+      - PAPERLESS_CONSUMER_POLLING=10
 
       - PAPERLESS_REDIS=redis://paperless-broker:6379
       - PAPERLESS_DBHOST=paperless-db
