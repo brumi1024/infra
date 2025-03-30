@@ -24,9 +24,9 @@ services:
     volumes:
       - paperless-pgdata:/var/lib/postgresql/data
     environment:
-      PGUSER:${PAPERLESS_DB_USER}
       POSTGRES_DB: ${PAPERLESS_DB_NAME}
       POSTGRES_USER: ${PAPERLESS_DB_USER}
+      PGUSER: ${PAPERLESS_DB_USER}
       POSTGRES_PASSWORD: ${PAPERLESS_DB_PASSWORD}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $$PAPERLESS_DB_NAME -U $$PAPERLESS_DB_USER"]
