@@ -24,6 +24,7 @@ services:
     volumes:
       - paperless-pgdata:/var/lib/postgresql/data
     environment:
+      PGUSER:${PAPERLESS_DB_USER}
       POSTGRES_DB: ${PAPERLESS_DB_NAME}
       POSTGRES_USER: ${PAPERLESS_DB_USER}
       POSTGRES_PASSWORD: ${PAPERLESS_DB_PASSWORD}
