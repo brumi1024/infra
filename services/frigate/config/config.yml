@@ -36,7 +36,7 @@ semantic_search:
   model_size: large
 audio:
  # Optional: Enable audio events
-  enabled: true
+  enabled: false
 ffmpeg:
   # Optional: global ffmpeg args (default: shown below)
   global_args: -hide_banner -loglevel warning
@@ -237,10 +237,10 @@ cameras:
   #driveway:
   #  ffmpeg:
   #    inputs:
-  #      - path: rtsp://host.docker.internal:8554/driveway
+  #      - path: rtsp://127.0.0.1:8554/driveway
   #        roles:
   #          - record
-  #      - path: rtsp://host.docker.internal:8554/driveway_sub
+  #      - path: rtsp://127.0.0.1:8554/driveway_sub
   #        roles:
   #          - detect
   #          - audio
@@ -281,11 +281,11 @@ cameras:
   parking_area:
     ffmpeg:
       inputs:
-        - path: rtsp://host.docker.internal:8554/parking_area
+        - path: rtsp://127.0.0.1:8554/parking_area
           roles:
             - detect
             - record
-            - audio
+            # - audio
     best_image_timeout: 120
     objects:
       track:
@@ -295,11 +295,11 @@ cameras:
   main_terrace:
     ffmpeg:
       inputs:
-        - path: rtsp://host.docker.internal:8554/main_terrace
+        - path: rtsp://127.0.0.1:8554/main_terrace
           roles:
             - detect
             - record
-            - audio
+            # - audio
     objects:
       track:
         - person
@@ -308,11 +308,11 @@ cameras:
   shed:
     ffmpeg:
       inputs:
-        - path: rtsp://host.docker.internal:8554/shed
+        - path: rtsp://127.0.0.1:8554/shed
           roles:
             - detect
             - record
-            - audio
+            # - audio
     objects:
       track:
         - person
@@ -321,13 +321,13 @@ cameras:
   nordic_entrance:
     ffmpeg:
       inputs:
-        - path: rtsp://host.docker.internal:8554/nordic_entrance
+        - path: rtsp://127.0.0.1:8554/nordic_entrance
           roles:
             - record
-        - path: rtsp://host.docker.internal:8554/nordic_entrance_sub
+        - path: rtsp://127.0.0.1:8554/nordic_entrance_sub
           roles:
             - detect
-            - audio
+            # - audio
     motion:
       mask:
         - 0,0,190,0,322,0,346,88,0,124
@@ -367,13 +367,13 @@ cameras:
   nordic_front:
     ffmpeg:
       inputs:
-        - path: rtsp://host.docker.internal:8554/nordic_front
+        - path: rtsp://127.0.0.1:8554/nordic_front
           roles:
             - record
-        - path: rtsp://host.docker.internal:8554/nordic_front_sub
+        - path: rtsp://127.0.0.1:8554/nordic_front_sub
           roles:
             - detect
-            - audio
+            # - audio
     objects:
       track:
         - person
@@ -385,13 +385,13 @@ cameras:
   nordic_west:
     ffmpeg:
       inputs:
-        - path: rtsp://host.docker.internal:8554/nordic_west
+        - path: rtsp://127.0.0.1:8554/nordic_west
           roles:
             - record
-        - path: rtsp://host.docker.internal:8554/nordic_west_sub
+        - path: rtsp://127.0.0.1:8554/nordic_west_sub
           roles:
             - detect
-            - audio
+            # - audio
       output_args:
         record: preset-record-generic-audio-copy
     objects:
@@ -402,15 +402,15 @@ cameras:
   front_gate:
     ffmpeg:
       inputs:
-        - path: rtsp://host.docker.internal:8554/front_gate
+        - path: rtsp://127.0.0.1:8554/front_gate
           input_args: preset-rtsp-restream
           roles:
             - record
-        - path: rtsp://host.docker.internal:8554/front_gate_sub
+        - path: rtsp://127.0.0.1:8554/front_gate_sub
           input_args: preset-rtsp-restream
           roles:
             - detect
-            - audio
+            # - audio
       hwaccel_args: preset-vaapi
       output_args:
         record: preset-record-ubiquiti
