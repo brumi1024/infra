@@ -36,7 +36,7 @@ semantic_search:
   model_size: large
 audio:
  # Optional: Enable audio events
-  enabled: false
+  enabled: true
 ffmpeg:
   # Optional: global ffmpeg args (default: shown below)
   global_args: -hide_banner -loglevel warning
@@ -285,7 +285,7 @@ cameras:
           roles:
             - detect
             - record
-            # - audio
+            - audio
     best_image_timeout: 120
     objects:
       track:
@@ -299,7 +299,7 @@ cameras:
           roles:
             - detect
             - record
-            # - audio
+            - audio
     objects:
       track:
         - person
@@ -312,7 +312,7 @@ cameras:
           roles:
             - detect
             - record
-            # - audio
+            - audio
     objects:
       track:
         - person
@@ -327,7 +327,7 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_entrance_sub
           roles:
             - detect
-            # - audio
+            - audio
     motion:
       mask:
         - 0,0,190,0,322,0,346,88,0,124
@@ -373,7 +373,7 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_front_sub
           roles:
             - detect
-            # - audio
+            - audio
     objects:
       track:
         - person
@@ -391,7 +391,7 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_west_sub
           roles:
             - detect
-            # - audio
+            - audio
       output_args:
         record: preset-record-generic-audio-copy
     objects:
@@ -410,7 +410,7 @@ cameras:
           input_args: preset-rtsp-restream
           roles:
             - detect
-            # - audio
+            - audio
       hwaccel_args: preset-vaapi
       output_args:
         record: preset-record-ubiquiti
