@@ -422,6 +422,7 @@ cameras:
       hwaccel_args: preset-vaapi
       output_args:
         record: preset-record-ubiquiti
+      apple_compatibility: true
     motion:
       mask:
         - 0,0,1600,0,1600,219,1068,332,700,298,504,231,0,161
