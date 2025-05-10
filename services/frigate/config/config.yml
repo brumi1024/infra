@@ -42,9 +42,6 @@ lpr:
   known_plates:
     Beni:
       plate: 'AI CS-319'
-      color: 'blue'
-      make: 'BMW'
-      model: 'i4 M50'
 audio:
  # Optional: Enable audio events
   enabled: true
