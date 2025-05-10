@@ -266,7 +266,6 @@ cameras:
   #        - car
   #        - motorcycle
   #        - bus
-  #        - licence_plate
   #    road:
   #      coordinates: 619,185,640,138,607,131,552,155,510,183
   #      objects:
@@ -351,14 +350,12 @@ cameras:
           - car
           - motorcycle
           - bus
-          - licence_plate
       entryway:
         coordinates: 640,132,478,71,344,71,324,108,640,263
         objects:
           - car
           - motorcycle
           - bus
-          - licence_plate
       everywhere:
         coordinates: 0,480,640,480,640,196,640,54,562,30,330,34,341,77,0,118
         objects:
