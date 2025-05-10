@@ -37,6 +37,14 @@ semantic_search:
   model_size: large
 lpr:
   enabled: true
+  min_area: 1500 # Ignore plates with an area (length x width) smaller than 1500 pixels
+  min_plate_length: 4 # Only recognize plates with 4 or more characters
+  known_plates:
+    Beni:
+      plate: 'AI CS-319'
+      color: 'blue'
+      make: 'BMW'
+      model: 'i4 M50'
 audio:
  # Optional: Enable audio events
   enabled: true
@@ -45,7 +53,7 @@ ffmpeg:
   global_args: -hide_banner -loglevel warning
   # Optional: global hwaccel args (default: shown below)
   # NOTE: See hardware acceleration docs for your specific device
-  hwaccel_args: preset-intel-qsv-h264
+  hwaccel_args: preset-vaapi
   # Optional: global input args
   input_args: preset-rtsp-restream
   # Optional: global output args
@@ -295,19 +303,19 @@ cameras:
         - person
         - cat
         - dog
-  main_terrace:
-    ffmpeg:
-      inputs:
-        - path: rtsp://127.0.0.1:8554/main_terrace
-          roles:
-            - detect
-            - record
-            - audio
-    objects:
-      track:
-        - person
-        - cat
-        - dog
+  #main_terrace:
+  #  ffmpeg:
+  #    inputs:
+  #      - path: rtsp://127.0.0.1:8554/main_terrace
+  #        roles:
+  #          - detect
+  #          - record
+  #          - audio
+  #  objects:
+  #    track:
+  #      - person
+  #      - cat
+  #      - dog
   shed:
     ffmpeg:
       inputs:
@@ -409,10 +417,10 @@ cameras:
           input_args: preset-rtsp-restream
           roles:
             - record
+            - detect
         - path: rtsp://127.0.0.1:8554/front_gate_sub
           input_args: preset-rtsp-restream
           roles:
-            - detect
             - audio
       hwaccel_args: preset-vaapi
       output_args:
