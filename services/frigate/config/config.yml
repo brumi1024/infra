@@ -55,7 +55,7 @@ ffmpeg:
   input_args: preset-rtsp-restream
   # Optional: global output args
   output_args:
-    record: preset-record-generic-audio-copy
+    record: preset-record-generic-audio-aac
 detect:
   # Optional: enables detection for the camera (default: True)
   # This value can be set via MQTT and will be updated in startup based on retained value
@@ -419,7 +419,6 @@ cameras:
           input_args: preset-rtsp-restream
           roles:
             - audio
-      hwaccel_args: preset-vaapi
       output_args:
         record: preset-record-ubiquiti
       apple_compatibility: true
