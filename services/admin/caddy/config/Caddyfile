@@ -237,7 +237,7 @@ frigate.seq.{$DOMAIN} {
         #        tls
         #        tls_insecure_skip_verify
         #}
-    }
+    #}
 }
 
 # Services
