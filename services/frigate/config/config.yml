@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=http://100.112.177.31:5000/api/config/schema
+# yaml-language-server: $schema=http://sequoia-docker:5000/api/config/schema.json
 mqtt:
   host: 192.168.1.5
   user: '{FRIGATE_MQTT_USER}'
