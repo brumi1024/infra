@@ -232,11 +232,11 @@ zephyrus.{$DOMAIN} {
 frigate.seq.{$DOMAIN} {
     import authenticate
     import cloudflare
-    reverse_proxy http://sequoia-docker:{$PORT_FRIGATE_HTTP} {
-        transport http {
-                tls
-                tls_insecure_skip_verify
-        }
+    reverse_proxy http://sequoia-docker:{$PORT_FRIGATE_HTTP} #{
+        #transport http {
+        #        tls
+        #        tls_insecure_skip_verify
+        #}
     }
 }
 
