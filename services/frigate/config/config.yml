@@ -37,11 +37,11 @@ semantic_search:
   model_size: large
 lpr:
   enabled: true
-  min_area: 1500 # Ignore plates with an area (length x width) smaller than 1500 pixels
   min_plate_length: 4 # Only recognize plates with 4 or more characters
   known_plates:
     Beni:
       - 'AI CS-319'
+  match_distance: 1
 audio:
  # Optional: Enable audio events
   enabled: true
@@ -91,7 +91,6 @@ objects:
     - car
     - motorcycle
     - bus
-    - licence_plate
 motion:
   # Optional: The threshold passed to cv2.threshold to determine if a pixel is different enough to be counted as motion. (default: shown below)
   # Increasing this value will make motion detection less sensitive and decreasing it will make motion detection more sensitive.
