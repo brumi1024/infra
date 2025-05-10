@@ -426,7 +426,7 @@ cameras:
       mask:
         - 0,0,1600,0,1600,219,1068,332,700,298,504,231,0,161
     lpr:
-      enabled: false
+      enabled: true
 face_recognition:
   enabled: true
   model_size: large
