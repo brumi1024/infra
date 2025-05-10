@@ -41,7 +41,7 @@ lpr:
   min_plate_length: 4 # Only recognize plates with 4 or more characters
   known_plates:
     Beni:
-      plate: 'AI CS-319'
+      - 'AI CS-319'
 audio:
  # Optional: Enable audio events
   enabled: true
