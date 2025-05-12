@@ -37,11 +37,11 @@ semantic_search:
   model_size: large
 lpr:
   enabled: true
-  min_plate_length: 4 # Only recognize plates with 4 or more characters
+  min_plate_length: 2 # Only recognize plates with 4 or more characters
   known_plates:
     Beni:
-      - 'AI CS-319'
-  match_distance: 1
+      - AI CS-319
+  match_distance: 2
 audio:
  # Optional: Enable audio events
   enabled: true
@@ -284,125 +284,7 @@ cameras:
   #        - entry
   #        - road
   #        - everywhere
-  parking_area:
-    ffmpeg:
-      inputs:
-        - path: rtsp://127.0.0.1:8554/parking_area
-          roles:
-            - detect
-            - record
-            - audio
-    best_image_timeout: 120
-    objects:
-      track:
-        - person
-        - cat
-        - dog
-  #main_terrace:
-  #  ffmpeg:
-  #    inputs:
-  #      - path: rtsp://127.0.0.1:8554/main_terrace
-  #        roles:
-  #          - detect
-  #          - record
-  #          - audio
-  #  objects:
-  #    track:
-  #      - person
-  #      - cat
-  #      - dog
-  shed:
-    ffmpeg:
-      inputs:
-        - path: rtsp://127.0.0.1:8554/shed
-          roles:
-            - detect
-            - record
-            - audio
-    objects:
-      track:
-        - person
-        - cat
-        - dog
-  nordic_entrance:
-    ffmpeg:
-      inputs:
-        - path: rtsp://127.0.0.1:8554/nordic_entrance
-          roles:
-            - record
-        - path: rtsp://127.0.0.1:8554/nordic_entrance_sub
-          roles:
-            - detect
-            - audio
-    motion:
-      mask:
-        - 0,0,190,0,322,0,346,88,0,124
-        - 505,62,640,88,640,0,552,0,521,0
-    snapshots:
-      required_zones:
-        - gate
-        - entryway
-        - everywhere
-    zones:
-      gate:
-        coordinates: 401,69,397,82,458,94,534,61,540,0,339,0,344,73
-        objects:
-          - car
-          - motorcycle
-          - bus
-      entryway:
-        coordinates: 640,132,478,71,344,71,324,108,640,263
-        objects:
-          - car
-          - motorcycle
-          - bus
-      everywhere:
-        coordinates: 0,480,640,480,640,196,640,54,562,30,330,34,341,77,0,118
-        objects:
-          - person
-          - cat
-          - dog
-    review:
-      alerts:
-        required_zones:
-          - gate
-          - entryway
-          - everywhere
-  nordic_front:
-    ffmpeg:
-      inputs:
-        - path: rtsp://127.0.0.1:8554/nordic_front
-          roles:
-            - record
-        - path: rtsp://127.0.0.1:8554/nordic_front_sub
-          roles:
-            - detect
-            - audio
-    objects:
-      track:
-        - person
-        - cat
-        - dog
-    motion:
-      mask:
-        - 0,176,0,0,157,0,285,0,297,62,160,80
-  nordic_west:
-    ffmpeg:
-      inputs:
-        - path: rtsp://127.0.0.1:8554/nordic_west
-          roles:
-            - record
-        - path: rtsp://127.0.0.1:8554/nordic_west_sub
-          roles:
-            - detect
-            - audio
-      output_args:
-        record: preset-record-generic-audio-copy
-    objects:
-      track:
-        - person
-        - cat
-        - dog
+
   front_gate:
     ffmpeg:
       inputs:
