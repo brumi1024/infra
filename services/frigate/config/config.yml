@@ -38,10 +38,10 @@ semantic_search:
   model_size: small
 lpr:
   enabled: true
-  min_plate_length: 2 # Only recognize plates with 4 or more characters
+  min_plate_length: 3 # Only recognize plates with 4 or more characters
   known_plates:
     Beni:
-      - AI CS-319
+      - AICS-319
   match_distance: 2
 audio:
  # Optional: Enable audio events
