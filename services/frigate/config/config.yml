@@ -17,7 +17,7 @@ proxy:
   header_map:
     user: x-authentik-username
     role: x-forwarded-role
-    default_role: admin
+  default_role: admin
 birdseye:
   # Optional: Enable birdseye view (default: shown below)
   enabled: true
