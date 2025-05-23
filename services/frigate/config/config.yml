@@ -215,12 +215,12 @@ go2rtc:
     username: '{FRIGATE_GO2RTC_RTSP_USERNAME}'
     password: '{FRIGATE_GO2RTC_RTSP_PASSWORD}'
   streams:
-    #driveway:
-    #  - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h265Preview_01_main
-    #  - ffmpeg:driveway#video=h264#hardware#audio=opus
-    #driveway_sub:
-    #  - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h264Preview_01_sub
-    #  - ffmpeg:driveway_sub#video=h264#hardware#audio=opus
+    main_pool:
+      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h265Preview_01_main
+      - ffmpeg:driveway#video=h264#hardware#audio=opus
+    main_pool_sub:
+      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h264Preview_01_sub
+      - ffmpeg:driveway_sub#video=h264#hardware#audio=opus
     nordic_entrance:
       - ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     nordic_entrance_sub:
@@ -247,19 +247,23 @@ go2rtc:
     front_gate_sub:
       - rtspx://192.168.1.1:7441/gcEGERg66Iw13NC8
 cameras:
-  #driveway:
-  #  ffmpeg:
-  #    inputs:
-  #      - path: rtsp://127.0.0.1:8554/driveway
-  #        roles:
-  #          - record
-  #      - path: rtsp://127.0.0.1:8554/driveway_sub
-  #        roles:
-  #          - detect
-  #          - audio
-  #  motion:
-  #    mask:
-  #      - 640,0,640,0,640,101,429,98,232,110,0,144,0,0
+  main_pool:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/main_pool
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/main_pool_sub
+          roles:
+            - detect
+            - audio
+      output_args:
+        record: preset-record-generic-audio-copy
+    objects:
+      track:
+        - person
+        - cat
+        - dog
   #  snapshots:
   #    required_zones:
   #      - entry
