@@ -66,7 +66,7 @@
             type: diskstation
             url: http://zephyrus.{{HOMEPAGE_VAR_TAILNET}}:{{HOMEPAGE_VAR_PORT_ZEPHYRUS_HTTP}}
             username: remote_stats
-            password: JOAN!enduring5apples
+            password: {{HOMEPAGE_VAR_ZEPHYRUS_REMOTE_STATS_PASSWORD}}
     - Pi-hole Sequoia 1:
         icon: pi-hole.svg
         href: https://pihole1.seq.{{HOMEPAGE_VAR_ADMIN_DOMAIN}}
