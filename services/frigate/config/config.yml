@@ -314,6 +314,7 @@ cameras:
         - dog
   main_terrace:
     ffmpeg:
+      hwaccel_args: ""
       inputs:
         - path: rtsp://127.0.0.1:8554/main_terrace
           roles:
@@ -330,7 +331,7 @@ cameras:
     onvif:
       # Required: host of the camera being connected to.
       # NOTE: HTTP is assumed by default; HTTPS is supported if you specify the scheme, ex: "https://0.0.0.0".
-      host: http://192.168.1.227
+      host: 192.168.1.227
       # Optional: ONVIF port for device (default: shown below).
       port: 8000
       # Optional: username for login.
