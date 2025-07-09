@@ -218,10 +218,10 @@ go2rtc:
   streams:
     main_pool:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h265Preview_01_main
-      - ffmpeg:driveway#video=h264#hardware#audio=opus
+      - ffmpeg:main_pool#video=h264#hardware#audio=opus
     main_pool_sub:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h264Preview_01_sub
-      - ffmpeg:driveway_sub#video=h264#hardware#audio=opus
+      - ffmpeg:main_pool_sub#video=h264#hardware#audio=opus
     nordic_entrance:
       - ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     nordic_entrance_sub:
@@ -239,7 +239,10 @@ go2rtc:
       - ffmpeg:parking_area#audio=opus
     main_terrace:
       - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.227:554/h265Preview_01_main
-      - ffmpeg:driveway#video=h264#hardware#audio=opus
+      - ffmpeg:main_terrace#video=h264#hardware#audio=opus
+    main_terrace_sub:
+      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.227:554/h264Preview_01_sub
+      - ffmpeg:main_terrace_sub#video=h264#hardware#audio=opus
     shed:
       - rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:shed#audio=opus
@@ -314,8 +317,10 @@ cameras:
       inputs:
         - path: rtsp://127.0.0.1:8554/main_terrace
           roles:
-            - detect
             - record
+        - path: rtsp://127.0.0.1:8554/main_terrace_sub
+          roles:
+            - detect
             - audio
     objects:
       track:
