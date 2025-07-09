@@ -330,9 +330,9 @@ cameras:
       port: 8000
       # Optional: username for login.
       # NOTE: Some devices require admin to access ONVIF.
-      user: {FRIGATE_RTSP_USER}
+      user: '{FRIGATE_RTSP_USER}'
       # Optional: password for login.
-      password: {FRIGATE_RTSP_PASSWORD}
+      password: '{FRIGATE_RTSP_PASSWORD}'
       # Optional: Skip TLS verification from the ONVIF server (default: shown below)
       tls_insecure: False
       # Optional: PTZ camera object autotracking. Keeps a moving object in
