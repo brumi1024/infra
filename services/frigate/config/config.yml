@@ -330,7 +330,7 @@ cameras:
     onvif:
       # Required: host of the camera being connected to.
       # NOTE: HTTP is assumed by default; HTTPS is supported if you specify the scheme, ex: "https://0.0.0.0".
-      host: https://192.168.1.227
+      host: http://192.168.1.227
       # Optional: ONVIF port for device (default: shown below).
       port: 8000
       # Optional: username for login.
@@ -344,7 +344,7 @@ cameras:
       # the center of the frame by automatically moving the PTZ camera.
       autotracking:
         # Optional: enable/disable object autotracking. (default: shown below)
-        enabled: False
+        enabled: True
         # Optional: calibrate the camera on startup (default: shown below)
         # A calibration will move the PTZ in increments and measure the time it takes to move.
         # The results are used to help estimate the position of tracked objects after a camera move.
@@ -356,7 +356,7 @@ cameras:
         #   disabled - don't zoom in/out on autotracked objects, use pan/tilt only
         #   absolute - use absolute zooming (supported by most PTZ capable cameras)
         #   relative - use relative zooming (not supported on all PTZs, but makes concurrent pan/tilt/zoom movements)
-        zooming: relative
+        zooming: absolute
         # Optional: A value to change the behavior of zooming on autotracked objects. (default: shown below)
         # A lower value will keep more of the scene in view around a tracked object.
         # A higher value will zoom in more on a tracked object, but Frigate may lose tracking more quickly.
