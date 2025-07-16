@@ -136,31 +136,6 @@ services:
     ports:
       - ${PORT_SONARR_HTTP}:8989
     restart: unless-stopped
-  readarr:
-    image: lscr.io/linuxserver/readarr:${READARR_TAG:-develop}
-    logging:
-      driver: ${LOGGING_DRIVER:-local}
-    container_name: readarr
-    volumes:
-      - ${CONFIGDIR}/readarr:/config
-      - media:/data
-    labels:
-      - homepage.group=Media Tools
-      - homepage.name=Readarr
-      - homepage.icon=readarr.svg
-      - homepage.href=https://readarr.${DOMAIN}
-      - homepage.description=Book Show Requests
-      - homepage.widget.type=readarr
-      - homepage.widget.url=http://${HOST_NAME}.${TAILNET}:${PORT_READARR_HTTP}
-      - homepage.widget.key=${READARR_API_AUTH_TOKEN}
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - HOST_NAME=${HOST_NAME}
-    ports:
-      - ${PORT_READARR_HTTP}:8787
-    restart: unless-stopped
 
 networks:
   default:

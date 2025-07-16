@@ -30,7 +30,6 @@ This infrastructure uses:
   - Prowlarr (indexer management)
   - Sonarr (TV shows)
   - Radarr (movies)
-  - Readarr (books)
   - Overseerr (request management)
   - qBittorrent (torrent client)
 - **[Tautulli](services/tautulli/compose.yml)** - Plex analytics and monitoring
