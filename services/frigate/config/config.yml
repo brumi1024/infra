@@ -314,7 +314,6 @@ cameras:
         - dog
   main_terrace:
     ffmpeg:
-      hwaccel_args: ""
       inputs:
         - path: rtsp://127.0.0.1:8554/main_terrace
           roles:
