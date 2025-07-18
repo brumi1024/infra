@@ -282,9 +282,11 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/main_terrace
+          input_args: preset-rtsp-restream
           roles:
             - record
         - path: rtsp://127.0.0.1:8554/main_terrace_sub
+          input_args: preset-rtsp-restream
           roles:
             - detect
             - audio
@@ -316,7 +318,7 @@ cameras:
         # The results are used to help estimate the position of tracked objects after a camera move.
         # Frigate will update your config file automatically after a calibration with
         # a "movement_weights" entry for the camera. You should then set calibrate_on_startup to False.
-        calibrate_on_startup: True
+        calibrate_on_startup: False
         # Optional: the mode to use for zooming in/out on objects during autotracking. (default: shown below)
         # Available options are: disabled, absolute, and relative
         #   disabled - don't zoom in/out on autotracked objects, use pan/tilt only
