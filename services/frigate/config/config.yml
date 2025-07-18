@@ -217,11 +217,9 @@ go2rtc:
     password: '{FRIGATE_GO2RTC_RTSP_PASSWORD}'
   streams:
     main_pool:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h265Preview_01_main
-      - ffmpeg:main_pool#video=h264#hardware#audio=opus
+      - ffmpeg:http://192.168.1.219/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     main_pool_sub:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.219:554/h264Preview_01_sub
-      - ffmpeg:main_pool_sub#video=h264#hardware#audio=opus
+      - ffmpeg:http://192.168.1.219/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     nordic_entrance:
       - ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     nordic_entrance_sub:
@@ -238,11 +236,9 @@ go2rtc:
       - rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:parking_area#audio=opus
     main_terrace:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.227:554/h265Preview_01_main
-      - ffmpeg:main_terrace#video=h264#hardware#audio=opus
+      - ffmpeg:http://192.168.1.227/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     main_terrace_sub:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.227:554/h264Preview_01_sub
-      - ffmpeg:main_terrace_sub#video=h264#hardware#audio=opus
+      - ffmpeg:http://192.168.1.227/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     shed:
       - rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:shed#audio=opus
@@ -268,36 +264,6 @@ cameras:
         - person
         - cat
         - dog
-  #  snapshots:
-  #    required_zones:
-  #      - entry
-  #      - road
-  #      - everywhere
-  #  zones:
-  #    entry:
-  #      coordinates: 619,184,640,280,428,271,456,230,425,213,449,187
-  #      objects:
-  #        - car
-  #        - motorcycle
-  #        - bus
-  #    road:
-  #      coordinates: 619,185,640,138,607,131,552,155,510,183
-  #      objects:
-  #        - car
-  #        - motorcycle
-  #        - bus
-  #    everywhere:
-  #      coordinates: 0,480,640,480,640,73,0,114
-  #      objects:
-  #        - person
-  #        - cat
-  #        - dog
-  #  review:
-  #    alerts:
-  #      required_zones:
-  #        - entry
-  #        - road
-  #        - everywhere
   parking_area:
     ffmpeg:
       inputs:
