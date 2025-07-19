@@ -113,10 +113,31 @@ objects:
     - dhl
     - package
   filters:
+    dog:
+      min_score: .7
+      threshold: .9
+    cat:
+      min_score: .65
+      threshold: .8
+    face:
+      min_score: .7
+    package:
+      min_score: .65
+      threshold: .9
+    license_plate:
+      min_score: .6
+    amazon:
+      min_score: .75
+    ups:
+      min_score: .75
+    fedex:
+      min_score: .75
     person:
-      threshold: 0.75
+      min_score: .65
+      threshold: .85
     car:
-      threshold: 0.75
+      min_score: .65
+      threshold: .85
 motion:
   # Optional: The threshold passed to cv2.threshold to determine if a pixel is different enough to be counted as motion. (default: shown below)
   # Increasing this value will make motion detection less sensitive and decreasing it will make motion detection more sensitive.
