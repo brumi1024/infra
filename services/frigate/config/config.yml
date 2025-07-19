@@ -242,7 +242,6 @@ snapshots:
       dog: 5
       car: 5
       motorcycle: 5
-      bus: 5
 live:
   # Optional: Set the height of the live stream. (default: 720)
   # This must be less than or equal to the height of the detect stream. Lower resolutions
@@ -416,13 +415,11 @@ cameras:
         objects:
           - car
           - motorcycle
-          - bus
       entryway:
         coordinates: 640,132,478,71,344,71,324,108,640,263
         objects:
           - car
           - motorcycle
-          - bus
       everywhere:
         coordinates: 0,480,640,480,640,196,640,54,562,30,330,34,341,77,0,118
         objects:
