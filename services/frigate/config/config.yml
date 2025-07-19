@@ -32,11 +32,16 @@ birdseye:
   #   objects - cameras are included if they have had a tracked object within the last 30 seconds
   #   motion - cameras are included if motion was detected in the last 30 seconds
   #   continuous - all cameras are included always
-  mode: motion
+  mode: motion  
 semantic_search:
   enabled: true
   model: "jinav1"
   model_size: small
+genai:
+  enabled: True
+  provider: gemini
+  api_key: "{FRIGATE_GEMINI_API_KEY}"
+  model: gemini-2.5-flash
 lpr:
   enabled: true
   min_plate_length: 3 # Only recognize plates with 4 or more characters
@@ -87,12 +92,24 @@ objects:
   # Optional: list of objects to track from labelmap.txt (default: shown below)
   track:
     - person
-    - bicycle
-    - cat
+    - face
+    - license_plate
     - dog
+    - cat
+    - squirrel
+    - deer
+    - bird
+    - fox
     - car
     - motorcycle
-    - bus
+    - bicycle
+    - amazon
+    - fedex
+    - ups
+    - dpd
+    - gls
+    - dhl
+    - package
   filters:
     person:
       threshold: 0.75
@@ -443,6 +460,8 @@ cameras:
       output_args:
         record: preset-record-ubiquiti
       apple_compatibility: true
+    genai:
+      enabled: True
     motion:
       mask:
         - 0,0,1600,0,1600,219,1068,332,700,298,504,231,0,161
