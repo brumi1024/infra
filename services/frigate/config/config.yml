@@ -42,7 +42,7 @@ semantic_search:
 genai:
   enabled: True
   provider: gemini
-  api_key: "{FRIGATE_GEMINI_API_KEY}"
+  api_key: '{FRIGATE_GEMINI_API_KEY}'
   model: gemini-2.5-flash
 lpr:
   enabled: true
