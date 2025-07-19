@@ -49,7 +49,7 @@ services:
       - FRIGATE_GO2RTC_RTSP_PASSWORD=${FRIGATE_GO2RTC_RTSP_PASSWORD}
       - LIBVA_DRIVER_NAME_JELLYFIN=iHD
       - PLUS_API_KEY=${PLUS_API_KEY}
-
+      - FRIGATE_GEMINI_API_KEY=${FRIGATE_GEMINI_API_KEY}
 networks:
   default:
     name: caddy-net
