@@ -236,9 +236,11 @@ go2rtc:
       - rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:parking_area#audio=opus
     main_terrace:
-      - ffmpeg:http://192.168.1.227/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
+      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.227/Preview_01_main
+      # - ffmpeg:http://192.168.1.227/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     main_terrace_sub:
-      - ffmpeg:http://192.168.1.227/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
+      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.227/Preview_01_sub
+      # - ffmpeg:http://192.168.1.227/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
     shed:
       - rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:shed#audio=opus
@@ -251,11 +253,9 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/main_pool
-          input_args: preset-rtsp-restream
           roles:
             - record
         - path: rtsp://127.0.0.1:8554/main_pool_sub
-          input_args: preset-rtsp-restream
           roles:
             - detect
             - audio
@@ -282,11 +282,9 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/main_terrace
-          input_args: preset-rtsp-restream
           roles:
             - record
         - path: rtsp://127.0.0.1:8554/main_terrace_sub
-          input_args: preset-rtsp-restream
           roles:
             - detect
             - audio
@@ -357,11 +355,9 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/nordic_entrance
-          input_args: preset-rtsp-restream
           roles:
             - record
         - path: rtsp://127.0.0.1:8554/nordic_entrance_sub
-          input_args: preset-rtsp-restream
           roles:
             - detect
             - audio
@@ -403,11 +399,9 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/nordic_front
-          input_args: preset-rtsp-restream
           roles:
             - record
         - path: rtsp://127.0.0.1:8554/nordic_front_sub
-          input_args: preset-rtsp-restream
           roles:
             - detect
             - audio
@@ -423,11 +417,9 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/nordic_west
-          input_args: preset-rtsp-restream
           roles:
             - record
         - path: rtsp://127.0.0.1:8554/nordic_west_sub
-          input_args: preset-rtsp-restream
           roles:
             - detect
             - audio
