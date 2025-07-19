@@ -32,7 +32,9 @@ birdseye:
   #   objects - cameras are included if they have had a tracked object within the last 30 seconds
   #   motion - cameras are included if motion was detected in the last 30 seconds
   #   continuous - all cameras are included always
-  mode: motion  
+  mode: motion
+model:
+  path: plus://e074d6405b3257c98d255cd2efc9d21f
 semantic_search:
   enabled: true
   model: "jinav1"
