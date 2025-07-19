@@ -219,26 +219,26 @@ go2rtc:
     main_pool:
       - ffmpeg:http://192.168.1.219/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     main_pool_sub:
-      - ffmpeg:http://192.168.1.219/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
+      - ffmpeg:http://192.168.1.219/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
     nordic_entrance:
       - ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     nordic_entrance_sub:
-      - ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
+      - ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
     nordic_front:
       - ffmpeg:http://192.168.1.225/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     nordic_front_sub:
-      - ffmpeg:http://192.168.1.225/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
+      - ffmpeg:http://192.168.1.225/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
     nordic_west:
       - ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     nordic_west_sub:
-      - ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
+      - ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
     parking_area:
       - rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:parking_area#audio=opus
     main_terrace:
       - ffmpeg:http://192.168.1.227/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     main_terrace_sub:
-      - ffmpeg:http://192.168.1.227/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
+      - ffmpeg:http://192.168.1.227/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
     shed:
       - rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:shed#audio=opus
@@ -251,14 +251,14 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/main_pool
+          input_args: preset-rtsp-restream
           roles:
             - record
         - path: rtsp://127.0.0.1:8554/main_pool_sub
+          input_args: preset-rtsp-restream
           roles:
             - detect
             - audio
-      output_args:
-        record: preset-record-generic-audio-copy
     objects:
       track:
         - person
@@ -357,9 +357,11 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/nordic_entrance
+          input_args: preset-rtsp-restream
           roles:
             - record
         - path: rtsp://127.0.0.1:8554/nordic_entrance_sub
+          input_args: preset-rtsp-restream
           roles:
             - detect
             - audio
@@ -401,9 +403,11 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/nordic_front
+          input_args: preset-rtsp-restream
           roles:
             - record
         - path: rtsp://127.0.0.1:8554/nordic_front_sub
+          input_args: preset-rtsp-restream
           roles:
             - detect
             - audio
@@ -419,14 +423,14 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/nordic_west
+          input_args: preset-rtsp-restream
           roles:
             - record
         - path: rtsp://127.0.0.1:8554/nordic_west_sub
+          input_args: preset-rtsp-restream
           roles:
             - detect
             - audio
-      output_args:
-        record: preset-record-generic-audio-copy
     objects:
       track:
         - person
