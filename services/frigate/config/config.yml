@@ -264,35 +264,33 @@ go2rtc:
     password: '{FRIGATE_GO2RTC_RTSP_PASSWORD}'
   streams:
     main_pool:
-      - rtsp://docker-seq:42145/15cbc359a8dcf77f
+      - rtsp://docker-seq:42145/15cbc359a8dcf77f?video=copy&audio=copy&audio=opus
     main_pool_sub:
-      - rtsp://docker-seq:42145/6e9c0713678e4c12
+      - rtsp://docker-seq:42145/6e9c0713678e4c12?video=copy&audio=copy&audio=opus
     nordic_entrance:
-      - ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
+      - rtsp://docker-seq:44533/1927427f7461ee46?video=copy&audio=copy&audio=opus
     nordic_entrance_sub:
-      - ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
+      - rtsp://docker-seq:44533/2fbad425ebcba4e1?video=copy&audio=copy&audio=opus
     nordic_front:
-      - ffmpeg:http://192.168.1.225/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
+      - rtsp://docker-seq:35477/88db2cda3f7294b5?video=copy&audio=copy&audio=opus
     nordic_front_sub:
-      - ffmpeg:http://192.168.1.225/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
+      - rtsp://docker-seq:35477/a47902191732c223?video=copy&audio=copy&audio=opus
     nordic_west:
-      - ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
+      - rtsp://docker-seq:34553/675df5f2c739a1b8?video=copy&audio=copy&audio=opus
     nordic_west_sub:
-      - ffmpeg:http://192.168.1.224/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
+      - rtsp://docker-seq:34553/2f460ae50afeb1d2?video=copy&audio=copy&audio=opus
     parking_area:
-      - rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
-      - ffmpeg:parking_area#audio=opus
+      - rtsp://docker-seq:39485/af0cb121af4a7c06?video=copy&audio=copy&audio=opus
     main_terrace:
-      - rtsp://docker-seq:35717/d84e4188d36843ef?video=copy&audio=aac
+      - rtsp://docker-seq:35717/d84e4188d36843ef?video=copy&audio=copy&audio=opus
     main_terrace_sub:
-      - rtsp://docker-seq:35717/836bc44ae762f2eb?video=copy&audio=aac
+      - rtsp://docker-seq:35717/836bc44ae762f2eb?video=copy&audio=copy&audio=opus
     shed:
-      - rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
-      - ffmpeg:shed#audio=opus
+      - rtsp://docker-seq:44253/0675168f31844249?video=copy&audio=copy&audio=opus
     front_gate:
-      - rtspx://192.168.1.1:7441/nYyBpEANSAfrQgbo
+      - rtsp://docker-seq:41427/8280cde88018d7db?video=copy&audio=copy&audio=opus
     front_gate_sub:
-      - rtspx://192.168.1.1:7441/gcEGERg66Iw13NC8
+      - rtsp://localhost:41427/1bf1ea721811f5de?video=copy&audio=copy&audio=opus
 cameras:
   main_pool:
     ffmpeg:
