@@ -264,9 +264,9 @@ go2rtc:
     password: '{FRIGATE_GO2RTC_RTSP_PASSWORD}'
   streams:
     main_pool:
-      - ffmpeg:http://192.168.1.219/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
+      - rtsp://docker-seq:42145/15cbc359a8dcf77f?video=copy#audio=copy#audio=opus
     main_pool_sub:
-      - ffmpeg:http://192.168.1.219/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
+      - rtsp://docker-seq:42145/6e9c0713678e4c12?video=copy#audio=copy#audio=opus
     nordic_entrance:
       - ffmpeg:http://192.168.1.223/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
     nordic_entrance_sub:
