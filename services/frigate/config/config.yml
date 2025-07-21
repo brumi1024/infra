@@ -66,9 +66,17 @@ ffmpeg:
   output_args:
     record: preset-record-generic-audio-aac
 detect:
+# Optional: width of the frame for the input with the detect role (default: use native stream resolution)
+  width: 1280
+  # Optional: height of the frame for the input with the detect role (default: use native stream resolution)
+  height: 720
+  # Optional: desired fps for your camera for the input with the detect role (default: shown below)
+  # NOTE: Recommended value of 5. Ideally, try and reduce your FPS on the camera.
+  fps: 5
   # Optional: enables detection for the camera (default: True)
-  # This value can be set via MQTT and will be updated in startup based on retained value
-  enabled: true
+  enabled: True
+  # Optional: Number of consecutive detection hits required for an object to be initialized in the tracker. (default: 1/2 the frame rate)
+  min_initialized: 2
   # Optional: Configuration for stationary object tracking
   stationary:
     # Optional: Frequency for confirming stationary objects (default: shown below)
@@ -275,11 +283,9 @@ go2rtc:
       - rtsp://192.168.1.221:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:parking_area#audio=opus
     main_terrace:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.227/Preview_01_main
-      # - ffmpeg:http://192.168.1.227/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}#video=copy#audio=copy#audio=opus
+      - rtsp://localhost:35717/d84e4188d36843ef?video=copy&audio=aac
     main_terrace_sub:
-      - rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@192.168.1.227/Preview_01_sub
-      # - ffmpeg:http://192.168.1.227/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}
+      - rtsp://localhost:35717/836bc44ae762f2eb?video=copy&audio=aac
     shed:
       - rtsp://192.168.1.220:554/user={FRIGATE_RTSP_USER}&password={FRIGATE_RTSP_PASSWORD}&channel=0&stream=0.sdp?
       - ffmpeg:shed#audio=opus
@@ -294,9 +300,9 @@ cameras:
         - path: rtsp://127.0.0.1:8554/main_pool
           roles:
             - record
+            - detect
         - path: rtsp://127.0.0.1:8554/main_pool_sub
           roles:
-            - detect
             - audio
     objects:
       track:
@@ -323,9 +329,9 @@ cameras:
         - path: rtsp://127.0.0.1:8554/main_terrace
           roles:
             - record
+            - detect
         - path: rtsp://127.0.0.1:8554/main_terrace_sub
           roles:
-            - detect
             - audio
     objects:
       track:
@@ -396,9 +402,9 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_entrance
           roles:
             - record
+            - detect
         - path: rtsp://127.0.0.1:8554/nordic_entrance_sub
           roles:
-            - detect
             - audio
     motion:
       mask:
@@ -438,9 +444,9 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_front
           roles:
             - record
+            - detect
         - path: rtsp://127.0.0.1:8554/nordic_front_sub
           roles:
-            - detect
             - audio
     objects:
       track:
@@ -456,9 +462,9 @@ cameras:
         - path: rtsp://127.0.0.1:8554/nordic_west
           roles:
             - record
+            - detect
         - path: rtsp://127.0.0.1:8554/nordic_west_sub
           roles:
-            - detect
             - audio
     objects:
       track:

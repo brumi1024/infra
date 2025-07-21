@@ -18,7 +18,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${REPODIR}/services/frigate/config/:/config/:rw
-      - media:/media/frigate:rw
+      - /mnt/media:/media/frigate:rw
       - ${CONFIGDIR}/frigate/db:/db:rw
       - type: tmpfs
         target: /tmp/cache
@@ -30,6 +30,7 @@ services:
       - "${PORT_FRIGATE_HTTP}:8971"
       - "8554:8554" # RTSP feeds
       - "8555:8555/tcp" # WebRTC over tcp
+      - "8555:8555/udp" # WebRTC over udp
     labels:
       - homepage.group=Smart Home
       - homepage.name=Frigate Sequoia
@@ -54,9 +55,3 @@ networks:
   default:
     name: caddy-net
     external: true
-volumes:
-  media:
-    driver_opts:
-      type: cifs
-      o: username=${SEQUOIA_FRIGATE_SMB_USER},password=${SEQUOIA_FRIGATE_SMB_PASSWORD},domain=WORKGROUP,uid=1032,gid=100,vers=3.0
-      device: //${SEQUOIA_NAS_IP}/frigate
