@@ -252,7 +252,7 @@ frigate.seq.{$DOMAIN} {
     }
 
      # WebRTC signaling
-      reverse_proxy /api/go2rtc/* http://docker-seq:5000 {
+      reverse_proxy /api/go2rtc/* http://docker-seq:{$PORT_FRIGATE_HTTP} {
           flush_interval -1
       }
 

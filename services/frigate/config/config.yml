@@ -18,6 +18,9 @@ proxy:
     user: x-authentik-username
     role: x-forwarded-role
   default_role: admin
+tls:
+  # Optional: Enable TLS for port 8971 (default: shown below)
+  enabled: False
 birdseye:
   # Optional: Enable birdseye view (default: shown below)
   enabled: true
