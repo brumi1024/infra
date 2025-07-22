@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=http://100.112.177.31:5000/api/config/schema
+# yaml-language-server: $schema=http://100.110.100.115:5000/api/config/schema
 mqtt:
   host: 192.168.1.5
   user: '{FRIGATE_MQTT_USER}'
@@ -290,7 +290,12 @@ go2rtc:
     front_gate:
       - rtsp://docker-seq:41427/8280cde88018d7db?video=copy&audio=copy&audio=opus
     front_gate_sub:
-      - rtsp://localhost:41427/1bf1ea721811f5de?video=copy&audio=copy&audio=opus
+      - rtsp://docker-seq:41427/1bf1ea721811f5de?video=copy&audio=copy&audio=opus
+  webrtc:
+      candidates:
+        - 100.110.100.115:8555
+        - 192.168.1.6:8555
+        - stun:8555
 cameras:
   main_pool:
     ffmpeg:
@@ -299,14 +304,17 @@ cameras:
           roles:
             - record
             - detect
-        - path: rtsp://127.0.0.1:8554/main_pool_sub
-          roles:
             - audio
     objects:
       track:
         - person
-        - cat
+        - face
         - dog
+        - cat
+        - squirrel
+        - deer
+        - bird
+        - fox
   parking_area:
     ffmpeg:
       inputs:
@@ -315,12 +323,6 @@ cameras:
             - detect
             - record
             - audio
-    best_image_timeout: 120
-    objects:
-      track:
-        - person
-        - cat
-        - dog
   main_terrace:
     ffmpeg:
       inputs:
@@ -328,14 +330,17 @@ cameras:
           roles:
             - record
             - detect
-        - path: rtsp://127.0.0.1:8554/main_terrace_sub
-          roles:
             - audio
     objects:
       track:
         - person
-        - cat
+        - face
         - dog
+        - cat
+        - squirrel
+        - deer
+        - bird
+        - fox
     onvif:
       # Required: host of the camera being connected to.
       # NOTE: HTTP is assumed by default; HTTPS is supported if you specify the scheme, ex: "https://0.0.0.0".
@@ -376,7 +381,7 @@ cameras:
           - person
         # Required: Begin automatically tracking an object when it enters any of the listed zones.
         required_zones:
-          - zone_name
+          - terrace
         # Required: Name of ONVIF preset in camera's firmware to return to when tracking is over. (default: shown below)
         return_preset: home
         # Optional: Seconds to delay before returning to preset. (default: shown below)
@@ -392,8 +397,13 @@ cameras:
     objects:
       track:
         - person
-        - cat
+        - face
         - dog
+        - cat
+        - squirrel
+        - deer
+        - bird
+        - fox
   nordic_entrance:
     ffmpeg:
       inputs:
@@ -401,8 +411,6 @@ cameras:
           roles:
             - record
             - detect
-        - path: rtsp://127.0.0.1:8554/nordic_entrance_sub
-          roles:
             - audio
     motion:
       mask:
@@ -443,14 +451,17 @@ cameras:
           roles:
             - record
             - detect
-        - path: rtsp://127.0.0.1:8554/nordic_front_sub
-          roles:
             - audio
     objects:
       track:
         - person
-        - cat
+        - face
         - dog
+        - cat
+        - squirrel
+        - deer
+        - bird
+        - fox
     motion:
       mask:
         - 0,176,0,0,157,0,285,0,297,62,160,80
@@ -461,14 +472,17 @@ cameras:
           roles:
             - record
             - detect
-        - path: rtsp://127.0.0.1:8554/nordic_west_sub
-          roles:
             - audio
     objects:
       track:
         - person
-        - cat
+        - face
         - dog
+        - cat
+        - squirrel
+        - deer
+        - bird
+        - fox
   front_gate:
     ffmpeg:
       inputs:

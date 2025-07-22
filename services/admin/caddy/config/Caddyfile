@@ -49,6 +49,23 @@
       }
 }
 
+# Local network authentication bypass
+(authenticate_with_tailscale_bypass) {
+      @tailscale_network {
+            remote_ip 100.64.0.0/10
+        }
+      
+      # Skip authentication for local network requests
+      handle @tailscale_network {
+          # Just pass through to the backend without authentication
+      }
+      
+      # Apply authentication for non-local requests
+      handle {
+          import authenticate
+      }
+}
+
 ############
 # Routing  #
 ############
@@ -147,7 +164,7 @@ beszel.{$DOMAIN} {
 uptime.{$DOMAIN} {
     import cloudflare
     import log_common
-    import authenticate
+    import authenticate_with_tailscale_bypass
     reverse_proxy homelab-vps.{$TAILNET}:{$PORT_UPTIME_KUMA}
 }
 
@@ -178,19 +195,19 @@ homeassistant.kalasz.{$DOMAIN} {
 # Media Stack
 
 prowlarr.{$DOMAIN} {
-    import authenticate
+    import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy docker:{$PORT_PROWLARR_HTTP}
 }
 
 sonarr.{$DOMAIN} {
-    import authenticate
+    import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy docker:{$PORT_SONARR_HTTP}
 }
 
 radarr.{$DOMAIN} {
-    import authenticate
+    import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy docker:{$PORT_RADARR_HTTP}
 }
@@ -206,7 +223,7 @@ tautulli.{$DOMAIN} {
 }
 
 qbittorrent.{$DOMAIN} {
-    import authenticate
+    import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy docker:{$PORT_QBITTORRENT_HTTP}
 }
@@ -224,20 +241,34 @@ zephyrus.{$DOMAIN} {
 }
 
 frigate.seq.{$DOMAIN} {
-    import authenticate
+    import authenticate_with_tailscale_bypass
     import cloudflare
-    reverse_proxy http://sequoia-docker:{$PORT_FRIGATE_HTTP} #{
+    reverse_proxy http://docker-seq:{$PORT_FRIGATE_HTTP} {
         #transport http {
         #        tls
         #        tls_insecure_skip_verify
         #}
-    #}
+        flush_interval -1
+    }
+
+     # WebRTC signaling
+      reverse_proxy /api/go2rtc/* http://docker-seq:5000 {
+          flush_interval -1
+      }
+
+      # WebRTC streams - both TCP and UDP
+      reverse_proxy /live/webrtc/* http://docker-seq:8555 {
+          flush_interval -1
+          transport http {
+              keepalive 30s
+          }
+      }
 }
 
 # Services
 
 dash.{$DOMAIN} {
-    import authenticate
+    import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy homelab-vps.{$TAILNET}:{$PORT_DASH_HTTP}
 }
