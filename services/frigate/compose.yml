@@ -18,7 +18,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${REPODIR}/services/frigate/config/:/config/:rw
-      - /mnt/media:/media/frigate:rw
+      - media:/media/frigate:rw
       - ${CONFIGDIR}/frigate/db:/db:rw
       - type: tmpfs
         target: /tmp/cache
@@ -55,3 +55,9 @@ networks:
   default:
     name: caddy-net
     external: true
+volumes:
+  media:
+    driver_opts:
+      type: cifs
+      o: username=${SEQUOIA_FRIGATE_SMB_USER},password=${SEQUOIA_FRIGATE_SMB_PASSWORD},domain=WORKGROUP,uid=1032,gid=100,vers=3.0
+      device: //${SEQUOIA_NAS_IP}/frigate
