@@ -6,9 +6,9 @@ mqtt:
 database:
   path: /db/frigate.db
 detectors:
-  coral:
-    type: edgetpu
-    device: usb
+  ov_0:
+    type: openvino
+    device: GPU
 auth:
   enabled: false
   trusted_proxies:
@@ -37,7 +37,7 @@ birdseye:
   #   continuous - all cameras are included always
   mode: motion
 model:
-  path: plus://e074d6405b3257c98d255cd2efc9d21f
+  path: plus://45e79bc69e9a5188669fcce0ff4e2c00
 semantic_search:
   enabled: true
   model: "jinav1"
@@ -270,33 +270,33 @@ go2rtc:
     default_query: "timeout=10&buffer_size=524288"
   streams:
     main_pool:
-      - rtsp://docker-seq:42145/15cbc359a8dcf77f?video=copy&audio=opus
+      - rtsp://docker-seq:42145/15cbc359a8dcf77f?video=copy&audio=copy&audio=opus
     main_pool_sub:
-      - rtsp://docker-seq:42145/6e9c0713678e4c12?video=copy&audio=opus
+      - rtsp://docker-seq:42145/6e9c0713678e4c12?video=copy&audio=copy&audio=opus
     nordic_entrance:
-      - rtsp://docker-seq:44533/1927427f7461ee46?video=copy&audio=opus
+      - rtsp://docker-seq:44533/1927427f7461ee46?video=copy&audio=copy&audio=opus
     nordic_entrance_sub:
-      - rtsp://docker-seq:44533/2fbad425ebcba4e1?video=copy&audio=opus
+      - rtsp://docker-seq:44533/2fbad425ebcba4e1?video=copy&audio=copy&audio=opus
     nordic_front:
-      - rtsp://docker-seq:35477/88db2cda3f7294b5?video=copy&audio=opus
+      - rtsp://docker-seq:35477/88db2cda3f7294b5?video=copy&audio=copy&audio=opus
     nordic_front_sub:
-      - rtsp://docker-seq:35477/a47902191732c223?video=copy&audio=opus
+      - rtsp://docker-seq:35477/a47902191732c223?video=copy&audio=copy&audio=opus
     nordic_west:
-      - rtsp://docker-seq:34553/675df5f2c739a1b8?video=copy&audio=opus
+      - rtsp://docker-seq:34553/675df5f2c739a1b8?video=copy&audio=copy&audio=opus
     nordic_west_sub:
-      - rtsp://docker-seq:34553/2f460ae50afeb1d2?video=copy&audio=opus
+      - rtsp://docker-seq:34553/2f460ae50afeb1d2?video=copy&audio=copy&audio=opus
     parking_area:
-      - rtsp://docker-seq:39485/af0cb121af4a7c06?video=copy&audio=opus
+      - rtsp://docker-seq:39485/af0cb121af4a7c06?video=copy&audio=copy&audio=opus
     main_terrace:
-      - rtsp://docker-seq:35717/d84e4188d36843ef?video=copy&audio=opus
+      - rtsp://docker-seq:35717/d84e4188d36843ef?video=copy&audio=copy&audio=opus
     main_terrace_sub:
-      - rtsp://docker-seq:35717/836bc44ae762f2eb?video=copy&audio=opus
+      - rtsp://docker-seq:35717/836bc44ae762f2eb?video=copy&audio=copy&audio=opus
     shed:
-      - rtsp://docker-seq:44253/0675168f31844249?video=copy&audio=opus
+      - rtsp://docker-seq:44253/0675168f31844249?video=copy&audio=copy&audio=opus
     front_gate:
-      - rtsp://docker-seq:41427/8280cde88018d7db?video=copy&audio=opus
+      - rtsp://docker-seq:41427/8280cde88018d7db?video=copy&audio=copy&audio=opus
     front_gate_sub:
-      - rtsp://docker-seq:41427/1bf1ea721811f5de?video=copy&audio=opus
+      - rtsp://docker-seq:41427/1bf1ea721811f5de?video=copy&audio=copy&audio=opus
   webrtc:
       candidates:
         - 100.110.100.115:8555
