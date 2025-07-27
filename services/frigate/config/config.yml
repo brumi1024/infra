@@ -69,7 +69,7 @@ ffmpeg:
   # NOTE: See hardware acceleration docs for your specific device
   hwaccel_args: preset-vaapi
   # Optional: global input args
-  input_args: preset-rtsp-restream -fflags +genpts+discardcorrupt
+  input_args: preset-rtsp-restream
   # Optional: global output args
   output_args:
     record: preset-record-generic-audio-aac
