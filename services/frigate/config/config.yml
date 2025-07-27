@@ -272,7 +272,6 @@ go2rtc:
   rtsp:
     username: '{FRIGATE_GO2RTC_RTSP_USERNAME}'
     password: '{FRIGATE_GO2RTC_RTSP_PASSWORD}'
-    default_query: "timeout=10&buffer_size=524288"
   streams:
     main_pool:
       - rtsp://scrypted:42145/15cbc359a8dcf77f?video=copy&audio=copy&audio=opus
