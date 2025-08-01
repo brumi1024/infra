@@ -18,14 +18,14 @@ services:
       - ${PORT_CADDY_HTTPS}:443/udp
       - ${PORT_CADDY_ADMIN}:2019
     volumes:
-      - ${REPODIR}/services/admin/caddy/config/Caddyfile:/etc/caddy/Caddyfile:ro # Required.
+      - ${REPODIR}/services/admin/sequoia/caddy/config/Caddyfile:/etc/caddy/Caddyfile:ro # Required.
       - ${CONFIGDIR}/caddy/data:/data # Optional, house for certs. Caddy adds its own /caddy/ directory
       - ${CONFIGDIR}/caddy/config:/config # Optional, JSON Config files. Caddy adds its own /caddy/ directory
     labels:
       - homepage.group=Administration
-      - homepage.name=Caddy
+      - homepage.name=Caddy Sequoia
       - homepage.icon=caddy.svg
-      - homepage.description=Reverse Proxy
+      - homepage.description=Sequoia Reverse Proxy
       - homepage.widget.type=caddy
       - homepage.widget.url=http://${HOST_NAME}.${TAILNET}:${PORT_CADDY_ADMIN}
     env_file:
