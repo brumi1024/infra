@@ -242,7 +242,12 @@ zephyrus.{$DOMAIN} {
 
 scrypted.seq.{$DOMAIN} {
     import cloudflare
-    reverse_proxy https://scrypted.{$TAILNET}:{$PORT_SCRIPTED_HTTPS}
+    reverse_proxy https://scrypted.{$TAILNET}:{$PORT_SCRIPTED_HTTPS} {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
 }
 
 # Services
