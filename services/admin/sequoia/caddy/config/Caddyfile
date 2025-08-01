@@ -1,0 +1,136 @@
+##################
+# Global options #
+##################
+{
+    metrics
+
+    dynamic_dns {
+      provider cloudflare {$CF_API_TOKEN}
+      domains {
+        seq.{$DOMAIN} @ www *
+      }
+    }
+
+    admin 0.0.0.0:{$PORT_CADDY_ADMIN}
+}
+
+
+############
+# Snippets #
+############
+(cloudflare) {
+  tls {
+    dns cloudflare {$CF_API_TOKEN}
+    resolvers 1.1.1.1 1.0.0.1 # Needed for VPS
+  }
+
+  encode zstd gzip
+}
+
+(log_common) {
+  log {
+    output file /var/log/caddy/caddy_access.log
+  }
+}
+
+(authenticate) {
+      # always forward outpost path to actual outpost
+      reverse_proxy /outpost.goauthentik.io/* http://homelab-vps.{$TAILNET}:{$PORT_AUTHENTIK_HTTP}
+
+      # forward authentication to outpost
+      forward_auth http://homelab-vps.{$TAILNET}:{$PORT_AUTHENTIK_HTTP} {
+          uri /outpost.goauthentik.io/auth/caddy
+
+          # capitalization of the headers is important, otherwise they will be empty
+          copy_headers X-Authentik-Username X-Authentik-Groups X-Authentik-Entitlements X-Authentik-Email X-Authentik-Name X-Authentik-Uid X-Authentik-Jwt X-Authentik-Meta-Jwks X-Authentik-Meta-Outpost X-Authentik-Meta-Provider X-Authentik-Meta-App X-Authentik-Meta-Version X-Forwarded-Role authorization
+
+          # optional, in this config trust all private ranges, should probably be set to the outposts IP
+          trusted_proxies private_ranges
+      }
+}
+
+# Local network authentication bypass
+(authenticate_with_tailscale_bypass) {
+      @tailscale_network {
+            remote_ip 100.64.0.0/10
+        }
+      
+      # Skip authentication for local network requests
+      handle @tailscale_network {
+          # Just pass through to the backend without authentication
+      }
+      
+      # Apply authentication for non-local requests
+      handle {
+          import authenticate
+      }
+}
+
+############
+# Routing  #
+############
+
+# Sequoia
+
+eurus.{$ADMIN_DOMAIN} {
+    import cloudflare
+    import log_common
+    reverse_proxy https://eurus.{$TAILNET}:{$PORT_PROXMOX_HTTPS}
+}
+
+pbs.{$ADMIN_DOMAIN} {
+    import cloudflare
+    import log_common
+    reverse_proxy https://proxmox-backup-server.{$TAILNET}:{$PORT_PBS_HTTPS} {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+pihole1.seq.{$ADMIN_DOMAIN} {
+    import cloudflare
+    import log_common
+    redir / /admin{uri}
+    reverse_proxy https://pihole-seq-1.{$TAILNET} {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+pihole2.seq.{$ADMIN_DOMAIN} {
+    import cloudflare
+    import log_common
+    redir / /admin{uri}
+    reverse_proxy https://sequoia-rpi-4.{$TAILNET} {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+# Home Assistant
+
+homeassistant.seq.{$DOMAIN} {
+  import cloudflare
+  reverse_proxy homeassistant-seq:{$PORT_HOMEASSISTANT_HTTP}
+}
+
+zephyrus.{$DOMAIN} {
+    import cloudflare
+    reverse_proxy zephyrus:{$PORT_ZEPHYRUS_HTTP}
+}
+
+scrypted.seq.{$DOMAIN} {
+    import cloudflare
+    reverse_proxy https://scrypted.{$TAILNET}:{$PORT_SCRIPTED_HTTPS} {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
