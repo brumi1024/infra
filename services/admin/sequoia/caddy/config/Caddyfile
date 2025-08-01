@@ -9,6 +9,8 @@
       domains {
         seq.{$DOMAIN} @ www *
       }
+      versions ipv6
+      ip_source interface eth0
     }
 
     admin 0.0.0.0:{$PORT_CADDY_ADMIN}

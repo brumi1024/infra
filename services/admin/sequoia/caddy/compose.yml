@@ -8,7 +8,7 @@ services:
   caddy:
     container_name: caddy
     build:
-      context: ${REPODIR}/services/admin/caddy/dockerfile
+      context: ${REPODIR}/services/admin/sequoia/caddy/dockerfile
       dockerfile: caddy.dockerfile # Custom build which uses cloudflare ddns
     logging:
       driver: ${LOGGING_DRIVER:-local}
