@@ -240,29 +240,9 @@ zephyrus.{$DOMAIN} {
     reverse_proxy zephyrus:{$PORT_ZEPHYRUS_HTTP}
 }
 
-frigate.seq.{$DOMAIN} {
-    import authenticate_with_tailscale_bypass
+scrypted.seq.{$DOMAIN} {
     import cloudflare
-    reverse_proxy http://docker-seq:{$PORT_FRIGATE_HTTP} {
-        #transport http {
-        #        tls
-        #        tls_insecure_skip_verify
-        #}
-        flush_interval -1
-    }
-
-     # WebRTC signaling
-      reverse_proxy /api/go2rtc/* http://docker-seq:{$PORT_FRIGATE_HTTP} {
-          flush_interval -1
-      }
-
-      # WebRTC streams - both TCP and UDP
-      reverse_proxy /live/webrtc/* http://docker-seq:8555 {
-          flush_interval -1
-          transport http {
-              keepalive 30s
-          }
-      }
+    reverse_proxy http://scrypted:{$PORT_SCRIPTED_HTTPS}
 }
 
 # Services
