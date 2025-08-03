@@ -7,7 +7,7 @@ main-docker:
   port: {{HOMEPAGE_VAR_PORT_SOCKY_PROXY}}
 
 sequoia-docker:
-  host: sequoia-docker.{{HOMEPAGE_VAR_TAILNET}}
+  host: docker-seq.{{HOMEPAGE_VAR_TAILNET}}
   port: {{HOMEPAGE_VAR_PORT_SOCKY_PROXY}}
 
 homelab-vps-docker:
