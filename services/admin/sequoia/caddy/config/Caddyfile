@@ -9,7 +9,7 @@
       domains {
         {$DOMAIN} seq www *.seq
       }
-      versions ipv4 ipv6
+      versions ipv6
       ip_source simple_http https://icanhazip.com
       ip_source simple_http https://api64.ipify.org
       ip_source upnp
