@@ -38,3 +38,4 @@ networks:
   default:
     name: caddy-net
     external: true
+    enable_ipv6: true

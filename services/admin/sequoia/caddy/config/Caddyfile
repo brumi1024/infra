@@ -9,7 +9,7 @@
       domains {
         seq.{$DOMAIN} @ www *
       }
-      versions ipv6
+      versions ipv4 ipv6
       ip_source interface eth0
     }
 
