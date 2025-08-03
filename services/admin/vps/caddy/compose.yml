@@ -1,12 +1,12 @@
-name: "reverse_proxy"
+name: "vps_reverse_proxy"
 
 services:
 ####################
-# Reverse Proxy
+# VPS Reverse Proxy
 ####################
 
   caddy:
-    container_name: caddy
+    container_name: caddy-vps
     build:
       context: ${REPODIR}/services/admin/caddy-build
       dockerfile: Dockerfile
@@ -18,16 +18,16 @@ services:
       - ${PORT_CADDY_HTTPS}:443/udp
       - ${PORT_CADDY_ADMIN}:2019
     volumes:
-      - ${REPODIR}/services/admin/sequoia/caddy/config/Caddyfile:/etc/caddy/Caddyfile:ro # Required.
-      - ${CONFIGDIR}/caddy/data:/data # Optional, house for certs. Caddy adds its own /caddy/ directory
-      - ${CONFIGDIR}/caddy/config:/config # Optional, JSON Config files. Caddy adds its own /caddy/ directory
+      - ${REPODIR}/services/admin/vps/caddy/config/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ${CONFIGDIR}/caddy-vps/data:/data
+      - ${CONFIGDIR}/caddy-vps/config:/config
     labels:
       - homepage.group=Administration
-      - homepage.name=Caddy Sequoia
+      - homepage.name=Caddy VPS
       - homepage.icon=caddy.svg
-      - homepage.description=Sequoia Reverse Proxy
+      - homepage.description=VPS Main Router
       - homepage.widget.type=caddy
-      - homepage.widget.url=http://${HOST_NAME}.${TAILNET}:${PORT_CADDY_ADMIN}
+      - homepage.widget.url=http://localhost:${PORT_CADDY_ADMIN}
     env_file:
       - ${REPODIR}/docker.env
     healthcheck:
@@ -38,4 +38,3 @@ networks:
   default:
     name: caddy-net
     external: true
-    enable_ipv6: true

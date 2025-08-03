@@ -21,7 +21,7 @@
 (cloudflare) {
   tls {
     dns cloudflare {$CF_API_TOKEN}
-    resolvers 1.1.1.1 1.0.0.1 # Needed for VPS
+    resolvers 1.1.1.1 1.0.0.1
   }
 
   encode zstd gzip
@@ -66,33 +66,60 @@
       }
 }
 
-############
-# Routing  #
-############
+##########################
+# VPS Hosted Services    #
+##########################
 
-# Admin
+komodo.{$DOMAIN} {
+    import cloudflare
+    import log_common
+    reverse_proxy docker:9120
+}
 
+beszel.{$DOMAIN} {
+    import cloudflare
+    import log_common
+    reverse_proxy homelab-vps.{$TAILNET}:{$PORT_BESZEL_HTTP}
+}
+
+uptime.{$DOMAIN} {
+    import cloudflare
+    import log_common
+    import authenticate_with_tailscale_bypass
+    reverse_proxy homelab-vps.{$TAILNET}:{$PORT_UPTIME_KUMA}
+}
+
+auth.{$DOMAIN} {
+    import cloudflare
+    reverse_proxy homelab-vps.{$TAILNET}:{$PORT_AUTHENTIK_HTTP}
+}
+
+dash.{$DOMAIN} {
+    import authenticate_with_tailscale_bypass
+    import cloudflare
+    reverse_proxy homelab-vps.{$TAILNET}:{$PORT_DASH_HTTP}
+}
+
+actual.{$DOMAIN} {
+    import cloudflare
+    reverse_proxy docker:{$PORT_ACTUAL_HTTP}
+}
+
+##########################
+# Admin Domain Routing   #
+##########################
+
+# Home Infrastructure
 susanoo.{$ADMIN_DOMAIN} {
     import cloudflare
     import log_common
     reverse_proxy https://susanoo.{$TAILNET}:{$PORT_PROXMOX_HTTPS}
 }
 
-eurus.{$ADMIN_DOMAIN} {
+truenas.{$ADMIN_DOMAIN} {
     import cloudflare
     import log_common
-    reverse_proxy https://eurus.{$TAILNET}:{$PORT_PROXMOX_HTTPS}
-}
-
-pbs.{$ADMIN_DOMAIN} {
-    import cloudflare
-    import log_common
-    reverse_proxy https://proxmox-backup-server.{$TAILNET}:{$PORT_PBS_HTTPS} {
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
-    }
+    reverse_proxy http://truenas-scale.{$TAILNET}:80
 }
 
 pihole1.{$ADMIN_DOMAIN} {
@@ -112,6 +139,24 @@ pihole2.{$ADMIN_DOMAIN} {
     import log_common
     redir / /admin{uri}
     reverse_proxy https://main-pi-zero-2.{$TAILNET} {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+# Sequoia Infrastructure
+eurus.{$ADMIN_DOMAIN} {
+    import cloudflare
+    import log_common
+    reverse_proxy https://eurus.{$TAILNET}:{$PORT_PROXMOX_HTTPS}
+}
+
+pbs.{$ADMIN_DOMAIN} {
+    import cloudflare
+    import log_common
+    reverse_proxy https://proxmox-backup-server.{$TAILNET}:{$PORT_PBS_HTTPS} {
         transport http {
             tls
             tls_insecure_skip_verify
@@ -143,137 +188,107 @@ pihole2.seq.{$ADMIN_DOMAIN} {
     }
 }
 
-truenas.{$ADMIN_DOMAIN} {
-    import cloudflare
-    import log_common
-    reverse_proxy truenas-scale.{$TAILNET}
-}
+##########################
+# Service Routing        #
+# Routes to appropriate  #
+# site based on service  #
+##########################
 
-komodo.{$DOMAIN} {
-    import cloudflare
-    import log_common
-    reverse_proxy docker:9120
-}
-
-beszel.{$DOMAIN} {
-    import cloudflare
-    import log_common
-    reverse_proxy homelab-vps.{$TAILNET}:{$PORT_BESZEL_HTTP}
-}
-
-uptime.{$DOMAIN} {
-    import cloudflare
-    import log_common
-    import authenticate_with_tailscale_bypass
-    reverse_proxy homelab-vps.{$TAILNET}:{$PORT_UPTIME_KUMA}
-}
-
-# Auth
-
-auth.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy homelab-vps.{$TAILNET}:{$PORT_AUTHENTIK_HTTP}
-}
-
-# Home Assistant
-
+# Home Assistant - Main
 homeassistant.{$DOMAIN} {
   import cloudflare
-  reverse_proxy homeassistant:{$PORT_HOMEASSISTANT_HTTP}
+  # Route to Main/Home site
+  reverse_proxy https://homeassistant.home.{$DOMAIN} {
+    header_up Host {upstream_hostport}
+  }
 }
 
-homeassistant.seq.{$DOMAIN} {
-  import cloudflare
-  reverse_proxy homeassistant-seq:{$PORT_HOMEASSISTANT_HTTP}
-}
-
+# Home Assistant - Kalasz
 homeassistant.kalasz.{$DOMAIN} {
   import cloudflare
-  reverse_proxy homeassistant-kalasz:{$PORT_HOMEASSISTANT_HTTP}
+  reverse_proxy http://homeassistant-kalasz.{$TAILNET}:{$PORT_HOMEASSISTANT_HTTP}
 }
 
-# Media Stack
-
+# Media Stack - Route to Main/Home
 prowlarr.{$DOMAIN} {
     import authenticate_with_tailscale_bypass
     import cloudflare
-    reverse_proxy docker:{$PORT_PROWLARR_HTTP}
+    reverse_proxy https://prowlarr.home.{$DOMAIN} {
+      header_up Host {upstream_hostport}
+    }
 }
 
 sonarr.{$DOMAIN} {
     import authenticate_with_tailscale_bypass
     import cloudflare
-    reverse_proxy docker:{$PORT_SONARR_HTTP}
+    reverse_proxy https://sonarr.home.{$DOMAIN} {
+      header_up Host {upstream_hostport}
+    }
 }
 
 radarr.{$DOMAIN} {
     import authenticate_with_tailscale_bypass
     import cloudflare
-    reverse_proxy docker:{$PORT_RADARR_HTTP}
+    reverse_proxy https://radarr.home.{$DOMAIN} {
+      header_up Host {upstream_hostport}
+    }
 }
 
 overseerr.{$DOMAIN} {
     import cloudflare
-    reverse_proxy docker:{$PORT_OVERSEERR_HTTP}
+    reverse_proxy https://overseerr.home.{$DOMAIN} {
+      header_up Host {upstream_hostport}
+    }
 }
 
 tautulli.{$DOMAIN} {
     import cloudflare
-    reverse_proxy docker:{$PORT_TAUTULLI_HTTP}
+    reverse_proxy https://tautulli.home.{$DOMAIN} {
+      header_up Host {upstream_hostport}
+    }
 }
 
 qbittorrent.{$DOMAIN} {
     import authenticate_with_tailscale_bypass
     import cloudflare
-    reverse_proxy docker:{$PORT_QBITTORRENT_HTTP}
+    reverse_proxy https://qbittorrent.home.{$DOMAIN} {
+      header_up Host {upstream_hostport}
+    }
 }
 
 plex.{$DOMAIN} {
     import cloudflare
-    reverse_proxy plex:{$PORT_PLEX_HTTP}
-}
-
-# Sequoia
-
-zephyrus.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy zephyrus:{$PORT_ZEPHYRUS_HTTP}
-}
-
-scrypted.seq.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy https://scrypted.{$TAILNET}:{$PORT_SCRIPTED_HTTPS} {
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+    reverse_proxy https://plex.home.{$DOMAIN} {
+      header_up Host {upstream_hostport}
     }
 }
 
-# Services
-
-dash.{$DOMAIN} {
-    import authenticate_with_tailscale_bypass
-    import cloudflare
-    reverse_proxy homelab-vps.{$TAILNET}:{$PORT_DASH_HTTP}
-}
-
-actual.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy docker:{$PORT_ACTUAL_HTTP}
-}
-
+# Services - Route to Main/Home
 paperless.{$DOMAIN} {
     import cloudflare
-    reverse_proxy docker:{$PORT_PAPERLESS_HTTP}
+    reverse_proxy https://paperless.home.{$DOMAIN} {
+      header_up Host {upstream_hostport}
+    }
 }
 
 stirling.{$DOMAIN} {
     import cloudflare
-    reverse_proxy docker:{$PORT_STIRLING_HTTP}
+    reverse_proxy https://stirling.home.{$DOMAIN} {
+      header_up Host {upstream_hostport}
+    }
 }
 
 immich.{$DOMAIN} {
     import cloudflare
-    reverse_proxy docker:{$PORT_IMMICH_HTTP}
+    reverse_proxy https://immich.home.{$DOMAIN} {
+      header_up Host {upstream_hostport}
+    }
+}
+
+# Sequoia Services
+zephyrus.{$DOMAIN} {
+    import cloudflare
+    reverse_proxy https://zephyrus.seq.{$DOMAIN} {
+      header_up Host {upstream_hostport}
+    }
 }

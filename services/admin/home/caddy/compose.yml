@@ -1,15 +1,15 @@
-name: "reverse_proxy"
+name: "home_reverse_proxy"
 
 services:
 ####################
-# Reverse Proxy
+# Home Reverse Proxy
 ####################
 
   caddy:
-    container_name: caddy
+    container_name: caddy-home
     build:
-      context: ${REPODIR}/services/admin/caddy/dockerfile
-      dockerfile: caddy.dockerfile # Custom build which uses cloudflare ddns
+      context: ${REPODIR}/services/admin/caddy-build
+      dockerfile: Dockerfile
     logging:
       driver: ${LOGGING_DRIVER:-local}
     ports:
@@ -18,14 +18,14 @@ services:
       - ${PORT_CADDY_HTTPS}:443/udp
       - ${PORT_CADDY_ADMIN}:2019
     volumes:
-      - ${REPODIR}/services/admin/caddy/config/Caddyfile:/etc/caddy/Caddyfile:ro # Required.
-      - ${CONFIGDIR}/caddy/data:/data # Optional, house for certs. Caddy adds its own /caddy/ directory
-      - ${CONFIGDIR}/caddy/config:/config # Optional, JSON Config files. Caddy adds its own /caddy/ directory
+      - ${REPODIR}/services/admin/home/caddy/config/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ${CONFIGDIR}/caddy-home/data:/data
+      - ${CONFIGDIR}/caddy-home/config:/config
     labels:
       - homepage.group=Administration
-      - homepage.name=Caddy
+      - homepage.name=Caddy Home
       - homepage.icon=caddy.svg
-      - homepage.description=Reverse Proxy
+      - homepage.description=Home Site Reverse Proxy
       - homepage.widget.type=caddy
       - homepage.widget.url=http://${HOST_NAME}.${TAILNET}:${PORT_CADDY_ADMIN}
     env_file:
