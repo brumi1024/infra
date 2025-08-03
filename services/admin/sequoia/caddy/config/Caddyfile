@@ -7,10 +7,12 @@
     dynamic_dns {
       provider cloudflare {$CF_API_TOKEN}
       domains {
-        seq.{$DOMAIN} @ www *
+        {$DOMAIN} seq www *.seq
       }
       versions ipv4 ipv6
-      ip_source interface eth0
+      ip_source simple_http https://icanhazip.com
+      ip_source simple_http https://api64.ipify.org
+      ip_source upnp
     }
 
     admin 0.0.0.0:{$PORT_CADDY_ADMIN}
