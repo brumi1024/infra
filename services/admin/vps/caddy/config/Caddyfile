@@ -268,6 +268,9 @@ paperless.{$DOMAIN} {
     import cloudflare
     reverse_proxy https://paperless.home.{$DOMAIN} {
       header_up Host {upstream_hostport}
+      header_up X-Real-IP {remote}                                                                                                                                                                                                                                                                                                                                                                                                                                                        │ │
+      header_up X-Forwarded-For {remote}                                                                                                                                                                                                                                                                                                                                                                                                                                                  │ │
+      header_up X-Forwarded-Proto {scheme}
     }
 }
 
@@ -275,6 +278,9 @@ stirling.{$DOMAIN} {
     import cloudflare
     reverse_proxy https://stirling.home.{$DOMAIN} {
       header_up Host {upstream_hostport}
+      header_up X-Real-IP {remote}                                                                                                                                                                                                                                                                                                                                                                                                                                                        │ │
+      header_up X-Forwarded-For {remote}                                                                                                                                                                                                                                                                                                                                                                                                                                                  │ │
+      header_up X-Forwarded-Proto {scheme}
     }
 }
 
