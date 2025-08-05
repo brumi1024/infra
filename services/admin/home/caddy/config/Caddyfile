@@ -33,6 +33,39 @@
   }
 }
 
+(authenticate) {
+      # always forward outpost path to actual outpost
+      reverse_proxy /outpost.goauthentik.io/* http://homelab-vps.{$TAILNET}:{$PORT_AUTHENTIK_HTTP}
+
+      # forward authentication to outpost
+      forward_auth http://homelab-vps.{$TAILNET}:{$PORT_AUTHENTIK_HTTP} {
+          uri /outpost.goauthentik.io/auth/caddy
+
+          # capitalization of the headers is important, otherwise they will be empty
+          copy_headers X-Authentik-Username X-Authentik-Groups X-Authentik-Entitlements X-Authentik-Email X-Authentik-Name X-Authentik-Uid X-Authentik-Jwt X-Authentik-Meta-Jwks X-Authentik-Meta-Outpost X-Authentik-Meta-Provider X-Authentik-Meta-App X-Authentik-Meta-Version X-Forwarded-Role authorization
+
+          # optional, in this config trust all private ranges, should probably be set to the outposts IP
+          trusted_proxies private_ranges
+      }
+}
+
+# Local network authentication bypass
+(authenticate_with_tailscale_bypass) {
+      @tailscale_network {
+            remote_ip 100.64.0.0/10
+        }
+      
+      # Skip authentication for local network requests
+      handle @tailscale_network {
+          # Just pass through to the backend without authentication
+      }
+      
+      # Apply authentication for non-local requests
+      handle {
+          import authenticate
+      }
+}
+
 ##########################
 # Main/Home Site Services#
 ##########################
@@ -47,16 +80,19 @@ homeassistant.home.{$DOMAIN} {
 # Media Stack
 
 prowlarr.home.{$DOMAIN} {
+    import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy docker:{$PORT_PROWLARR_HTTP}
 }
 
 sonarr.home.{$DOMAIN} {
+    import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy docker:{$PORT_SONARR_HTTP}
 }
 
 radarr.home.{$DOMAIN} {
+    import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy docker:{$PORT_RADARR_HTTP}
 }
@@ -72,6 +108,7 @@ tautulli.home.{$DOMAIN} {
 }
 
 qbittorrent.home.{$DOMAIN} {
+    import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy docker:{$PORT_QBITTORRENT_HTTP}
 }
