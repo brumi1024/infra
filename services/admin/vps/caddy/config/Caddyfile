@@ -198,12 +198,7 @@ pihole2.seq.{$ADMIN_DOMAIN} {
 homeassistant.{$DOMAIN} {
   import cloudflare
   # Route to Main/Home site
-  reverse_proxy https://homeassistant.home.{$DOMAIN} {
-    header_up X-Real-IP {remote}
-    header_up X-Forwarded-For {remote}
-    header_up X-Forwarded-Proto {scheme}
-    header_up X-Forwarded-Host {host}
-  }
+  reverse_proxy https://homeassistant.home.{$DOMAIN}
 }
 
 # Home Assistant - Kalasz
