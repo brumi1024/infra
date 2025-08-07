@@ -119,7 +119,7 @@ susanoo.{$ADMIN_DOMAIN} {
 truenas.{$ADMIN_DOMAIN} {
     import cloudflare
     import log_common
-    reverse_proxy http://truenas-scale.{$TAILNET}:80
+    reverse_proxy https://truenas-scale.{$TAILNET}:80
 }
 
 pihole1.{$ADMIN_DOMAIN} {
@@ -216,7 +216,7 @@ homeassistant.kalasz.{$DOMAIN} {
 # Home Assistant - Sequoia
 homeassistant.seq.{$DOMAIN} {
   import cloudflare
-  reverse_proxy https://homeassistant-seq.{$TAILNET}:{$PORT_HOMEASSISTANT_HTTP} {
+  reverse_proxy http://homeassistant-seq.{$TAILNET}:{$PORT_HOMEASSISTANT_HTTP} {
     header_up Host {host}
     header_up X-Real-IP {remote}
     header_up X-Forwarded-For {remote}
@@ -234,6 +234,10 @@ scrypted.seq.{$DOMAIN} {
     header_up X-Forwarded-For {remote}
     header_up X-Forwarded-Proto {scheme}
     header_up X-Forwarded-Host {host}
+    transport http {
+            tls
+            tls_insecure_skip_verify
+        }
   }
 }
 
