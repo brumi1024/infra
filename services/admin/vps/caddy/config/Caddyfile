@@ -7,7 +7,7 @@
     dynamic_dns {
       provider cloudflare {$CF_API_TOKEN}
       domains {
-        {$DOMAIN} @ www *
+        {$DOMAIN} @ * *.seq
       }
     }
 
@@ -199,7 +199,11 @@ homeassistant.{$DOMAIN} {
   import cloudflare
   # Route to Main/Home site
   reverse_proxy https://homeassistant.home.{$DOMAIN} {
-    header_up Host {upstream_hostport}
+    header_up Host {host}
+    header_up X-Real-IP {remote}
+    header_up X-Forwarded-For {remote}
+    header_up X-Forwarded-Proto {scheme}
+    header_up X-Forwarded-Host {host}
   }
 }
 
@@ -209,12 +213,40 @@ homeassistant.kalasz.{$DOMAIN} {
   reverse_proxy http://homeassistant-kalasz.{$TAILNET}:{$PORT_HOMEASSISTANT_HTTP}
 }
 
+# Home Assistant - Sequoia
+homeassistant.seq.{$DOMAIN} {
+  import cloudflare
+  reverse_proxy https://homeassistant.seq.{$DOMAIN} {
+    header_up Host {host}
+    header_up X-Real-IP {remote}
+    header_up X-Forwarded-For {remote}
+    header_up X-Forwarded-Proto {scheme}
+    header_up X-Forwarded-Host {host}
+  }
+}
+
+# Scrypted - Sequoia
+scrypted.seq.{$DOMAIN} {
+  import cloudflare
+  reverse_proxy https://scrypted.seq.{$DOMAIN} {
+    header_up Host {host}
+    header_up X-Real-IP {remote}
+    header_up X-Forwarded-For {remote}
+    header_up X-Forwarded-Proto {scheme}
+    header_up X-Forwarded-Host {host}
+  }
+}
+
 # Media Stack - Route to Main/Home
 prowlarr.{$DOMAIN} {
     import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy https://prowlarr.home.{$DOMAIN} {
-      header_up Host {upstream_hostport}
+      header_up Host {host}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
     }
 }
 
@@ -222,7 +254,11 @@ sonarr.{$DOMAIN} {
     import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy https://sonarr.home.{$DOMAIN} {
-      header_up Host {upstream_hostport}
+      header_up Host {host}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
     }
 }
 
@@ -230,21 +266,33 @@ radarr.{$DOMAIN} {
     import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy https://radarr.home.{$DOMAIN} {
-      header_up Host {upstream_hostport}
+      header_up Host {host}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
     }
 }
 
 overseerr.{$DOMAIN} {
     import cloudflare
     reverse_proxy https://overseerr.home.{$DOMAIN} {
-      header_up Host {upstream_hostport}
+      header_up Host {host}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
     }
 }
 
 tautulli.{$DOMAIN} {
     import cloudflare
     reverse_proxy https://tautulli.home.{$DOMAIN} {
-      header_up Host {upstream_hostport}
+      header_up Host {host}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
     }
 }
 
@@ -252,14 +300,22 @@ qbittorrent.{$DOMAIN} {
     import authenticate_with_tailscale_bypass
     import cloudflare
     reverse_proxy https://qbittorrent.home.{$DOMAIN} {
-      header_up Host {upstream_hostport}
+      header_up Host {host}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
     }
 }
 
 plex.{$DOMAIN} {
     import cloudflare
     reverse_proxy https://plex.home.{$DOMAIN} {
-      header_up Host {upstream_hostport}
+      header_up Host {host}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
     }
 }
 
@@ -267,27 +323,33 @@ plex.{$DOMAIN} {
 paperless.{$DOMAIN} {
     import cloudflare
     reverse_proxy https://paperless.home.{$DOMAIN} {
-      header_up Host {upstream_hostport}
-      header_up X-Real-IP {remote}                                                                                                                                                                                                                                                                                                                                                                                                                                                        │ │
-      header_up X-Forwarded-For {remote}                                                                                                                                                                                                                                                                                                                                                                                                                                                  │ │
+      header_up Host {host}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
       header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
     }
 }
 
 stirling.{$DOMAIN} {
     import cloudflare
     reverse_proxy https://stirling.home.{$DOMAIN} {
-      header_up Host {upstream_hostport}
-      header_up X-Real-IP {remote}                                                                                                                                                                                                                                                                                                                                                                                                                                                        │ │
-      header_up X-Forwarded-For {remote}                                                                                                                                                                                                                                                                                                                                                                                                                                                  │ │
+      header_up Host {host}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
       header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
     }
 }
 
 immich.{$DOMAIN} {
     import cloudflare
     reverse_proxy https://immich.home.{$DOMAIN} {
-      header_up Host {upstream_hostport}
+      header_up Host {host}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
     }
 }
 
@@ -295,6 +357,10 @@ immich.{$DOMAIN} {
 zephyrus.{$DOMAIN} {
     import cloudflare
     reverse_proxy https://zephyrus.seq.{$DOMAIN} {
-      header_up Host {upstream_hostport}
+      header_up Host {host}
+      header_up X-Real-IP {remote}
+      header_up X-Forwarded-For {remote}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
     }
 }
