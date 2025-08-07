@@ -216,7 +216,7 @@ homeassistant.kalasz.{$DOMAIN} {
 # Home Assistant - Sequoia
 homeassistant.seq.{$DOMAIN} {
   import cloudflare
-  reverse_proxy https://homeassistant.seq.{$DOMAIN} {
+  reverse_proxy https://homeassistant-seq.{$TAILNET}:{$PORT_HOMEASSISTANT_HTTP} {
     header_up Host {host}
     header_up X-Real-IP {remote}
     header_up X-Forwarded-For {remote}
@@ -228,7 +228,7 @@ homeassistant.seq.{$DOMAIN} {
 # Scrypted - Sequoia
 scrypted.seq.{$DOMAIN} {
   import cloudflare
-  reverse_proxy https://scrypted.seq.{$DOMAIN} {
+  reverse_proxy https://scrypted.{$TAILNET}:{$PORT_SCRIPTED_HTTPS} {
     header_up Host {host}
     header_up X-Real-IP {remote}
     header_up X-Forwarded-For {remote}
