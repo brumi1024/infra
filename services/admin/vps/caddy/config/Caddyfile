@@ -119,7 +119,7 @@ susanoo.{$ADMIN_DOMAIN} {
 truenas.{$ADMIN_DOMAIN} {
     import cloudflare
     import log_common
-    reverse_proxy https://truenas-scale.{$TAILNET}:80
+    reverse_proxy http://truenas-scale.{$TAILNET}:80
 }
 
 pihole1.{$ADMIN_DOMAIN} {
