@@ -194,13 +194,6 @@ pihole2.seq.{$ADMIN_DOMAIN} {
 # site based on service  #
 ##########################
 
-# Home Assistant - Main
-homeassistant.{$DOMAIN} {
-  import cloudflare
-  # Route to Main/Home site
-  reverse_proxy https://homeassistant.home.{$DOMAIN}
-}
-
 # Home Assistant - Kalasz
 homeassistant.kalasz.{$DOMAIN} {
   import cloudflare
@@ -208,145 +201,12 @@ homeassistant.kalasz.{$DOMAIN} {
 }
 
 # Home Assistant - Sequoia
-homeassistant.seq.{$DOMAIN} {
+*.home.{$DOMAIN} {
   import cloudflare
-  reverse_proxy http://homeassistant-seq.{$TAILNET}:{$PORT_HOMEASSISTANT_HTTP} {
-    header_up X-Real-IP {remote}
-    header_up X-Forwarded-For {remote}
-    header_up X-Forwarded-Proto {scheme}
-    header_up X-Forwarded-Host {host}
-  }
+  reverse_proxy http://docker.{$TAILNET}:80
 }
 
-# Scrypted - Sequoia
-scrypted.seq.{$DOMAIN} {
+*.seq.{$DOMAIN} {
   import cloudflare
-  reverse_proxy https://scrypted.{$TAILNET}:{$PORT_SCRIPTED_HTTPS} {
-    header_up X-Real-IP {remote}
-    header_up X-Forwarded-For {remote}
-    header_up X-Forwarded-Proto {scheme}
-    header_up X-Forwarded-Host {host}
-    transport http {
-            tls
-            tls_insecure_skip_verify
-        }
-  }
-}
-
-# Media Stack - Route to Main/Home
-prowlarr.{$DOMAIN} {
-    import authenticate_with_tailscale_bypass
-    import cloudflare
-    reverse_proxy https://prowlarr.home.{$DOMAIN} {
-      header_up X-Real-IP {remote}
-      header_up X-Forwarded-For {remote}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-    }
-}
-
-sonarr.{$DOMAIN} {
-    import authenticate_with_tailscale_bypass
-    import cloudflare
-    reverse_proxy https://sonarr.home.{$DOMAIN} {
-      header_up Host {host}
-      header_up X-Real-IP {remote}
-      header_up X-Forwarded-For {remote}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-    }
-}
-
-radarr.{$DOMAIN} {
-    import authenticate_with_tailscale_bypass
-    import cloudflare
-    reverse_proxy https://radarr.home.{$DOMAIN} {
-      header_up X-Real-IP {remote}
-      header_up X-Forwarded-For {remote}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-    }
-}
-
-overseerr.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy https://overseerr.home.{$DOMAIN} {
-      header_up X-Real-IP {remote}
-      header_up X-Forwarded-For {remote}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-    }
-}
-
-tautulli.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy https://tautulli.home.{$DOMAIN} {
-      header_up X-Real-IP {remote}
-      header_up X-Forwarded-For {remote}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-    }
-}
-
-qbittorrent.{$DOMAIN} {
-    import authenticate_with_tailscale_bypass
-    import cloudflare
-    reverse_proxy https://qbittorrent.home.{$DOMAIN} {
-      header_up X-Real-IP {remote}
-      header_up X-Forwarded-For {remote}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-    }
-}
-
-plex.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy https://plex.home.{$DOMAIN} {
-      header_up X-Real-IP {remote}
-      header_up X-Forwarded-For {remote}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-    }
-}
-
-# Services - Route to Main/Home
-paperless.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy https://paperless.home.{$DOMAIN} {
-      header_up X-Real-IP {remote}
-      header_up X-Forwarded-For {remote}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-    }
-}
-
-stirling.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy https://stirling.home.{$DOMAIN} {
-      header_up X-Real-IP {remote}
-      header_up X-Forwarded-For {remote}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-    }
-}
-
-immich.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy https://immich.home.{$DOMAIN} {
-      header_up X-Real-IP {remote}
-      header_up X-Forwarded-For {remote}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-    }
-}
-
-# Sequoia Services
-zephyrus.{$DOMAIN} {
-    import cloudflare
-    reverse_proxy https://zephyrus.seq.{$DOMAIN} {
-      header_up X-Real-IP {remote}
-      header_up X-Forwarded-For {remote}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-    }
+  reverse_proxy http://docker-seq.{$TAILNET}:80
 }

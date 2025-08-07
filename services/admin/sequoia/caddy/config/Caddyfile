@@ -15,6 +15,15 @@
       ip_source upnp
     }
 
+    servers {
+      listener_wrappers {
+        tls
+      }
+       # Bind to IPv6 only
+       listen [::]:443
+       listen [::]:80
+    }
+
     admin 0.0.0.0:{$PORT_CADDY_ADMIN}
 }
 
