@@ -58,17 +58,17 @@ services:
         source: media
         target: /usr/src/paperless/media
         volume:
-          subpath: documents/paperless/data
+          subpath: paperless/data
       - type: volume
         source: media
         target: /usr/src/paperless/export
         volume:
-          subpath: documents/paperless/export
+          subpath: paperless/export
       - type: volume
         source: media
         target: /usr/src/paperless/consume
         volume:
-          subpath: documents/paperless/consume
+          subpath: paperless/consume
     labels:
       - homepage.group=Personal Apps
       - homepage.name=Paperless
