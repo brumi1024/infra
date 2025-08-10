@@ -120,7 +120,7 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=${NAS_IP},rw,vers=4.1
-      device: ":/mnt/blackbox/media"
+      device: ":/mnt/blackbox/media/documents"
   appdata:
     driver: local
     driver_opts:
