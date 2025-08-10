@@ -147,4 +147,4 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=${NAS_IP},rw,vers=4.1
-      device: ":/mnt/blackbox/media/servarr"
+      device: ":/mnt/blackbox/media"
