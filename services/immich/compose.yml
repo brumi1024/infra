@@ -9,10 +9,8 @@ services:
     #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
     volumes:
       - type: volume
-        source: media
+        source: photos
         target: /usr/src/app/upload
-        volume:
-          subpath: photos
       - /etc/localtime:/etc/localtime:ro
     labels:
       - homepage.group=Personal Apps
@@ -102,7 +100,7 @@ networks:
     external: true
 volumes:
   model-cache:
-  media:
+  photos:
     driver: local
     driver_opts:
       type: nfs
